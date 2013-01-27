@@ -8,7 +8,8 @@ def checkUnitForwardLinkExist(fn):
         if self.nextUnit is None:
             raise UnitError("Unit doesn`t has forward link")
             pass
-        fn(*args, **kwargs)
+
+        return fn(self, *args, **kwargs)
         pass
 
     return wrap
@@ -19,7 +20,8 @@ def checkUnitForwardLinkDoesNotExist(fn):
         if self.nextUnit is not None:
             raise UnitError("Unit has forward link. It must be None.")
             pass
-        fn(*args, **kwargs)
+
+        return fn(self, *args, **kwargs)
         pass
 
     return wrap
@@ -50,10 +52,23 @@ class Unit(object):
             pass
         pass
 
+    def getSlot(self, signalType):
+        if signalType not in self.slots:
+            return None
+            pass
+        
+        return self.slots[signalType]
+        pass
+    
     def processSignal(self, signal):
         slot = self.getSlot(signal.type)
         if slot is not None:
             isNeedToContinue = slot(signal.data)
+
+            if isNeedToContinue is not True and isNeedToContinue is not False:
+                raise BaseException("UNIT SLOT MUST RETURN BOOLEAN %s" % str(slot))
+                pass
+            
             if isNeedToContinue is False:
                 return
                 pass

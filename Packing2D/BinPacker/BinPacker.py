@@ -1,6 +1,7 @@
 __author__ = 'human88998999877'
 
 from Packing2D.BinPacker.BinSet import BinSet
+from Packing2D import BorderMode,RotateMode
 
 class BinPackerError(BaseException):
     pass
@@ -10,15 +11,14 @@ class BinPackerValidateSettingsError(BaseException):
 
 class BinPacker(object):
     def __init__(self):
-        super(self, BinPacker).__init__()
+        super(BinPacker,self ).__init__()
         pass
 
     def initialise(self, factory, settings):
-        self.binSet = BinSet()
-        #self.isValidSettings( settings )
         self.settings = settings
         self._onInitialise( factory, settings )
         self.settings = settings
+        self.binSet = BinSet(self.settings.maxWidth, self.settings.maxHeight)
         pass
 
     def isValidSettings(self, settings):
@@ -36,7 +36,12 @@ class BinPacker(object):
     def packBin(self, bin):
         self.setBorder(bin)
         self.rotateBin(bin)
-        self._onPackBin(bin)
+        if self._onPackBin(bin) is False:
+            return False
+            pass
+        
+        self.binSet.add(bin)
+        return True
         pass
 
     def _onPackBin(self, bin):
@@ -47,13 +52,19 @@ class BinPacker(object):
         return (0,0,0,0)
         pass
 
-    def rotateBin(self, bin):
-        if self.settings.isRotate is False:
+    def rotateBin(self, rect):
+        if self.settings.rotateMode == RotateMode.NONE:
             return
             pass
-
-        if bin.getWidth() < bin.getHeight():
-            bin.rotate()
+        elif self.settings.rotateMode == RotateMode.HEIGHT_LONGER:
+            if rect.getWidth() < rect.getHeight():
+                rect.setRotate(True)
+                pass
+            pass
+        elif self.settings.rotateMode == RotateMode.WIDTH_LONGER:
+            if rect.getWidth() > rect.getHeight():
+                rect.setRotate(True)
+                pass
             pass
         pass
 
@@ -72,13 +83,13 @@ class BinPacker(object):
         pass
 
     def flush(self):
-        #self._onFlush()
         result = self.binSet
-        self.binSet = BinSet()
+        self.binSet = BinSet(self.settings.maxWidth, self.settings.maxHeight)
+        self._onFlush()
         return result
         pass
 
-#    def _onFlush(self):
-#        raise NotImplementedError()
-#        pass
+    def _onFlush(self):
+        raise NotImplementedError()
+        pass
     pass

@@ -4,12 +4,12 @@ class MappedFactoryError(BaseException):
 
 class MappedFactory(object):
     def __init__(self):
-        super(self, MappedFactory).__init__()
+        super(MappedFactory, self).__init__()
         self._types = {}
         self._cache = {}
         pass
 
-    def registerType(self, name, classType):
+    def register(self, name, classType):
         if self.hasType( name ):
             raise MappedFactoryError("TypeName already register %s" % name)
             pass
@@ -55,10 +55,10 @@ class MappedFactory(object):
 
         instance = None
         if cached is True:
-            instance = self._getCachedInstance()
+            instance = self._getCachedInstance(name)
             pass
         else:
-            instance = self._getInstance()
+            instance = self._getInstance(name)
             pass
 
         return instance

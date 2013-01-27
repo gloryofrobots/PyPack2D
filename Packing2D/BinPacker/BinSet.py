@@ -2,12 +2,20 @@ __author__ = 'human88998999877'
 
 class BinSet(object):
     def __init__(self, width, height):
-        super(self, BinSet).__init__()
+        super(BinSet, self).__init__()
         self.bins = []
         self.width = width
         self.height = height
         pass
 
+    def getWidth(self):
+        return self.width
+        pass
+
+    def getHeight(self):
+        return self.height
+        pass
+    
     def setSize(self, width, height):
         self.width = width
         self.height = height

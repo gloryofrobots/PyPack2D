@@ -5,7 +5,8 @@ SignalType = Enum(
     "PUSH_INPUT" #send from filters, accumulators, Packing2D
     , "START_PACK" #send from Packing2D
     , "PREPARE_TO_PACK" #send from Packing2D
-    , "END_PACK") #send from PackingControl
+    , "END_PACK" #send from PackingControl
+    , "WASTE_INPUT")
 
 class Signal(object):
     def __init__(self, signalType, data):

@@ -4,6 +4,8 @@ from Packing2D.Enum.Enum import Enum
 SortOrder = Enum("ASC", "DESC")
 
 SortKey = Enum("AREA"
+               ,"WIDTH"
+               ,"HEIGHT"
                ,"SHORTER_SIDE"
                ,"LONGER_SIDE"
                ,"PERIMETER"
@@ -28,7 +30,7 @@ PlaceHeuristic = Enum(  "NEXT_FIT"
                       , "BOTTOM_LEFT"
                       , "BEST_FIT")
 
-BinSizeMode = Enum("STRICT","AUTO_MINIMIZE")
+BinSizeMode = Enum("STRICT","MINIMIZE_MAXIMAL", "MINIMIZE_POW2")
 
 PackingAlgorithmAbility = Enum("RECTANGLE_MERGE", "WASTE_MAP", "FLOOR_CEILING")
 
@@ -37,9 +39,11 @@ GuillotineSplitRule = Enum("SHORTER_AXIS"
                            , "SHORTER_LEFTOVER_AXIS"
                            , "LONGER_LEFTOVER_AXIS"
                            , "MAX_AREA"
-                           , "MIN_AREA")
+                           , "MIN_AREA"
+                           , "HORIZONTAL"
+                           , "VERTICAL")
 
 BorderMode = Enum("NONE","STRICT","AUTO")
 
-
+RotateMode = Enum("NONE", "WIDTH_LONGER", "HEIGHT_LONGER")
 

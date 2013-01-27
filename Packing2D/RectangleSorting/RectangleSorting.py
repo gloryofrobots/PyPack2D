@@ -8,55 +8,85 @@ class RectangleSorting(object):
         pass
 
     def _onSort(self, input, isReverse):
-        sorted(input, key = lambda image: self.getSortingAttribute(image), reverse = isReverse)
+        input.sort(key = lambda image: self.getSortingAttribute(image), reverse = isReverse)
         pass
 
     def getSortingAttribute(self, image):
         pass
     
     def getReverseFromOrder(self, order):
-        if order == SortOrder.ASC:
+        if order == SortOrder.DESC:
             return True
             pass
         
-        return True
+        return False
         pass
     pass
 
 
 class RectangleSortingArea(RectangleSorting):
     def getSortingAttribute(self, image):
+        return image.getWidth() * image.getHeight()
+        pass
+    pass
+
+class RectangleSortingWidth(RectangleSorting):
+    def getSortingAttribute(self, image):
+        return image.getWidth()
+        pass
+    pass
+
+class RectangleSortingHeight(RectangleSorting):
+    def getSortingAttribute(self, image):
+        return image.getHeight()
+        pass
+    pass
+
+class RectangleSortingShorterSide(RectangleSorting):
+    def getSortingAttribute(self, image):
+        width = image.getWidth()
+        height = image.getHeight()
+        if width < height:
+            return width
+            pass
         
+        return height
         pass
     pass
 
-class RectangleSortingShorterSide(Sort):
+class RectangleSortingLongerSide(RectangleSorting):
     def getSortingAttribute(self, image):
+        width = image.getWidth()
+        height = image.getHeight()
+        if width > height:
+            return width
+            pass
 
+        return height
         pass
     pass
 
-class RectangleSortingLongerSide(Sort):
+class RectangleSortingPerimeter(RectangleSorting):
     def getSortingAttribute(self, image):
-
+        width = image.getWidth()
+        height = image.getHeight()
+        return width + height
         pass
     pass
 
-class RectangleSortingPerimeter(Sort):
+class RectangleSortingSideLengthDifference(RectangleSorting):
     def getSortingAttribute(self, image):
-
+        width = image.getWidth()
+        height = image.getHeight()
+        return width - height
         pass
     pass
 
-class RectangleSortingSideLengthDifference(Sort):
+class RectangleSortingSideRatio(RectangleSorting):
     def getSortingAttribute(self, image):
-
-        pass
-    pass
-
-class RectangleSortingSideRatio(Sort):
-    def getSortingAttribute(self, image):
-
+        width = image.getWidth()
+        height = image.getHeight()
+        return width / height
         pass
     pass
 

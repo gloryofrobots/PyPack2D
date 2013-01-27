@@ -19,5 +19,6 @@ class Validator(Unit):
                 pass
             pass
         self.processSignal( Signal(SignalType.WASTE_INPUT, waste) )
+        return True
         pass
-
+    pass

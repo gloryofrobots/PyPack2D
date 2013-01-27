@@ -4,16 +4,17 @@ from Packing2D.PackingConveyer.Signal import SignalType,Signal
 
 class Accumulator(Unit):
     def _onInit(self):
-        self.connect(SignalType.PREPARE_TO_PACK, self._onPrepareToPack)
+        self.connect(SignalType.START_PACK, self._onStartPack)
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)
 
         self.input = []
         pass
 
     @checkUnitForwardLinkExist
-    def _onPrepareToPack(self, dummy):
+    def _onStartPack(self, dummy):
         newSignal = Signal(SignalType.PUSH_INPUT, self.input)
         self._processNext(newSignal)
+        return True
         pass
 
     @checkUnitForwardLinkExist

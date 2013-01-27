@@ -4,16 +4,16 @@ class PackingSettings(object):
     def __init__(self
                  , PackingAlgorithm
                  , PlaceHeuristic
-                 , PackingMode = None
-                 , SortOrder = None
-                 , SortKey = None
-                 , BinSizeMode = None
-                 , PackingAlgorithmAbility = None
-                 , MaxWidth = None
-                 , MaxHeight = None
-                 , Border = None
-                 , BorderMode = None
-                 , IsRotate = None ):
+                 , PackingMode
+                 , SortOrder
+                 , SortKey
+                 , BinSizeMode
+                 , PackingAlgorithmAbility
+                 , MaxWidth
+                 , MaxHeight
+                 , Border
+                 , BorderMode
+                 , RotateMode):
         super(PackingSettings, self).__init__()
 
         self.packingAlgorithm = PackingAlgorithm
@@ -24,7 +24,7 @@ class PackingSettings(object):
         self.packingMode = PackingMode
         self.packingAlgorithmAbility = PackingAlgorithmAbility
 
-        self.isRotate = IsRotate
+        self.rotateMode = RotateMode
         self.maxWidth = MaxWidth
         self.maxHeight = MaxHeight
         self.border = Border
@@ -33,12 +33,33 @@ class PackingSettings(object):
     pass
 
 class PackingSettingsGuillotine(PackingSettings):
-    def __init__(self, PackingAlgorithm, PlaceHeuristic, SplitRule, SortOrder = None
-                 , SortKey = None, BinSizeMode = None, PackingAlgorithmAbility = None):
+    def __init__(self
+                 , PackingAlgorithm
+                 , PlaceHeuristic
+                 , PackingMode
+                 , SortOrder
+                 , SortKey
+                 , BinSizeMode
+                 , PackingAlgorithmAbility
+                 , MaxWidth
+                 , MaxHeight
+                 , Border
+                 , BorderMode
+                 , RotateMode
+                 , SplitRule):
 
-        super(PackingSettingsGuillotine, self).__init__(PackingAlgorithm, PlaceHeuristic, SortOrder
-                                                  ,SortKey, BinSizeMode, PackingAlgorithmAbility)
-
+        super(PackingSettingsGuillotine, self).__init__(PackingAlgorithm
+                                                        , PlaceHeuristic
+                                                        , PackingMode
+                                                        , SortOrder
+                                                        , SortKey
+                                                        , BinSizeMode
+                                                        , PackingAlgorithmAbility
+                                                        , MaxWidth
+                                                        , MaxHeight
+                                                        , Border
+                                                        , BorderMode
+                                                        , RotateMode)
         self.splitRule = SplitRule
         pass
     pass

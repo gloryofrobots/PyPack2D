@@ -1,16 +1,23 @@
 __author__ = 'human88998999877'
 
-from PyBuilder.Atlas.AtlasGenerator.Field2D import Field2D
+from Atlas.Field2D import Field2D
 from PIL import Image
 
 class AtlasImage(object):
-    def __init__(self, path, onPackCallback, borderSize):
+    def __init__(self, path):
         super(AtlasImage, self).__init__()
         self.img = Image.open(path)
         self.path = path
-        self.onPackCallback = onPackCallback
         self._initialise()
-        self.borderSize = borderSize
+        self.bin = None
+        pass
+
+    def __repr__(self):
+        return "<%s %s (%i,%i)>" %( self.__class__.__name__, self.path, self.width, self.height)
+        pass
+    
+    def getBin(self):
+        return self.bin
         pass
 
     def _initialise(self):
@@ -33,51 +40,51 @@ class AtlasImage(object):
         pass
 
     def _createBorderFromMyBody(self, border):
+        newWidth = self.width + border[0] + border[2]
+        newHeight = self.height + border[1] + border[3]
 
-        newWidth = self.width + border.left + border.right
-        newHeight = self.height + border.top + border.bottom
-        
+        #TODO CHECK IS COLOR NOT SEEN
         newImage = Image.new("RGBA",(newWidth, newHeight),(128,128,128,255) )
 
-        newImage.paste(self.img,(border.left, border.top))
+        newImage.paste(self.img,(border[0], border[1]))
         data = list(newImage.getdata())
         field2D = Field2D(data, newWidth, newHeight)
         #print(self.height,newHeight)
         #Copying data to box around
-        if border.top is not 0:
+        if border[1] is not 0:
             #print("copy top")
             #top Lines
-            sourceLine = border.top
+            sourceLine = border[1]
             lineNumbers = range(0, sourceLine)
             self.copyLines(field2D, sourceLine, lineNumbers)
             pass
 
-        if border.bottom is not 0:
+        if border[3] is not 0:
             #print("copy bottom")
-            #bottom lines
-            sourceLine = self.height + border.top - 1
+            #bottom lines+
+            sourceLine = self.height + border[1] - 1
             lineNumbers = range(sourceLine + 1, newHeight)
 
             self.copyLines(field2D, sourceLine, lineNumbers)
             pass
 
-        if border.left is not 0:
+        if border[0] is not 0:
             #print("copy left")
             #left columns
-            sourceColumn = border.left
+            sourceColumn = border[0]
             columnNumbers = range(0, sourceColumn)
             self.copyColumns(field2D, sourceColumn, columnNumbers)
             pass
         
-        if border.right is not 0:
+        if border[2] is not 0:
             #print("copy right")
             #right columns
-            sourceColumn = self.width + border.left - 1 
+            sourceColumn = self.width + border[0] - 1 
             columnNumbers = range(sourceColumn + 1, newWidth)
 
             self.copyColumns(field2D, sourceColumn, columnNumbers)
             pass
-   
+      
         newImage.putdata(data)
         self.img = newImage
 
@@ -86,10 +93,6 @@ class AtlasImage(object):
 
     def getImagePIL(self):
         return self.img
-        pass
-
-    def getBorderSize(self):
-        return self.borderSize
         pass
     
     def getPath(self):
@@ -104,79 +107,54 @@ class AtlasImage(object):
         return self.height
         pass
 
-    def getLowestSide(self):
-        if self.height < self.width:
-            return self.height
-            pass
+    def setBin(self, bin):
+        self.bin = bin
 
-        return self.width
-        pass
-
-    def getBiggestSide(self):
-        if self.height > self.width:
-            return self.height
-            pass
-
-        return self.width
-        pass
-
-    def getRatio(self):
-        return self.width / self.height
-        pass
-
-    def getDiff(self):
-        return self.width - self.height
-        pass
-
-    def getPerimeter(self):
-        return self.width + self.height
-        pass
-
-    def getArea(self):
-        return self.width * self.height
-        pass
-
-    def setTexture(self, texture):
-        self.texture = texture
-
-        if self.texture.isRotate():
+        if self.bin.isRotate():
             self.img = self.img.rotate(-90)
             self._initialise()
             pass
 
-        border = self.texture.getBorder()
+        border = self.bin.getBorder()
 
-        if border.isZero() is True:
+        if border[0] == 0 and border[1] == 0 and border[2] == 0 and border[3] == 0:
             return
             pass
         
-        #print("self._createBorderFromMyBody",texture.name)
         self._createBorderFromMyBody(border)
-        #from PyBuilder.FileSystem import FileSystem
-        #path = "D:\\Projects\\PyBuilderConsole\\atlases\\textures\\" + FileSystem.getBasename(texture.name)
-
-        #self.img.save(path)
         pass
 
     def getUV(self):
-        return self.texture.getUV()
+        #TODO
+        #return self.bin.getUV()
         pass
     
     def isRotate(self):
-        return self.texture.isRotate()
+        return self.bin.isRotate()
         pass
     
-    def onPackToAtlas(self, atlas):
-        self.onPackCallback(self, atlas)
+    def pack(self, atlas):
+        canvas = atlas.getCanvas()
+
+        if self.bin is None:
+            raise BaseException("Atlas Image pack error. Bin not determined")
+            pass
+
+        canvas.paste(self.img, box = (self.bin.left, self.bin.top))
+        self._onPack(atlas)
+        pass
+
+    def _onPack(self,atlas):
         pass
     pass
 
-"""
-from PIL import Image
-path = "D:\\Projects\\PyBuilderConsole\\atlases\\textures\\test\\100x100(border).png"
-resultPath = "D:\\Projects\\PyBuilderConsole\\atlases\\textures\\test\\100x100(border)2.png"
-image = AtlasImage(path,None,(1,1))
-image.img.save("D:\\Projects\\PyBuilderConsole\\atlases\\textures\\test\\100x100(border)2.png")
+class AtlasImagePyBuilder(AtlasImage):
+    def __init__(self, path, onPackCallback = None):
+        super(AtlasImagePyBuilder, self).__init__(path)
+        self.onPackCallback = onPackCallback
+        pass
 
-x = [0,0,0,0,0,0,0]
-y = [1,1,1,1]"""
+    def _onPack(self,atlas):
+        self.onPackCallback(self, atlas)
+        pass
+    pass

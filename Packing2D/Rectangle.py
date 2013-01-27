@@ -1,7 +1,27 @@
-
 class Rectangle:
-    def __init__(self, x, y, width, height):
+    def __init__(self, *args):
+        if len(args) == 4:
+            self._createFromLeftTopWidthHeight(*args)
+            pass
+        elif len(args) == 2:
+            self._createFromWidthHeight(*args)
+            pass
+
+        elif len(args) == 1:
+            self._createFromRectangle(*args)
+            pass
+        pass
+
+    def _createFromRectangle(self, rect):
+        self.set(rect.left, rect.top, rect.width, rect.height)
+        pass
+
+    def _createFromLeftTopWidthHeight(self, x, y, width, height):
         self.set(x, y, width, height)
+        pass
+
+    def _createFromWidthHeight(self,width, height):
+        self.set(0, 0, width, height)
         pass
 
     def set(self, x, y, width, height):
@@ -15,11 +35,6 @@ class Rectangle:
         self._x = x
         self._y = y
         pass
-    
-#    def increasePosition(self, add):
-#        self._x += add.left
-#        self._y += add.top
-#        pass
     
     def isZeroSize(self):
         if self._x == 0 and self._width == 0 and self._y == 0 and self._height == 0:
@@ -43,13 +58,21 @@ class Rectangle:
         return self._width
         pass
 
-    width = property(fget=getWidth)
+    def setWidth(self, width):
+        self._width = width
+        pass
+    
+    width = property(fget = getWidth, fset = setWidth)
 
     def getHeight(self):
         return self._height
         pass
 
-    height = property(fget=getHeight)
+    def setHeight(self, height):
+        self._height = height
+        pass
+
+    height = property(fget = getHeight, fset = setHeight)
 
     def getLeft(self):
         return self._x
@@ -75,6 +98,22 @@ class Rectangle:
 
     bottom = property(fget=getBottom)
 
+    def getLongerSide(self):
+        if self.width > self.height:
+            return self.width
+            pass
+
+        return self.height
+        pass
+
+    def getShorterSide(self):
+        if self.width < self.height:
+            return self.width
+            pass
+
+        return self.height
+        pass
+
     def contain(self, rect):
         #print("I am ",self)
         #print("other ", rect)
@@ -90,6 +129,6 @@ class Rectangle:
         pass
 
     def __repr__(self):
-        return "Rectangle<left %d top : %d right : %d bottom: %d>" % (self._x,self._y, self._width, self._height)
+        return "Rectangle<left %d top : %d right : %d bottom: %d>" % (self.left,self.top, self.right, self.bottom)
         pass
     pass

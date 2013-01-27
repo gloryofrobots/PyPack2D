@@ -34,7 +34,7 @@ class BinSizeShifterPow2(BinSizeShifter):
 
     def _normaliseSize(self, binSet, newWidth, newHeight):
         #print("normaliseSize")
-        #print(self.width,self.height,newWidth,newHeight)
+        #print(newWidth,newHeight)
 
         newRect = Rectangle( 0, 0, newWidth, newHeight )
 
@@ -60,7 +60,7 @@ class BinSizeShifterPow2(BinSizeShifter):
                 pass
             pass
 
-        self.normaliseSize()
+        self.normaliseSize(binSet)
         return True
         pass
 
