@@ -16,8 +16,8 @@ class Atlas(object):
         pass
 
     def initialise(self, width, height, dirPath, fileName, texMode, atlasType, fillColor):
-        self.width = height
-        self.height = width
+        self.width = width
+        self.height = height
         self.dirPath = dirPath
         self.fileName = fileName
         self.textureMode = texMode

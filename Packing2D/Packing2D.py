@@ -78,7 +78,9 @@ class Packing2D(object):
         factory.register(PackingMode.LOCAL_SEARCH, PackingConveyerBuilderLocalSearch)
 
         from Packing2D.BinPackerGuillotine.BinPackerGuillotine import BinPackerGuillotine
+        from Packing2D.BinPackerCell.BinPackerCell import BinPackerCell
         factory.register(PackingAlgorithm.GUILLOTINE, BinPackerGuillotine)
+        factory.register(PackingAlgorithm.CELL, BinPackerCell)
 
         from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2
         from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterMaximal import BinSizeShifterMaximal

@@ -53,6 +53,10 @@ class BinPacker(object):
         pass
 
     def rotateBin(self, rect):
+        self._onRotateBin(rect)
+        pass
+
+    def _onRotateBin(self, rect):
         if self.settings.rotateMode == RotateMode.NONE:
             return
             pass
@@ -67,7 +71,7 @@ class BinPacker(object):
                 pass
             pass
         pass
-
+    
     def setBorder(self, bin):
         if self.settings.borderMode == BorderMode.NONE:
             return

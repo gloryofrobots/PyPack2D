@@ -14,7 +14,7 @@ SortKey = Enum("AREA"
 
 PackingMode = Enum("ONLINE", "OFFLINE", "LOCAL_SEARCH")
 
-PackingAlgorithm = Enum("SHELF", "SKYLINE", "GUILLOTINE")
+PackingAlgorithm = Enum("SHELF", "CELL", "GUILLOTINE")
 
 PlaceHeuristic = Enum(  "NEXT_FIT"
                       , "BEST_WIDTH_FIT"

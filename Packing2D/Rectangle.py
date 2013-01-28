@@ -31,6 +31,13 @@ class Rectangle:
         self._height = height
         pass
 
+    def setBB(self, left, top, right, bottom):
+        self._x = left
+        self._y = top
+        self._width = right - left
+        self._height = bottom - top
+        pass
+
     def setCoord(self, x, y):
         self._x = x
         self._y = y
@@ -115,9 +122,6 @@ class Rectangle:
         pass
 
     def contain(self, rect):
-        #print("I am ",self)
-        #print("other ", rect)
-
         if self.width < rect.width \
             or self.height < rect.height \
             or self.left > rect.left \
@@ -129,6 +133,6 @@ class Rectangle:
         pass
 
     def __repr__(self):
-        return "Rectangle<left %d top : %d right : %d bottom: %d>" % (self.left,self.top, self.right, self.bottom)
+        return "Rectangle %s : %s <left %d top : %d right : %d bottom: %d>" % (str(self.__class__.__name__), hex(id(self)), self.left, self.top, self.right, self.bottom)
         pass
     pass

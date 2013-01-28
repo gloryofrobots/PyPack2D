@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
 from Packing2D.BinPacker.BinPacker import BinPacker,BinPackerValidateSettingsError
-from Packing2D import PackingAlgorithmAbility,PlaceHeuristic,GuillotineSplitRule,BorderMode
+from Packing2D import PlaceHeuristic,GuillotineSplitRule
 
 
 from Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLongerAxis \
