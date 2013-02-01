@@ -1,4 +1,15 @@
+class BBox(object):
+    def __init__(self, left, top, right, bottom):
+        pass
+
 class Rectangle:
+    @staticmethod
+    def createFromBB(left, top, right, bottom):
+        rect = Rectangle()
+        rect.setBB(left, top , right, bottom)
+        return rect
+        pass
+
     def __init__(self, *args):
         if len(args) == 4:
             self._createFromLeftTopWidthHeight(*args)
@@ -9,6 +20,9 @@ class Rectangle:
 
         elif len(args) == 1:
             self._createFromRectangle(*args)
+            pass
+        elif len(args) == 0:
+            self._createFromWidthHeight(0,0)
             pass
         pass
 
@@ -121,15 +135,43 @@ class Rectangle:
         return self.height
         pass
 
-    def contain(self, rect):
-        if self.width < rect.width \
-            or self.height < rect.height \
+    def isContain(self, rect):
+        if self.right < rect.right \
+            or self.bottom < rect.bottom \
             or self.left > rect.left \
             or self.top >  rect.top:
             return False
             pass
 
         return True
+        pass
+
+    def isPossibleToFit(self, rect):
+        if self.height < rect.height or self.width < rect.width:
+            return False
+            pass
+
+        return True
+        pass
+
+    def isIntersect(self, rect):
+        if self.left >= rect.right or self.top >= rect.bottom or self.right <= rect.left or self.bottom <= rect.top:
+            return False
+            pass
+
+        return True
+        pass
+
+    def getIntersection(self, rect):
+        if self.isIntersect(rect) is False:
+            return None
+            pass
+
+        left = max(self.left, rect.left)
+        top = max(self.top,rect.top)
+        width = min(self.width, rect.width)
+        height = min(self.height, rect.height)
+        return Rectangle(left, top, width, height)
         pass
 
     def __repr__(self):

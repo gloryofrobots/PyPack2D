@@ -14,9 +14,9 @@ SortKey = Enum("AREA"
 
 PackingMode = Enum("ONLINE", "OFFLINE", "LOCAL_SEARCH")
 
-PackingAlgorithm = Enum("SHELF", "CELL", "GUILLOTINE")
+PackingAlgorithm = Enum("SHELF", "CELL", "GUILLOTINE", "MAX_RECTANGLES")
 
-PlaceHeuristic = Enum(  "NEXT_FIT"
+PlaceHeuristic = Enum(  "FIRST_FIT"
                       , "BEST_WIDTH_FIT"
                       , "BEST_HEIGHT_FIT"
                       , "WORST_WIDTH_FIT"
@@ -44,6 +44,8 @@ GuillotineSplitRule = Enum("SHORTER_AXIS"
                            , "VERTICAL")
 
 BorderMode = Enum("NONE","STRICT","AUTO")
+BorderType = Enum("PIXELS_FROM_EDGE", "COLOR")
 
-RotateMode = Enum("NONE", "WIDTH_LONGER", "HEIGHT_LONGER")
+
+RotateMode = Enum("NONE", "UP_RIGHT", "SIDE_WAYS", "AUTO")
 

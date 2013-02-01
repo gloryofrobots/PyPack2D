@@ -49,6 +49,31 @@ class Bin(Rectangle):
         self.set(0, 0, self.height, self.width)
         pass
 
+    def flip(self):
+        if self.isRotate() is False:
+            self.setRotate(True)
+            pass
+        else:
+            self.setRotate(False)
+            pass
+        pass
+
+    def rotateUpRight(self):
+        if self.width <= self.height:
+            return
+            pass
+
+        self.flip()
+        pass
+
+    def rotateSideWays(self):
+        if self.width >= self.height:
+            return
+            pass
+
+        self.flip()
+        pass
+
     def isRotate(self):
         return self.rotate
         pass

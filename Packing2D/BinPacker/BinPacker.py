@@ -12,12 +12,23 @@ class BinPackerValidateSettingsError(BaseException):
 class BinPacker(object):
     def __init__(self):
         super(BinPacker,self ).__init__()
+        self.debugCount = 0
         pass
 
+    def abortOnCount(self, limit):
+        if self.debugCount >= limit:
+            raise BaseException()
+            pass
+        
+        self.debugCount+=1
+        pass
+    
     def initialise(self, factory, settings):
         self.settings = settings
+        self.heuristic = factory.getInstance(settings.placeHeuristic)
         self._onInitialise( factory, settings )
         self.settings = settings
+
         self.binSet = BinSet(self.settings.maxWidth, self.settings.maxHeight)
         pass
 
@@ -40,8 +51,28 @@ class BinPacker(object):
             return False
             pass
         
+        if self.settings.isDebug is True:
+            self.validate(bin)
+            self.onDebug()
+            pass
+
         self.binSet.add(bin)
         return True
+        pass
+
+    def validate(self, bin):
+        for binCheck in self.binSet:
+            if binCheck.isIntersect(bin) is True:
+                raise BaseException( "Validate Error bins are intersected : %s with %s" % (binCheck,bin) )
+                pass
+            pass
+        pass
+
+    def onDebug(self):
+        self._onDebug()
+        pass
+
+    def _onDebug(self):
         pass
 
     def _onPackBin(self, bin):
@@ -60,15 +91,11 @@ class BinPacker(object):
         if self.settings.rotateMode == RotateMode.NONE:
             return
             pass
-        elif self.settings.rotateMode == RotateMode.HEIGHT_LONGER:
-            if rect.getWidth() < rect.getHeight():
-                rect.setRotate(True)
-                pass
+        elif self.settings.rotateMode == RotateMode.UP_RIGHT:
+            rect.rotateUpRight()
             pass
-        elif self.settings.rotateMode == RotateMode.WIDTH_LONGER:
-            if rect.getWidth() > rect.getHeight():
-                rect.setRotate(True)
-                pass
+        elif self.settings.rotateMode == RotateMode.SIDE_WAYS:
+            rect.rotateSideWays()
             pass
         pass
     

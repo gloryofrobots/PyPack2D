@@ -10,17 +10,7 @@ from Packing2D.BinPackerCell.Cell import Cell
 class BinPackerCell(BinPacker):
     def _onInitialise(self, factory, settings):
         self.heuristic = None
-        self._initHeuristic(settings)
         self.cells = [Cell( 0, 0, settings.maxWidth, settings.maxHeight )]
-        pass
-
-    def _initHeuristic(self, settings):
-#        if settings.placeHeuristic == PlaceHeuristic.WORST_AREA_FIT:
-#            self.heuristic = PlaceHeuristicWorstAreaFit()
-#            pass
-#        else:
-#            raise BinPackerValidateSettingsError( "Place heuristic incorrect %s" % str(settings.placeHeuristic) )
-#            pass
         pass
 
     def _onPackBin(self, bin):

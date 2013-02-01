@@ -9,19 +9,15 @@ from Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLo
                                                     ,SplitterShorterLeftOverAxis, SplitterMinArea,SplitterVertical
 
 
-from Packing2D.BinPackerGuillotine.PlaceHeuristic import PlaceHeuristicBestAreaFit,PlaceHeuristicBestLongSideFit\
-                                                            ,PlaceHeuristicBestShortSideFit,PlaceHeuristicNextFit\
-                                                            ,PlaceHeuristicWorstAreaFit,PlaceHeuristicWorstLongSideFit\
-                                                            ,PlaceHeuristicWorstShortSideFit
-
 from Packing2D.BinPackerGuillotine.PackNode import PackNode
+
+#TODO RECTANGLE MERGE
 class BinPackerGuillotine(BinPacker):
     def _onInitialise(self, factory, settings):
         self.splitter = None
         self._initSplitter(settings)
 
         self.heuristic = None
-        self._initHeuristic(settings)
 
         self.packNode =  PackNode(0, 0, settings.maxWidth,  settings.maxHeight)
         pass
@@ -38,33 +34,6 @@ class BinPackerGuillotine(BinPacker):
 
     def _onFlush(self):
         self.packNode =  PackNode(0, 0, self.settings.maxWidth,  self.settings.maxHeight)
-        pass
-
-    def _initHeuristic(self, settings):
-        if settings.placeHeuristic == PlaceHeuristic.NEXT_FIT:
-            self.heuristic = PlaceHeuristicNextFit()
-            pass
-        elif settings.placeHeuristic == PlaceHeuristic.BEST_AREA_FIT:
-            self.heuristic = PlaceHeuristicBestAreaFit()
-            pass
-        elif settings.placeHeuristic == PlaceHeuristic.BEST_LONG_SIDE_FIT:
-            self.heuristic = PlaceHeuristicBestLongSideFit()
-            pass
-        elif settings.placeHeuristic == PlaceHeuristic.BEST_SHORT_SIDE_FIT:
-            self.heuristic = PlaceHeuristicBestShortSideFit()
-            pass
-        elif settings.placeHeuristic == PlaceHeuristic.WORST_SHORT_SIDE_FIT:
-            self.heuristic = PlaceHeuristicWorstShortSideFit()
-            pass
-        elif settings.placeHeuristic == PlaceHeuristic.WORST_LONG_SIDE_FIT:
-            self.heuristic = PlaceHeuristicWorstLongSideFit()
-            pass
-        elif settings.placeHeuristic == PlaceHeuristic.WORST_AREA_FIT:
-            self.heuristic = PlaceHeuristicWorstAreaFit()
-            pass
-        else:
-            raise BinPackerValidateSettingsError( "Place heuristic incorrect %s" % str(settings.placeHeuristic) )
-            pass
         pass
 
     def _initSplitter(self, settings):
