@@ -1,11 +1,7 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker,BinPackerValidateSettingsError
-from Packing2D import PlaceHeuristic
-
-
+from Packing2D.BinPacker.BinPacker import BinPacker
 from Packing2D.BinPackerCell.Cell import Cell
-
 
 class BinPackerCell(BinPacker):
     def _onInitialise(self, factory, settings):
@@ -37,7 +33,7 @@ class BinPackerCell(BinPacker):
         pass
 
     def _onFlush(self):
-        self.cells = [Cell( 0, 0, self.settings.maxWidth, self.settings.maxHeight )]
+        self.cells = [Cell( 0, 0, self.maxWidth, self.maxHeight )]
         pass
 
     def canPlace(self, cell, rect):
@@ -51,7 +47,7 @@ class BinPackerCell(BinPacker):
 
         rightEdge = cell.left + rect.width
 
-        if rightEdge > self.settings.maxWidth:
+        if rightEdge > self.maxWidth:
             return False
             pass
 
@@ -67,7 +63,7 @@ class BinPackerCell(BinPacker):
 
     def getBestCell(self, bin):
         bestCell = None
-        minTopLeft = self.settings.maxHeight * 2
+        minTopLeft = self.maxHeight * 2
         for cell in self.cells:
             if self.canPlace( cell, bin ) is False:
                 continue

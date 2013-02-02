@@ -44,7 +44,7 @@ GuillotineSplitRule = Enum("SHORTER_AXIS"
                            , "VERTICAL")
 
 BorderMode = Enum("NONE","STRICT","AUTO")
-BorderType = Enum("PIXELS_FROM_EDGE", "COLOR")
+BorderType = Enum("PIXELS_FROM_EDGE", "SOLID")
 
 
 RotateMode = Enum("NONE", "UP_RIGHT", "SIDE_WAYS", "AUTO")

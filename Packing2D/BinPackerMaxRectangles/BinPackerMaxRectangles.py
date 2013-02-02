@@ -122,6 +122,7 @@ class BinPackerMaxRectangles(BinPacker):
         pass
 
     def _onDebug(self):
+        return
         from PIL import  Image,ImageDraw
         from random import choice,randrange
 

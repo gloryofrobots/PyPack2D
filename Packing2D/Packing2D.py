@@ -72,7 +72,7 @@ class Packing2D(object):
 
         from Packing2D.PackingConveyer.Rotator import RotatorSideWays,RotatorUpRight
         factory.register(RotateMode.SIDE_WAYS, RotatorSideWays)
-        factory.register(RotateMode.RotatorUpRight, RotatorUpRight)
+        factory.register(RotateMode.UP_RIGHT, RotatorUpRight)
         
         ###################################################################################
 

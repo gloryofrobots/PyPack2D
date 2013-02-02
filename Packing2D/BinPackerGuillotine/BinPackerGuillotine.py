@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
 from Packing2D.BinPacker.BinPacker import BinPacker,BinPackerValidateSettingsError
-from Packing2D import PlaceHeuristic,GuillotineSplitRule
+from Packing2D import GuillotineSplitRule
 
 
 from Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLongerAxis \
@@ -11,14 +11,10 @@ from Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLo
 
 from Packing2D.BinPackerGuillotine.PackNode import PackNode
 
-#TODO RECTANGLE MERGE
 class BinPackerGuillotine(BinPacker):
     def _onInitialise(self, factory, settings):
         self.splitter = None
         self._initSplitter(settings)
-
-        self.heuristic = None
-
         self.packNode =  PackNode(0, 0, settings.maxWidth,  settings.maxHeight)
         pass
     
@@ -33,9 +29,10 @@ class BinPackerGuillotine(BinPacker):
         pass
 
     def _onFlush(self):
-        self.packNode =  PackNode(0, 0, self.settings.maxWidth,  self.settings.maxHeight)
+        self.packNode =  PackNode(0, 0, self.maxWidth,  self.maxHeight)
         pass
 
+    #TODO GET IT AWAY FROM HERE
     def _initSplitter(self, settings):
         if settings.splitRule == GuillotineSplitRule.SHORTER_AXIS:
            self.splitter = SplitterShorterAxis()

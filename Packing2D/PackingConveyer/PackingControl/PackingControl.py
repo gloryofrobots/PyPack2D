@@ -22,6 +22,7 @@ class PackingControl(Unit):
                 pass
 
             bin = input[index]
+
             self.lastPack = self.packer.packBin(bin)
 
             if self.lastPack is True:

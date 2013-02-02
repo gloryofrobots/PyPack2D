@@ -1,4 +1,5 @@
 from Packing2D.Rectangle import Rectangle
+from Packing2D.Border import Border
 
 class Bin(Rectangle):
     id = 0
@@ -13,7 +14,7 @@ class Bin(Rectangle):
     def __init__(self, x, y, width, height):
         super(Bin, self).__init__( x, y, width, height)
         self.rotate = False
-        self.border = (0,0,0,0)
+        self.border = Border(0,0,0,0)
         self.id = Bin.initInstance()
         pass
 
@@ -24,8 +25,8 @@ class Bin(Rectangle):
     def setBorder(self, border):
         self.border = border
 
-        self.width = self.width + border[0] + border[2]
-        self.height = self.height + border[1] + border[3]
+        self.width = self.width + border.left + border.right
+        self.height = self.height + border.top + border.bottom
         pass
 
     def getBorder(self):
@@ -33,10 +34,10 @@ class Bin(Rectangle):
         pass
 
     def getRectangleWithoutBorder(self):
-        left = self.left + self.border[0]
-        top = self.top + self.border[1]
-        width = self.width - (self.border[0] + self.border[2])
-        height = self.height - (self.border[1] + self.border[3])
+        left = self.left + self.border.left
+        top = self.top + self.border.top
+        width = self.width - (self.border.left + self.border.right)
+        height = self.height - (self.border.top + self.border.bottom)
         return Rectangle( left, top, width, height )
         pass
     

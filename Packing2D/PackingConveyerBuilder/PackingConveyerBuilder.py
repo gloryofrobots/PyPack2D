@@ -1,9 +1,15 @@
 __author__ = 'human88998999877'
 from Packing2D.PackingConveyer.Validator import Validator
-from Packing2D import BinSizeMode
+from Packing2D import BinSizeMode,RotateMode
 
 class PackingConveyerBuilder(object):
     def build(self, conveyer, factory, settings):
+
+        if settings.rotateMode == RotateMode.UP_RIGHT or settings.rotateMode == RotateMode.SIDE_WAYS:
+            rotator = factory.getInstance(settings.rotateMode)
+            conveyer.pushUnit(rotator)
+            pass
+
         validator = Validator( settings.maxWidth, settings.maxHeight )
         conveyer.pushUnit(validator)
 
