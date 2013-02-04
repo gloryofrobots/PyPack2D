@@ -36,7 +36,7 @@ class BinSizeShifterPow2(BinSizeShifter):
         #print("normaliseSize")
         #print(newWidth,newHeight)
 
-        newRect = Rectangle( 0, 0, newWidth, newHeight )
+        newRect = Rectangle.fromWH(newWidth, newHeight)
 
         if self.canChangeRect(binSet, newRect) is False:
             #print("CANT CHANGE",newRect)

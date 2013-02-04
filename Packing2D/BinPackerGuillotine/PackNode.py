@@ -2,15 +2,11 @@
 from Packing2D.Rectangle import Rectangle
 
 class PackNode(Rectangle):
-    """
-    Creates an area which can recursively pack other areas of smaller sizes into itself.
-    """
-    def __init__(self, *args):
-        super(PackNode, self).__init__(*args)
+    def _onInit(self):
         self.firstChild = None
         self.secondChild = None
         pass
-
+    
     def hasChildren(self):
         if self.secondChild is None \
             and self.firstChild is None:
@@ -18,10 +14,6 @@ class PackNode(Rectangle):
             pass
 
         return True
-        pass
-
-    def __repr__(self):
-        return "<%s %s>" % (self.__class__.__name__, str(self.rect))
         pass
 
     def getFreeBranch(self, rect, placer):
@@ -61,10 +53,10 @@ class PackNode(Rectangle):
 
         rectangles = splitter.split(self, rect)
 
-        self.firstChild = PackNode( rectangles[0] )
-        self.secondChild = PackNode( rectangles[1] )
+        self.firstChild = PackNode.fromRectangle( rectangles[0] )
+        self.secondChild = PackNode.fromRectangle( rectangles[1] )
         
-        leaf = PackNode( Rectangle(self.left, self.top, self.left+rect.width, self.top+rect.height) )
+        leaf = PackNode.fromRectangle( Rectangle(self.left, self.top, self.left+rect.width, self.top+rect.height) )
         return leaf
         pass
     pass

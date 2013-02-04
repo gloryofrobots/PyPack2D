@@ -1,39 +1,31 @@
 class Rectangle:
-    @staticmethod
-    def fromBB(left, top, right, bottom):
-        rect = Rectangle()
+    @classmethod
+    def fromBB(cls, left, top, right, bottom):
+        rect = cls(0, 0, 0, 0)
         rect.setBB(left, top , right, bottom)
         return rect
         pass
 
-    def __init__(self, *args):
-        if len(args) == 4:
-            self._createFromLeftTopWidthHeight(*args)
-            pass
-        elif len(args) == 2:
-            self._createFromWidthHeight(*args)
-            pass
-
-        elif len(args) == 1:
-            self._createFromRectangle(*args)
-            pass
-        elif len(args) == 0:
-            self._createFromWidthHeight(0,0)
-            pass
+    @classmethod
+    def fromRectangle(cls, rect):
+        rect = cls(rect.left, rect.top, rect.width, rect.height)
+        return rect
         pass
 
-    def _createFromRectangle(self, rect):
-        self.set(rect.left, rect.top, rect.width, rect.height)
+    @classmethod
+    def fromWH(cls, width, height):
+        rect = cls(0, 0, width, height)
+        return rect
         pass
-
-    def _createFromLeftTopWidthHeight(self, x, y, width, height):
+    
+    def __init__(self, x, y, width, height):
         self.set(x, y, width, height)
+        self._onInit()
         pass
 
-    def _createFromWidthHeight(self,width, height):
-        self.set(0, 0, width, height)
+    def _onInit(self):
         pass
-
+    
     def set(self, x, y, width, height):
         self._x = x
         self._y = y

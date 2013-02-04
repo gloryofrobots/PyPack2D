@@ -19,12 +19,8 @@ class PackingSettings(object):
         self.borderMode = None
         self.isDebug = False
         self.borderSize = None
-        pass
-    pass
-
-class PackingSettingsGuillotine(PackingSettings):
-    def __init__(self):
-        super(PackingSettingsGuillotine, self).__init__()
+        
+        #TODO ALGORITHM ABILITY
         self.splitRule = None
         pass
     pass

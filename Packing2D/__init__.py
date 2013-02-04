@@ -49,3 +49,108 @@ BorderType = Enum("PIXELS_FROM_EDGE", "SOLID")
 
 RotateMode = Enum("NONE", "UP_RIGHT", "SIDE_WAYS", "AUTO")
 
+# Initialise factory.
+# This fat big factory is created for minimising of if elif statements in places where program choose object type for user option
+# So we just have a dictionary with {typeName:class}. It`s bad style in memory usage aspect but it simplifies code
+
+from Packing2D.MappedFactory import MappedFactory
+
+packingFactory = MappedFactory()
+
+from Packing2D.PackingConveyerBuilder.PackingConveyerBuilderOnline import PackingConveyerBuilderOnline
+from Packing2D.PackingConveyerBuilder.PackingConveyerBuilderOffline import PackingConveyerBuilderOffline
+from Packing2D.PackingConveyerBuilder.PackingConveyerBuilderLocalSearch import PackingConveyerBuilderLocalSearch
+
+packingFactory.register(PackingMode.ONLINE, PackingConveyerBuilderOnline)
+packingFactory.register(PackingMode.OFFLINE, PackingConveyerBuilderOffline)
+packingFactory.register(PackingMode.LOCAL_SEARCH, PackingConveyerBuilderLocalSearch)
+
+###################################################################################
+
+from Packing2D.BinPackerGuillotine.BinPackerGuillotine import BinPackerGuillotine
+from Packing2D.BinPackerCell.BinPackerCell import BinPackerCell
+from Packing2D.BinPackerShelf.BinPackerShelf import BinPackerShelf
+from Packing2D.BinPackerMaxRectangles.BinPackerMaxRectangles import BinPackerMaxRectangles
+
+packingFactory.register(PackingAlgorithm.GUILLOTINE, BinPackerGuillotine)
+packingFactory.register(PackingAlgorithm.CELL, BinPackerCell)
+packingFactory.register(PackingAlgorithm.SHELF, BinPackerShelf)
+packingFactory.register(PackingAlgorithm.MAX_RECTANGLES, BinPackerMaxRectangles)
+
+###################################################################################
+
+from Packing2D.PackingConveyer.Rotator import RotatorSideWays,RotatorUpRight
+packingFactory.register(RotateMode.SIDE_WAYS, RotatorSideWays)
+packingFactory.register(RotateMode.UP_RIGHT, RotatorUpRight)
+
+###################################################################################
+
+from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2
+from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterMaximal import BinSizeShifterMaximal
+
+packingFactory.register(BinSizeMode.MINIMIZE_MAXIMAL, BinSizeShifterMaximal)
+packingFactory.register(BinSizeMode.MINIMIZE_POW2, BinSizeShifterPow2)
+
+###################################################################################
+
+from Packing2D.BinPacker.RectangleSorting.RectangleSorting import RectangleSortingArea, RectangleSortingLongerSide\
+                                                        , RectangleSortingPerimeter, RectangleSortingShorterSide\
+                                                        , RectangleSortingSideLengthDifference, RectangleSortingSideRatio\
+                                                        , RectangleSortingWidth ,RectangleSortingHeight
+
+###################################################################################
+
+packingFactory.register(SortKey.AREA, RectangleSortingArea)
+packingFactory.register(SortKey.WIDTH, RectangleSortingWidth)
+packingFactory.register(SortKey.HEIGHT, RectangleSortingHeight)
+packingFactory.register(SortKey.SHORTER_SIDE, RectangleSortingShorterSide)
+packingFactory.register(SortKey.LONGER_SIDE, RectangleSortingLongerSide)
+packingFactory.register(SortKey.PERIMETER, RectangleSortingPerimeter)
+packingFactory.register(SortKey.SIDE_LENGTH_DIFFERENCE, RectangleSortingSideLengthDifference)
+packingFactory.register(SortKey.SIDE_RATIO, RectangleSortingSideRatio)
+
+
+from Packing2D.BinPacker.PlaceChooseHeuristic.PlaceChooseHeuristic  import PlaceHeuristicBestAreaFit,PlaceHeuristicBestLongSideFit\
+                                                    ,PlaceHeuristicBestShortSideFit ,PlaceHeuristicWorstAreaFit\
+                                                    ,PlaceHeuristicWorstLongSideFit,PlaceHeuristicWorstWidthFit\
+                                                    ,PlaceHeuristicWorstShortSideFit,PlaceHeuristicBestHeightFit\
+                                                    ,PlaceHeuristicBestWidthFit,PlaceHeuristicBottomLeft\
+                                                    ,PlaceHeuristicFirstFit, PlaceHeuristicWorstHeightFit
+
+###################################################################################
+
+packingFactory.register(PlaceHeuristic.WORST_AREA_FIT, PlaceHeuristicWorstAreaFit)
+packingFactory.register(PlaceHeuristic.BEST_AREA_FIT, PlaceHeuristicBestAreaFit)
+
+packingFactory.register(PlaceHeuristic.BEST_LONG_SIDE_FIT, PlaceHeuristicBestLongSideFit)
+packingFactory.register(PlaceHeuristic.WORST_LONG_SIDE_FIT, PlaceHeuristicWorstLongSideFit)
+
+packingFactory.register(PlaceHeuristic.WORST_WIDTH_FIT, PlaceHeuristicWorstWidthFit)
+packingFactory.register(PlaceHeuristic.BEST_WIDTH_FIT, PlaceHeuristicBestWidthFit)
+
+packingFactory.register(PlaceHeuristic.BEST_SHORT_SIDE_FIT, PlaceHeuristicBestShortSideFit)
+packingFactory.register(PlaceHeuristic.WORST_SHORT_SIDE_FIT, PlaceHeuristicWorstShortSideFit)
+
+packingFactory.register(PlaceHeuristic.BEST_HEIGHT_FIT, PlaceHeuristicBestHeightFit)
+packingFactory.register(PlaceHeuristic.WORST_HEIGHT_FIT, PlaceHeuristicWorstHeightFit)
+
+packingFactory.register(PlaceHeuristic.FIRST_FIT, PlaceHeuristicFirstFit)
+
+packingFactory.register(PlaceHeuristic.BOTTOM_LEFT, PlaceHeuristicBottomLeft)
+
+###################################################################################
+
+from Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLongerAxis \
+                                                    ,SplitterLongerLeftOverAxis,SplitterMaxArea, SplitterShorterAxis\
+                                                    ,SplitterShorterLeftOverAxis, SplitterMinArea,SplitterVertical
+
+packingFactory.register(GuillotineSplitRule.SHORTER_AXIS, SplitterShorterAxis)
+packingFactory.register(GuillotineSplitRule.SHORTER_LEFTOVER_AXIS, SplitterShorterLeftOverAxis)
+packingFactory.register(GuillotineSplitRule.LONGER_AXIS, SplitterLongerAxis)
+packingFactory.register(GuillotineSplitRule.LONGER_LEFTOVER_AXIS, SplitterLongerLeftOverAxis)
+packingFactory.register(GuillotineSplitRule.HORIZONTAL, SplitterHorizontal)
+packingFactory.register(GuillotineSplitRule.VERTICAL, SplitterVertical)
+packingFactory.register(GuillotineSplitRule.MAX_AREA, SplitterMaxArea)
+packingFactory.register(GuillotineSplitRule.MIN_AREA, SplitterMinArea)
+
+###################################################################################

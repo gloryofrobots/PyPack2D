@@ -18,7 +18,7 @@ class AtlasGenerator(object):
         self.fillColor = fillColor
 
         self.images = {}
-
+        self.wastedImages = []
         self.atlases = []
         
         self.packing.initialise(settings)
@@ -57,9 +57,8 @@ class AtlasGenerator(object):
 
     def _workWithWaste(self, wasted):
         for wasteImage in wasted:
-            #TODO NOTIFICATION
             image = self._getImageForBin(wasteImage)
-            print("AtlasGenerator can not pack image %s" % image)
+            self.wastedImages.append(image)
             pass
         pass
 
@@ -82,8 +81,6 @@ class AtlasGenerator(object):
             atlas.save()
             self.atlases.append(atlas)
             pass
-
-
         pass
 
     def report(self, binSets):
@@ -95,6 +92,7 @@ class AtlasGenerator(object):
         middle = total / len(binSets)
         print ("Count images: %i efficiency : %4.2f " % (len(binSets), middle) )
         pass
+
     def generate(self):
         self.packing.pack()
 
@@ -105,5 +103,10 @@ class AtlasGenerator(object):
         self._workWithResult(binSets)
 
         self.report(binSets)
+        pass
+
+
+    def getWastedImages(self):
+        return self.wastedImages
         pass
     pass

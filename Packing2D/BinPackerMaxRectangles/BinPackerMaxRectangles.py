@@ -8,7 +8,7 @@ from Packing2D.BinPackerMaxRectangles.Area import Area
 
 class BinPackerMaxRectangles(BinPacker):
     def _onInitialise(self, factory, settings):
-        self.areas = [Area(self.maxWidth,self.maxHeight)]
+        self.areas = [Area.fromWH(self.maxWidth,self.maxHeight)]
         self.waste = []
         pass
 
@@ -101,7 +101,7 @@ class BinPackerMaxRectangles(BinPacker):
         pass
 
     def _onFlush(self):
-        self.areas = [Area(self.maxWidth,self.maxHeight)]
+        self.areas = [Area.fromWH(self.maxWidth,self.maxHeight)]
         pass
 
     def getBestRectangle(self, bin, heuristic):

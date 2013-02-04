@@ -11,7 +11,8 @@ class Atlas(object):
         self.textureMode = None
         self.atlasType = None
         self.fillColor = None
-        
+
+        self.canvas = None
         self.images = []
         pass
 
@@ -25,21 +26,9 @@ class Atlas(object):
         self.fillColor = fillColor
         pass
 
-    def getFileName(self):
-        return self.fileName
-        pass
-
     def addImage(self, image):
         self.images.append(image)
         return True
-        pass
-
-    def getWidth(self):
-        return self.width
-        pass
-
-    def getHeight(self):
-        return self.height
         pass
 
     def getCanvas(self):

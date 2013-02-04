@@ -1,14 +1,12 @@
 __author__ = 'human88998999877'
 
 from Packing2D.BinPacker.BinPacker import BinPacker
-from Packing2D import PlaceHeuristic,RotateMode
 from Packing2D.BinPackerShelf.Shelf import Shelf
 
 #TODO FLOOR CEILING
 
 class BinPackerShelf(BinPacker):
     def _onInitialise(self, factory, settings):
-        self.heuristic = None
         self.shelves = []
         pass
 

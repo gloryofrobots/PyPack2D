@@ -11,8 +11,7 @@ class Bin(Rectangle):
         return id
         pass
 
-    def __init__(self, x, y, width, height):
-        super(Bin, self).__init__( x, y, width, height)
+    def _onInit(self):
         self.rotate = False
         self.border = Border(bbox = (0,0,0,0))
         self.id = Bin.initInstance()
@@ -86,15 +85,14 @@ class Bin(Rectangle):
         return self.rotate
         pass
     
-#    def getUV(self):
-#        rect = self.getDestinationRect()
-#        left = (rect.left + self.border.left) / self.packer.getWidth()
-#        top = (rect.top + self.border.top) / self.packer.getHeight()
-#        right = (rect.right - self.border.right) / self.packer.getWidth()
-#        bottom = (rect.bottom - self.border.bottom) / self.packer.getHeight()
-#
-#        uv = (left, top, right, bottom)
-#        return uv
-#        pass
+    def getUV(self, width, height):
+        left = (self.left + self.border.left) / width
+        top = (self.top + self.border.top) / height
+        right = (self.right - self.border.right) / width
+        bottom = (self.bottom - self.border.bottom) / height
+
+        uv = (left, top, right, bottom)
+        return uv
+        pass
     pass
   
