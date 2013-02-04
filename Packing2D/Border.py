@@ -8,7 +8,7 @@ class Border(object):
             return
             pass
         elif borderSize != None:
-            self.init(borderSize, borderSize, borderSize, borderSize, type = None, color = None)
+            self.init(borderSize, borderSize, borderSize, borderSize, type, color)
             pass
         pass
     
@@ -20,4 +20,24 @@ class Border(object):
         self.type = type
         self.color = color
         pass
+
+    def isEmpty(self):
+        if self.left == 0 and self.right == 0 and self.top == 0 and self.bottom == 0:
+            return True
+            pass
+
+        return False
+        pass
+    
+    def getWidth(self):
+        return self.left + self.right
+        pass
+
+    width = property(fget = getWidth)
+
+    def getHeight(self):
+        return self.top + self.bottom
+        pass
+
+    height = property(fget = getHeight)
     pass

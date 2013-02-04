@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker,BinPackerValidateSettingsError
+from Packing2D.BinPacker.BinPacker import BinPacker
 from Packing2D import GuillotineSplitRule
 
 
@@ -59,7 +59,7 @@ class BinPackerGuillotine(BinPacker):
            self.splitter = SplitterMinArea()
            pass
         else:
-           raise BinPackerValidateSettingsError( "Split Rule incorrect %s" % str(settings.splitRule) )
+           raise BaseException( "Split Rule incorrect %s" % str(settings.splitRule) )
            pass
         pass
     pass

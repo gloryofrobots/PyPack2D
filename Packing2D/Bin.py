@@ -14,7 +14,7 @@ class Bin(Rectangle):
     def __init__(self, x, y, width, height):
         super(Bin, self).__init__( x, y, width, height)
         self.rotate = False
-        self.border = Border(0,0,0,0)
+        self.border = Border(bbox = (0,0,0,0))
         self.id = Bin.initInstance()
         pass
 
@@ -24,20 +24,27 @@ class Bin(Rectangle):
 
     def setBorder(self, border):
         self.border = border
-
-        self.width = self.width + border.left + border.right
-        self.height = self.height + border.top + border.bottom
         pass
 
     def getBorder(self):
         return self.border
         pass
 
+    #overloaded
+    def _getWidth(self):
+        return self._width + self.border.width
+        pass
+
+    #overloaded
+    def _getHeight(self):
+        return self._height + self.border.height
+        pass
+    
     def getRectangleWithoutBorder(self):
         left = self.left + self.border.left
         top = self.top + self.border.top
-        width = self.width - (self.border.left + self.border.right)
-        height = self.height - (self.border.top + self.border.bottom)
+        width = self.width - self.border.width
+        height = self.height - self.border.height
         return Rectangle( left, top, width, height )
         pass
     

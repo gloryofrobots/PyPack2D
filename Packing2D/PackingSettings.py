@@ -10,7 +10,7 @@ class PackingSettings(object):
         self.sortKey = None
         self.binSizeMode = None
         self.packingMode = None
-        self.packingAlgorithmAbility = None
+        #self.packingAlgorithmAbility = None
 
         self.rotateMode = None
         self.maxWidth = None
@@ -18,6 +18,7 @@ class PackingSettings(object):
         self.border = None
         self.borderMode = None
         self.isDebug = False
+        self.borderSize = None
         pass
     pass
 

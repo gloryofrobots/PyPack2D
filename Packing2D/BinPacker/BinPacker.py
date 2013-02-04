@@ -30,7 +30,7 @@ class BinPacker(object):
     def initialise(self, factory, settings):
         self.settings = settings
         self.heuristic = factory.getInstance(settings.placeHeuristic)
-        self._onInitialise( factory, settings )
+
         self.settings = settings
 
         self.maxWidth = self.settings.maxWidth
@@ -42,6 +42,8 @@ class BinPacker(object):
             pass
 
         self.binSet = BinSet(self.maxWidth, self.maxHeight)
+
+        self._onInitialise( factory, settings )
         pass
 
     def _onInitialise(self, factory, settings):
@@ -50,7 +52,8 @@ class BinPacker(object):
 
     def packBin(self, bin):
         self.setBorder(bin)
-
+        width = bin.getWidth()
+        right = bin.right
         if self._onPackBin(bin) is False:
             return False
             pass
@@ -82,25 +85,55 @@ class BinPacker(object):
     def _onPackBin(self, bin):
         raise NotImplementedError()
         pass
-
-    def _createAutoBorder(self, bin):
-        return None
-        pass
     
     def setBorder(self, bin):
         if self.settings.borderMode == BorderMode.NONE:
             return
             pass
         elif self.settings.borderMode == BorderMode.STRICT:
-            bin.setBorder(self.settings.border)
+            border = Border(border = self.settings.border)
+            bin.setBorder(border)
             pass
         elif self.settings.borderMode == BorderMode.AUTO:
-            border = Border( borderSize = self.settings.borderSize, type = self.settings.borderType, color = self.settings.borderColor )
+            border = Border( borderSize = self.settings.borderSize, type = self.settings.border.type, color = self.settings.border.color )
             bin.setBorder(border)
             pass
         pass
 
+    def normaliseBorder(self):
+        for bin in self.binSet:
+            border = bin.getBorder()
+            if bin.top is 0:
+                border.top = 0
+                pass
+            else:
+                bin.setCoord(bin.left, bin.top - self.settings.borderSize)
+                pass
+            if bin.left is 0:
+                border.left = 0
+                pass
+            else:
+                bin.setCoord(bin.left - self.settings.borderSize, bin.top)
+                pass
+            if bin.right == self.maxWidth:
+                border.right = 0
+                pass
+            if bin.bottom == self.maxHeight:
+                border.bottom = 0
+                pass
+            pass
+
+            realWidth = self.maxWidth - self.settings.borderSize * 2
+            realHeight = self.maxHeight - self.settings.borderSize * 2
+            self.binSet.setSize(realWidth, realHeight)
+            pass
+        pass
+
     def flush(self):
+        if self.settings.borderMode == BorderMode.AUTO:
+            self.normaliseBorder()
+            pass
+        
         result = self.binSet
         self.binSet = BinSet(self.maxWidth, self.maxHeight)
         self._onFlush()

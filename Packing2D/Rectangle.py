@@ -1,10 +1,6 @@
-class BBox(object):
-    def __init__(self, left, top, right, bottom):
-        pass
-
 class Rectangle:
     @staticmethod
-    def createFromBB(left, top, right, bottom):
+    def fromBB(left, top, right, bottom):
         rect = Rectangle()
         rect.setBB(left, top , right, bottom)
         return rect
@@ -46,10 +42,7 @@ class Rectangle:
         pass
 
     def setBB(self, left, top, right, bottom):
-        self._x = left
-        self._y = top
-        self._width = right - left
-        self._height = bottom - top
+        self.set(left, top, (right - left), (bottom - top))
         pass
 
     def setCoord(self, x, y):
@@ -58,7 +51,7 @@ class Rectangle:
         pass
     
     def isZeroSize(self):
-        if self._x == 0 and self._width == 0 and self._y == 0 and self._height == 0:
+        if self.left == 0 and self.width == 0 and self.top == 0 and self.height == 0:
             return True
             pass
         
@@ -66,34 +59,44 @@ class Rectangle:
         pass
     
     def getArea(self):
-        return self._width * self._height
+        return self.width * self.height
         pass
 
     area = property(fget=getArea)
 
-    def getCoord(self):
+    def getBBox(self):
         return ( self.left, self.top, self.right , self.bottom )
         pass
 
     def getWidth(self):
-        return self._width
+        return self._getWidth()
         pass
 
-    def setWidth(self, width):
-        self._width = width
+    def _getWidth(self):
+        return  self._width
         pass
-    
-    width = property(fget = getWidth, fset = setWidth)
+
+#    def setWidth(self, width):
+#        raise NotImplemented()
+#        self._width = width
+#        pass
+#
+    width = property(fget = getWidth)
 
     def getHeight(self):
+        return self._getHeight()
+        pass
+
+    def _getHeight(self):
         return self._height
         pass
 
-    def setHeight(self, height):
-        self._height = height
-        pass
+#    def setHeight(self, height):
+#        raise NotImplemented()
+#        self._height = height
+#        pass
 
-    height = property(fget = getHeight, fset = setHeight)
+    height = property(fget = getHeight)
 
     def getLeft(self):
         return self._x
@@ -102,7 +105,7 @@ class Rectangle:
     left = property(fget=getLeft)
     
     def getRight(self):
-        return self._x + self._width
+        return self.left + self.width
         pass
     
     right = property(fget=getRight)
@@ -114,7 +117,7 @@ class Rectangle:
     top = property(fget=getTop)
 
     def getBottom(self):
-        return self._y + self._height
+        return self.top + self.height
         pass
 
     bottom = property(fget=getBottom)

@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker,BinPackerValidateSettingsError
+from Packing2D.BinPacker.BinPacker import BinPacker
 
 #TODO DEBUG AND AREA TO BASIC
 
@@ -8,7 +8,7 @@ from Packing2D.BinPackerMaxRectangles.Area import Area
 
 class BinPackerMaxRectangles(BinPacker):
     def _onInitialise(self, factory, settings):
-        self.areas = [Area(self.settings.maxWidth,self.settings.maxHeight)]
+        self.areas = [Area(self.maxWidth,self.maxHeight)]
         self.waste = []
         pass
 
@@ -101,7 +101,7 @@ class BinPackerMaxRectangles(BinPacker):
         pass
 
     def _onFlush(self):
-        self.areas = [Area(self.settings.maxWidth,self.settings.maxHeight)]
+        self.areas = [Area(self.maxWidth,self.maxHeight)]
         pass
 
     def getBestRectangle(self, bin, heuristic):
@@ -134,11 +134,11 @@ class BinPackerMaxRectangles(BinPacker):
             COLORS.append((r,g,b))
             pass
 
-        canvas = Image.new("RGBA",(self.binSet.getWidth(),self.binSet.getHeight()),color = (128,128,128))
+        canvas = Image.new("RGBA", (self.binSet.getWidth(), self.binSet.getHeight()), color = (128,128,128))
         draw = ImageDraw.Draw(canvas)
 
         for area in self.areas:
-            draw.rectangle([area.left, area.top, area.right - 1, area.bottom - 1], outline =  choice(COLORS))
+            draw.rectangle([area.left, area.top, area.right - 1, area.bottom - 1], outline = choice(COLORS))
             pass
 
         for bin in self.binSet:

@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker,BinPackerValidateSettingsError
+from Packing2D.BinPacker.BinPacker import BinPacker
 from Packing2D import PlaceHeuristic,RotateMode
 from Packing2D.BinPackerShelf.Shelf import Shelf
 
@@ -37,11 +37,11 @@ class BinPackerShelf(BinPacker):
             y = topShelf.bottom
             pass
 
-        if y + bin.height > self.settings.maxHeight:
+        if y + bin.height > self.maxHeight:
             return None
             pass
         
-        shelf = Shelf(0, y, self.settings.maxWidth, bin.height)
+        shelf = Shelf(0, y, self.maxWidth, bin.height)
         self.shelves.append(shelf)
         return shelf
         pass
