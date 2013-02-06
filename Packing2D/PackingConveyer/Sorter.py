@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
-from Packing2D.PackingConveyer.Unit import Unit,checkUnitForwardLinkExist
-from Packing2D.PackingConveyer.Signal import SignalType
+from PyPack2D.Packing2D.PackingConveyer.Unit import Unit,checkUnitForwardLinkExist
+from PyPack2D.Packing2D.PackingConveyer.Signal import SignalType
 
 class Sorter(Unit):
     def _onInit(self, sorting, order):

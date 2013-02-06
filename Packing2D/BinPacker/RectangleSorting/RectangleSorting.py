@@ -1,4 +1,4 @@
-from Packing2D import SortOrder
+from PyPack2D.Packing2D import SortOrder
 __author__ = 'human88998999877'
 
 class RectangleSorting(object):

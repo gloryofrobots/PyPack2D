@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
-from Packing2D.PackingConveyer.Filter import Filter
-from Packing2D.PackingConveyer.PackingControl.PackingControl import PackingControl
-from Packing2D.PackingConveyerBuilder.PackingConveyerBuilder import PackingConveyerBuilder
+from PyPack2D.Packing2D.PackingConveyer.Filter import Filter
+from PyPack2D.Packing2D.PackingConveyer.PackingControl.PackingControl import PackingControl
+from PyPack2D.Packing2D.PackingConveyerBuilder.PackingConveyerBuilder import PackingConveyerBuilder
 
 
 class PackingConveyerBuilderOnline(PackingConveyerBuilder):

@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
-from Packing2D.PackingConveyer.Validator import Validator
-from Packing2D import BinSizeMode,RotateMode
+from PyPack2D.Packing2D.PackingConveyer.Validator import Validator
+from PyPack2D.Packing2D import BinSizeMode,RotateMode
 
 class PackingConveyerBuilder(object):
     def build(self, conveyer, factory, settings):

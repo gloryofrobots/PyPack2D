@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
 
-from Atlas.Field2D import Field2D
+from PyPack2D.Atlas.Field2D import Field2D
 from PIL import Image,ImageDraw
 
 class BorderDraw(object):

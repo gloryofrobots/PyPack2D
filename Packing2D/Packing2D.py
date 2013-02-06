@@ -1,11 +1,8 @@
 __author__ = 'human88998999877'
-from Packing2D.PackingConveyer.Conveyer import Conveyer
-from Packing2D import packingFactory
+from PyPack2D.Packing2D.PackingConveyer.Conveyer import Conveyer
+from PyPack2D.Packing2D import packingFactory
 
-from Packing2D import GuillotineSplitRule, BinSizeMode, BorderMode,\
-    PackingAlgorithm, PackingAlgorithmAbility, PackingMode,PlaceHeuristic,SortKey, SortOrder, RotateMode
-
-from Packing2D.PackingConveyer.Signal import SignalType,Signal
+from PyPack2D.Packing2D.PackingConveyer.Signal import SignalType,Signal
 
 class Packing2D(object):
     def __init__(self):

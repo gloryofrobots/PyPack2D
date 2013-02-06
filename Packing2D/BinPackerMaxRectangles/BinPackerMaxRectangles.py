@@ -1,10 +1,10 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker
+from PyPack2D.Packing2D.BinPacker.BinPacker import BinPacker
 
 #TODO DEBUG AND AREA TO BASIC
 
-from Packing2D.BinPackerMaxRectangles.Area import Area
+from PyPack2D.Packing2D.BinPackerMaxRectangles.Area import Area
 
 class BinPackerMaxRectangles(BinPacker):
     def _onInitialise(self, factory, settings):

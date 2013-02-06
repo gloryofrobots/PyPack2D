@@ -1,5 +1,5 @@
 __author__ = 'human88998999877'
-from Packing2D.Rectangle import Rectangle
+from PyPack2D.Packing2D.Rectangle import Rectangle
 
 class Shelf(Rectangle):
     def _onInit(self):

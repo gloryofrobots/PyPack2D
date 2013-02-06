@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
-from Packing2D.PackingConveyer.Unit import Unit
-from Packing2D.PackingConveyer.Signal import Signal,SignalType
+from PyPack2D.Packing2D.PackingConveyer.Unit import Unit
+from PyPack2D.Packing2D.PackingConveyer.Signal import Signal,SignalType
 
 #split input sequence S on groups of sub sequences S1..Sn where  length each of them == count
 class Filter(Unit):

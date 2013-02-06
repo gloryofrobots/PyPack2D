@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker
-from Packing2D.BinPackerShelf.Shelf import Shelf
+from PyPack2D.Packing2D.BinPacker.BinPacker import BinPacker
+from PyPack2D.Packing2D.BinPackerShelf.Shelf import Shelf
 
 #TODO FLOOR CEILING
 

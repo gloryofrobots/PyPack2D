@@ -1,5 +1,5 @@
-from Packing2D.Rectangle import Rectangle
-from Packing2D.Border import Border
+from PyPack2D.Packing2D.Rectangle import Rectangle
+from PyPack2D.Packing2D.Border import Border
 
 class Bin(Rectangle):
     id = 0

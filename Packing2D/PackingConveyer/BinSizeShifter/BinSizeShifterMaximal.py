@@ -1,5 +1,5 @@
 __author__ = 'human88998999877'
-from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifter import BinSizeShifter
+from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifter import BinSizeShifter
 
 class BinSizeShifterMaximal(BinSizeShifter):
     def _onShift(self, binSet):

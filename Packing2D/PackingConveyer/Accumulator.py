@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
-from Packing2D.PackingConveyer.Unit import Unit,checkUnitForwardLinkExist
-from Packing2D.PackingConveyer.Signal import SignalType,Signal
+from PyPack2D.Packing2D.PackingConveyer.Unit import Unit,checkUnitForwardLinkExist
+from PyPack2D.Packing2D.PackingConveyer.Signal import SignalType,Signal
 
 class Accumulator(Unit):
     def _onInit(self):

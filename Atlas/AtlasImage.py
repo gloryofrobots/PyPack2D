@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
-from Packing2D import BorderType
-from Atlas.BorderDraw import BorderDrawEdge,BorderDrawRectangle
+from PyPack2D.Packing2D import BorderType
+from PyPack2D.Atlas.BorderDraw import BorderDrawEdge,BorderDrawRectangle
 from PIL import Image
 
 class AtlasImage(object):

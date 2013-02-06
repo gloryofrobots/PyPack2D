@@ -1,10 +1,10 @@
 __author__ = 'human88998999877'
-from Packing2D.Enum.Enum import Enum
+from PyPack2D.Packing2D.Enum.Enum import Enum
 
 SignalType = Enum(
     "PUSH_INPUT" #send from filters, accumulators, Packing2D
-    , "START_PACK" #send from Packing2D
-    , "PREPARE_TO_PACK" #send from Packing2D
+    , "START_PACK" #send from PyPack2D.Packing2D
+    , "PREPARE_TO_PACK" #send from PyPack2D.Packing2D
     , "END_PACK" #send from PackingControl
     , "WASTE_INPUT")
 

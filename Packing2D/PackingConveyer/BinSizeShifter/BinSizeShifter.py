@@ -1,5 +1,5 @@
-from Packing2D.PackingConveyer.Unit import Unit
-from Packing2D.PackingConveyer.Signal import SignalType
+from PyPack2D.Packing2D.PackingConveyer.Unit import Unit
+from PyPack2D.Packing2D.PackingConveyer.Signal import SignalType
 
 class BinSizeShifter(Unit):
     def _onInit(self):

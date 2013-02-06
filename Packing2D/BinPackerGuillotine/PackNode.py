@@ -1,5 +1,5 @@
 
-from Packing2D.Rectangle import Rectangle
+from PyPack2D.Packing2D.Rectangle import Rectangle
 
 class PackNode(Rectangle):
     def _onInit(self):

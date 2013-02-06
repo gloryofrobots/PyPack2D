@@ -1,5 +1,5 @@
 __author__ = 'human88998999877'
-from Packing2D.Enum.Enum import Enum
+from PyPack2D.Packing2D.Enum.Enum import Enum
 
 SortOrder = Enum("ASC", "DESC")
 
@@ -53,13 +53,13 @@ RotateMode = Enum("NONE", "UP_RIGHT", "SIDE_WAYS", "AUTO")
 # This fat big factory is created for minimising of if elif statements in places where program choose object type for user option
 # So we just have a dictionary with {typeName:class}. It`s bad style in memory usage aspect but it simplifies code
 
-from Packing2D.MappedFactory import MappedFactory
+from PyPack2D.Packing2D.MappedFactory import MappedFactory
 
 packingFactory = MappedFactory()
 
-from Packing2D.PackingConveyerBuilder.PackingConveyerBuilderOnline import PackingConveyerBuilderOnline
-from Packing2D.PackingConveyerBuilder.PackingConveyerBuilderOffline import PackingConveyerBuilderOffline
-from Packing2D.PackingConveyerBuilder.PackingConveyerBuilderLocalSearch import PackingConveyerBuilderLocalSearch
+from PyPack2D.Packing2D.PackingConveyerBuilder.PackingConveyerBuilderOnline import PackingConveyerBuilderOnline
+from PyPack2D.Packing2D.PackingConveyerBuilder.PackingConveyerBuilderOffline import PackingConveyerBuilderOffline
+from PyPack2D.Packing2D.PackingConveyerBuilder.PackingConveyerBuilderLocalSearch import PackingConveyerBuilderLocalSearch
 
 packingFactory.register(PackingMode.ONLINE, PackingConveyerBuilderOnline)
 packingFactory.register(PackingMode.OFFLINE, PackingConveyerBuilderOffline)
@@ -67,10 +67,10 @@ packingFactory.register(PackingMode.LOCAL_SEARCH, PackingConveyerBuilderLocalSea
 
 ###################################################################################
 
-from Packing2D.BinPackerGuillotine.BinPackerGuillotine import BinPackerGuillotine
-from Packing2D.BinPackerCell.BinPackerCell import BinPackerCell
-from Packing2D.BinPackerShelf.BinPackerShelf import BinPackerShelf
-from Packing2D.BinPackerMaxRectangles.BinPackerMaxRectangles import BinPackerMaxRectangles
+from PyPack2D.Packing2D.BinPackerGuillotine.BinPackerGuillotine import BinPackerGuillotine
+from PyPack2D.Packing2D.BinPackerCell.BinPackerCell import BinPackerCell
+from PyPack2D.Packing2D.BinPackerShelf.BinPackerShelf import BinPackerShelf
+from PyPack2D.Packing2D.BinPackerMaxRectangles.BinPackerMaxRectangles import BinPackerMaxRectangles
 
 packingFactory.register(PackingAlgorithm.GUILLOTINE, BinPackerGuillotine)
 packingFactory.register(PackingAlgorithm.CELL, BinPackerCell)
@@ -79,21 +79,21 @@ packingFactory.register(PackingAlgorithm.MAX_RECTANGLES, BinPackerMaxRectangles)
 
 ###################################################################################
 
-from Packing2D.PackingConveyer.Rotator import RotatorSideWays,RotatorUpRight
+from PyPack2D.Packing2D.PackingConveyer.Rotator import RotatorSideWays,RotatorUpRight
 packingFactory.register(RotateMode.SIDE_WAYS, RotatorSideWays)
 packingFactory.register(RotateMode.UP_RIGHT, RotatorUpRight)
 
 ###################################################################################
 
-from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2
-from Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterMaximal import BinSizeShifterMaximal
+from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2
+from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterMaximal import BinSizeShifterMaximal
 
 packingFactory.register(BinSizeMode.MINIMIZE_MAXIMAL, BinSizeShifterMaximal)
 packingFactory.register(BinSizeMode.MINIMIZE_POW2, BinSizeShifterPow2)
 
 ###################################################################################
 
-from Packing2D.BinPacker.RectangleSorting.RectangleSorting import RectangleSortingArea, RectangleSortingLongerSide\
+from PyPack2D.Packing2D.BinPacker.RectangleSorting.RectangleSorting import RectangleSortingArea, RectangleSortingLongerSide\
                                                         , RectangleSortingPerimeter, RectangleSortingShorterSide\
                                                         , RectangleSortingSideLengthDifference, RectangleSortingSideRatio\
                                                         , RectangleSortingWidth ,RectangleSortingHeight
@@ -110,7 +110,7 @@ packingFactory.register(SortKey.SIDE_LENGTH_DIFFERENCE, RectangleSortingSideLeng
 packingFactory.register(SortKey.SIDE_RATIO, RectangleSortingSideRatio)
 
 
-from Packing2D.BinPacker.PlaceChooseHeuristic.PlaceChooseHeuristic  import PlaceHeuristicBestAreaFit,PlaceHeuristicBestLongSideFit\
+from PyPack2D.Packing2D.BinPacker.PlaceChooseHeuristic.PlaceChooseHeuristic  import PlaceHeuristicBestAreaFit,PlaceHeuristicBestLongSideFit\
                                                     ,PlaceHeuristicBestShortSideFit ,PlaceHeuristicWorstAreaFit\
                                                     ,PlaceHeuristicWorstLongSideFit,PlaceHeuristicWorstWidthFit\
                                                     ,PlaceHeuristicWorstShortSideFit,PlaceHeuristicBestHeightFit\
@@ -140,7 +140,7 @@ packingFactory.register(PlaceHeuristic.BOTTOM_LEFT, PlaceHeuristicBottomLeft)
 
 ###################################################################################
 
-from Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLongerAxis \
+from PyPack2D.Packing2D.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLongerAxis \
                                                     ,SplitterLongerLeftOverAxis,SplitterMaxArea, SplitterShorterAxis\
                                                     ,SplitterShorterLeftOverAxis, SplitterMinArea,SplitterVertical
 

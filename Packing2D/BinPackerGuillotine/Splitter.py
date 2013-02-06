@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
 
-from Packing2D.Rectangle import Rectangle
+from PyPack2D.Packing2D.Rectangle import Rectangle
 
 class Splitter(object):
     def split(self, hostRect, rect):

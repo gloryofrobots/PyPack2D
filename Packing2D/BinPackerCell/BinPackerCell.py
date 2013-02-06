@@ -1,7 +1,7 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinPacker import BinPacker
-from Packing2D.BinPackerCell.Cell import Cell
+from PyPack2D.Packing2D.BinPacker.BinPacker import BinPacker
+from PyPack2D.Packing2D.BinPackerCell.Cell import Cell
 
 class BinPackerCell(BinPacker):
     def _onInitialise(self, factory, settings):

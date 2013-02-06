@@ -1,6 +1,6 @@
 __author__ = 'human88998999877'
-from Packing2D.PackingConveyer.Unit import Unit
-from Packing2D.PackingConveyer.Signal import SignalType,Signal
+from PyPack2D.Packing2D.PackingConveyer.Unit import Unit
+from PyPack2D.Packing2D.PackingConveyer.Signal import SignalType,Signal
 
 class PackingControl(Unit):
     def _onInit(self, packer, factory, settings):

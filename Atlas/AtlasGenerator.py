@@ -1,6 +1,6 @@
-from Atlas.Atlas import Atlas
-from Packing2D.Packing2D import Packing2D
-from Packing2D.Bin import Bin
+from PyPack2D.Atlas.Atlas import Atlas
+from PyPack2D.Packing2D.Packing2D import Packing2D
+from PyPack2D.Packing2D.Bin import Bin
 
 class AtlasGenerator(object):
     def __init__(self):

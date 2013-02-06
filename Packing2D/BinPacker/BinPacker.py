@@ -1,8 +1,8 @@
 __author__ = 'human88998999877'
 
-from Packing2D.BinPacker.BinSet import BinSet
-from Packing2D import BorderMode,RotateMode
-from Packing2D.Border import Border
+from PyPack2D.Packing2D.BinPacker.BinSet import BinSet
+from PyPack2D.Packing2D import BorderMode,RotateMode
+from PyPack2D.Packing2D.Border import Border
 
 class BinPackerError(BaseException):
     pass
