@@ -101,6 +101,9 @@ class BinPacker(object):
         pass
 
     def normaliseBorder(self):
+
+        realWidth = self.maxWidth - self.settings.borderSize * 2
+        realHeight = self.maxHeight - self.settings.borderSize * 2
         for bin in self.binSet:
             border = bin.getBorder()
             if bin.top is 0:
@@ -115,16 +118,15 @@ class BinPacker(object):
             else:
                 bin.setCoord(bin.left - self.settings.borderSize, bin.top)
                 pass
-            if bin.right == self.maxWidth:
+            if bin.right > realWidth:
                 border.right = 0
                 pass
-            if bin.bottom == self.maxHeight:
+            if bin.bottom > realHeight:
                 border.bottom = 0
                 pass
             pass
 
-            realWidth = self.maxWidth - self.settings.borderSize * 2
-            realHeight = self.maxHeight - self.settings.borderSize * 2
+
             self.binSet.setSize(realWidth, realHeight)
             pass
         pass
