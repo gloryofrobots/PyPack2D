@@ -19,11 +19,9 @@ class PackingControl(Unit):
         self.packer = packer
         self.packer.initialise(factory, settings)
         self.packer.setSize(settings.maxWidth, settings.maxHeight)
-        self.processSignal( Signal(SignalType.CREATE_PACKER, self.packer) )
 
         self.result = []
         self.lastPack  = False
-
 
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)
         self.connect(SignalType.PREPARE_TO_PACK, self._onPrepareToPack)
@@ -74,6 +72,7 @@ class PackingControl(Unit):
         pass
 
     def _onPrepareToPack(self, dummy):
+        self.processSignal( Signal(SignalType.CREATE_PACKER, self.packer) )
         self.result = []
         return True
         pass

@@ -148,6 +148,5 @@ class BinPacker(object):
         pass
 
     def _onFlush(self):
-        raise NotImplementedError()
         pass
     pass

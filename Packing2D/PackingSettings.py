@@ -17,7 +17,6 @@ class PackingSettings(object):
         self.borderMode = None
         self.isDebug = False
         self.borderSize = None
-        self.findMinimalBinSetSize = None
 
         self.splitRule = None
         pass

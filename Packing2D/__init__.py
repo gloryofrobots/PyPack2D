@@ -87,9 +87,11 @@ packingFactory.register(RotateMode.UP_RIGHT, RotatorUpRight)
 
 from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2
 from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterMaximal import BinSizeShifterMaximal
+from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2MinimizeLast import BinSizeShifterPow2MinimizeLast
 
 packingFactory.register(BinSizeMode.MINIMIZE_MAXIMAL, BinSizeShifterMaximal)
 packingFactory.register(BinSizeMode.MINIMIZE_POW2, BinSizeShifterPow2)
+packingFactory.register(BinSizeMode.MINIMIZE_POW2_MINIMIZE_LAST, BinSizeShifterPow2MinimizeLast)
 
 ###################################################################################
 
