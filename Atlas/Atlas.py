@@ -34,18 +34,20 @@ class Atlas(object):
     def getCanvas(self):
         return self.canvas
         pass
-    
+
     def save(self):
+        path = self.dirPath + "\\" + self.fileName
+        self.canvas.save(path, self.atlasType)
+        pass
+
+    def show(self):
+        self.canvas.show()
+        pass
+
+    def pack(self):
         self.canvas = Image.new(self.textureMode, (self.width, self.height), self.fillColor)
         for img in self.images:
             img.pack(self)
             pass
-
-        path = self.dirPath + "\\" + self.fileName
-        #dir = FileSystem.getDirname(path)
-        #TODO CHANGE THIS
-        #FileSystem.makeDirsRecursiveIfNotExist(dir)
-        #self.canvas.save(path, self.atlasType)
-        self.canvas.show()
         pass
     pass

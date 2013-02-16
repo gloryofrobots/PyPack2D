@@ -78,7 +78,13 @@ class AtlasGenerator(object):
                 atlas.addImage(image)
                 pass
 
+            atlas.pack()
             atlas.save()
+
+            if self.settings.isDebug is True:
+                atlas.show()
+                pass
+            
             self.atlases.append(atlas)
             pass
         pass
