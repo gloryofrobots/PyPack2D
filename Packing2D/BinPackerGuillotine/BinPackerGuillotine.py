@@ -6,9 +6,12 @@ from PyPack2D.Packing2D.BinPackerGuillotine.PackNode import PackNode
 class BinPackerGuillotine(BinPacker):
     def _onInitialise(self, factory, settings):
         self.splitter = factory.getInstance(settings.splitRule)
+        pass
+
+    def _onSetSize(self):
         self.packNode =  PackNode(0, 0, self.maxWidth,  self.maxHeight)
         pass
-    
+
     def _onPackBin(self, bin):
         leaf = self.packNode.insert( bin, self.splitter, self.heuristic )
         if leaf == None:

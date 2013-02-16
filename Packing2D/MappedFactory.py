@@ -41,19 +41,19 @@ class MappedFactory(object):
 #        return instance
 #        pass
 
-    def __createInstance(self, name):
+    def __createInstance(self, name, *args):
         instanceT = self._types[name]
-        instance = instanceT()
+        instance = instanceT(*args)
         return instance
         pass
 
-    def getInstance(self, name):
+    def getInstance(self, name, *args):
         if self.hasType(name) is False:
             raise MappedFactoryError("TypeName not register %s" % name)
             return None
             pass
 
-        instance = self.__createInstance(name)
+        instance = self.__createInstance(name, *args)
         return instance
         pass
     pass

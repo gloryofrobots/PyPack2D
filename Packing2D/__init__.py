@@ -30,7 +30,7 @@ PlaceHeuristic = Enum(  "FIRST_FIT"
                       , "BOTTOM_LEFT"
                       , "BEST_FIT")
 
-BinSizeMode = Enum("STRICT","MINIMIZE_MAXIMAL", "MINIMIZE_POW2")
+BinSizeMode = Enum("STRICT","MINIMIZE_MAXIMAL", "MINIMIZE_POW2","MINIMIZE_POW2_MINIMIZE_LAST")
 
 PackingAlgorithmAbility = Enum("RECTANGLE_MERGE", "WASTE_MAP", "FLOOR_CEILING")
 

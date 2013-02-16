@@ -6,7 +6,9 @@ SignalType = Enum(
     , "START_PACK" #send from PyPack2D.Packing2D
     , "PREPARE_TO_PACK" #send from PyPack2D.Packing2D
     , "END_PACK" #send from PackingControl
-    , "WASTE_INPUT")
+    , "WASTE_INPUT" #send from Validator
+    , "CREATE_PACKER" #send from PackingControl
+    )
 
 class Signal(object):
     def __init__(self, signalType, data):

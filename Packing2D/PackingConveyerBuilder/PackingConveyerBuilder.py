@@ -4,7 +4,6 @@ from PyPack2D.Packing2D import BinSizeMode,RotateMode
 
 class PackingConveyerBuilder(object):
     def build(self, conveyer, factory, settings):
-
         if settings.rotateMode == RotateMode.UP_RIGHT or settings.rotateMode == RotateMode.SIDE_WAYS:
             rotator = factory.getInstance(settings.rotateMode)
             conveyer.pushUnit(rotator)

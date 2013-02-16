@@ -8,8 +8,11 @@ from PyPack2D.Packing2D.BinPackerMaxRectangles.Area import Area
 
 class BinPackerMaxRectangles(BinPacker):
     def _onInitialise(self, factory, settings):
-        self.areas = [Area.fromWH(self.maxWidth,self.maxHeight)]
         self.waste = []
+        pass
+
+    def _onSetSize(self):
+        self.areas = [Area.fromWH(self.maxWidth,self.maxHeight)]
         pass
 
     def _onPackBin(self, bin):
@@ -98,10 +101,6 @@ class BinPackerMaxRectangles(BinPacker):
             rect = Area(bigRect.left, splitRect.bottom, bigRect.width, bigRect.bottom - splitRect.bottom)
             destination.append(rect)
             pass
-        pass
-
-    def _onFlush(self):
-        self.areas = [Area.fromWH(self.maxWidth,self.maxHeight)]
         pass
 
     def getBestRectangle(self, bin, heuristic):

@@ -4,8 +4,8 @@ from PyPack2D.Packing2D.BinPacker.BinPacker import BinPacker
 from PyPack2D.Packing2D.BinPackerCell.Cell import Cell
 
 class BinPackerCell(BinPacker):
-    def _onInitialise(self, factory, settings):
-        self.cells = [Cell( 0, 0, settings.maxWidth, settings.maxHeight )]
+    def _onSetSize(self):
+        self.cells = [Cell( 0, 0, self.maxWidth, self.maxHeight )]
         pass
 
     def _onPackBin(self, bin):
@@ -29,10 +29,6 @@ class BinPackerCell(BinPacker):
 
         bin.setCoord(destinationRect.left, destinationRect.top)
         return True
-        pass
-
-    def _onFlush(self):
-        self.cells = [Cell( 0, 0, self.maxWidth, self.maxHeight )]
         pass
 
     def canPlace(self, cell, rect):

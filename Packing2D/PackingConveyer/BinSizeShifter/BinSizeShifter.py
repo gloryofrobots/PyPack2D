@@ -2,19 +2,25 @@ from PyPack2D.Packing2D.PackingConveyer.Unit import Unit
 from PyPack2D.Packing2D.PackingConveyer.Signal import SignalType
 
 class BinSizeShifter(Unit):
-    def _onInit(self):
+    def _onInit(self, settings):
+        self.settings = settings
         self.connect(SignalType.END_PACK, self._onEndToPack)
+        self.connect(SignalType.CREATE_PACKER, self._onCreatePacker)
         pass
 
     def shift(self, binSet):
         self._onShift(binSet)
         pass
 
+    def _onCreatePacker(self, packer):
+        self.packer = packer
+        pass
+    
     def _onEndToPack(self, result):
         for binSet in result:
             self.shift(binSet)
             pass
-
+        
         return True
         pass
 

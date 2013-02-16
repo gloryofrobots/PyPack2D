@@ -26,21 +26,18 @@ class BinPacker(object):
     def __init__(self):
         super(BinPacker,self ).__init__()
         pass
-    
-    def initialise(self, factory, settings, size = None):
+
+    def initialise(self, factory, settings):
         self.settings = settings
         self.heuristic = factory.getInstance(settings.placeHeuristic)
         
         self.settings = settings
+        self._onInitialise( factory, settings )
+        pass
 
-        if size is None:
-            self.maxWidth = self.settings.maxWidth
-            self.maxHeight = self.settings.maxHeight
-            pass
-        else:
-            self.maxWidth = size[0]
-            self.maxHeight = size[1]
-            pass
+    def setSize(self, width, height):
+        self.maxWidth = width
+        self.maxHeight = height
 
         if self.settings.borderMode == BorderMode.AUTO:
             self.maxHeight += self.settings.borderSize * 2
@@ -48,12 +45,14 @@ class BinPacker(object):
             pass
 
         self.binSet = BinSet(self.maxWidth, self.maxHeight)
+        self._onSetSize()
+        pass
 
-        self._onInitialise( factory, settings )
+    def _onSetSize(self):
+        raise NotImplementedError()
         pass
 
     def _onInitialise(self, factory, settings):
-        raise NotImplementedError()
         pass
 
     def packBin(self, bin):
@@ -144,6 +143,7 @@ class BinPacker(object):
         result = self.binSet
         self.binSet = BinSet(self.maxWidth, self.maxHeight)
         self._onFlush()
+        self._onSetSize()
         return result
         pass
 
