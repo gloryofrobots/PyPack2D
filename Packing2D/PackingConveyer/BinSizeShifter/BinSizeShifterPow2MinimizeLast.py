@@ -1,31 +1,5 @@
 __author__ = 'human88998999877'
-
 from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2,getLowPow2
-from PyPack2D.Packing2D.Rectangle import Rectangle
-
-def getLowPow2( x ):
-    y = 2
-    if y > x:
-        return None
-    while True:
-        if y >= x:
-            return y / 2
-            pass
-        y *= 2
-        pass
-    pass
-
-def getNearestPow2( x ):
-    y = 1
-    if y > x:
-        return None
-    while True:
-        if y >= x:
-            return y
-            pass
-        y *= 2
-        pass
-    pass
 
 class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
     def _onEndToPack(self, result):

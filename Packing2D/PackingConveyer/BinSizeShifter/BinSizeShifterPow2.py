@@ -4,7 +4,7 @@ from PyPack2D.Packing2D.PackingConveyer.BinSizeShifter.BinSizeShifter import Bin
 from PyPack2D.Packing2D.Rectangle import Rectangle
 
 def getLowPow2( x ):
-    y = 1
+    y = 2
     if y > x:
         return None
     while True:
