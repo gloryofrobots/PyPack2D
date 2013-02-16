@@ -52,6 +52,10 @@ class BinSizeShifterPow2(BinSizeShifter):
         newWidth = getLowPow2( binSet.getWidth() )
         newHeight = getLowPow2( binSet.getHeight() )
 
+        if newWidth is None or newHeight is None:
+            return False
+            pass
+        
         if self._normaliseSize(binSet, newWidth, newHeight) is False:
             if self._normaliseSize(binSet, binSet.getWidth(), newHeight) is False:
                 if self._normaliseSize(binSet, newWidth, binSet.getHeight()) is False:

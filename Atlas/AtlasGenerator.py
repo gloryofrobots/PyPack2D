@@ -82,7 +82,7 @@ class AtlasGenerator(object):
             atlas.save()
 
             if self.settings.isDebug is True:
-                atlas.show()
+                #atlas.show()
                 pass
             
             self.atlases.append(atlas)

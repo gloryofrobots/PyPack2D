@@ -103,6 +103,8 @@ class Rectangle:
     left = property(fget=getLeft)
     
     def getRight(self):
+        if self.width is None:
+            return
         return self.left + self.width
         pass
     
