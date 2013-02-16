@@ -6,7 +6,7 @@ from PyPack2D.Packing2D.BinPackerGuillotine.PackNode import PackNode
 class BinPackerGuillotine(BinPacker):
     def _onInitialise(self, factory, settings):
         self.splitter = factory.getInstance(settings.splitRule)
-        self.packNode =  PackNode(0, 0, settings.maxWidth,  settings.maxHeight)
+        self.packNode =  PackNode(0, 0, self.maxWidth,  self.maxHeight)
         pass
     
     def _onPackBin(self, bin):

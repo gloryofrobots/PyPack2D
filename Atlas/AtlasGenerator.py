@@ -49,8 +49,8 @@ class AtlasGenerator(object):
         width = image.getWidth()
         height = image.getHeight()
         bin = Bin(0, 0, width, height)
-        idBin = bin.getId()
-        
+        idBin = len(self.images)
+        bin.setId(idBin)
         self.packing.push(bin)
         self.images[idBin] = image
         pass
@@ -84,6 +84,10 @@ class AtlasGenerator(object):
         pass
 
     def report(self, binSets):
+        if len(binSets) is 0:
+            return
+            pass
+        
         total = 0
         for binSet in binSets:
             total += binSet.getEfficiency()
@@ -102,7 +106,9 @@ class AtlasGenerator(object):
         binSets = self.packing.getResult()
         self._workWithResult(binSets)
 
-        self.report(binSets)
+        if self.settings.isDebug is True:
+            self.report(binSets)
+            pass
         pass
 
 

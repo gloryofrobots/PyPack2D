@@ -3,14 +3,12 @@ __author__ = 'human88998999877'
 class PackingSettings(object):
     def __init__(self):
         super(PackingSettings, self).__init__()
-
         self.packingAlgorithm = None
         self.placeHeuristic = None
         self.sortOrder = None
         self.sortKey = None
         self.binSizeMode = None
         self.packingMode = None
-        #self.packingAlgorithmAbility = None
 
         self.rotateMode = None
         self.maxWidth = None
@@ -19,8 +17,8 @@ class PackingSettings(object):
         self.borderMode = None
         self.isDebug = False
         self.borderSize = None
-        
-        #TODO ALGORITHM ABILITY
+        self.findMinimalBinSetSize = None
+
         self.splitRule = None
         pass
     pass

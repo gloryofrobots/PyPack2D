@@ -16,7 +16,7 @@ class PackingConveyerBuilderOffline(PackingConveyerBuilder):
             conveyer.pushUnit( sorter )
             pass
 
-        packer = factory.createInstance(settings.packingAlgorithm)
+        packer = factory.getInstance(settings.packingAlgorithm)
         control = PackingControl(packer, factory, settings)
         conveyer.pushUnit(control)
         pass

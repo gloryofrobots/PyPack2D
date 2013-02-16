@@ -7,6 +7,12 @@ class Rectangle:
         pass
 
     @classmethod
+    def new(cls):
+        rect = cls(0, 0, 0, 0)
+        return rect
+        pass
+
+    @classmethod
     def fromRectangle(cls, rect):
         rect = cls(rect.left, rect.top, rect.width, rect.height)
         return rect

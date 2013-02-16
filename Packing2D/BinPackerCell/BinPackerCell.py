@@ -5,7 +5,6 @@ from PyPack2D.Packing2D.BinPackerCell.Cell import Cell
 
 class BinPackerCell(BinPacker):
     def _onInitialise(self, factory, settings):
-        self.heuristic = None
         self.cells = [Cell( 0, 0, settings.maxWidth, settings.maxHeight )]
         pass
 

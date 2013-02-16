@@ -41,7 +41,7 @@ class MappedFactory(object):
 #        return instance
 #        pass
 
-    def createInstance(self, name):
+    def __createInstance(self, name):
         instanceT = self._types[name]
         instance = instanceT()
         return instance
@@ -53,7 +53,7 @@ class MappedFactory(object):
             return None
             pass
 
-        instance = self.createInstance(name)
+        instance = self.__createInstance(name)
         return instance
         pass
     pass
