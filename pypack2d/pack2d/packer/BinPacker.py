@@ -1,4 +1,4 @@
-from pypack2d.pack2d.BinPacker.BinSet import BinSet
+from pypack2d.pack2d.packer.BinSet import BinSet
 from pypack2d.pack2d import BorderMode,RotateMode
 from pypack2d.pack2d.Border import Border
 

@@ -1,8 +1,8 @@
-from pypack2d.pack2d.BinPacker.BinPacker import BinPacker
+from pypack2d.pack2d.packer.BinPacker import BinPacker
 
 #TODO DEBUG AND AREA TO BASIC
 
-from pypack2d.pack2d.BinPackerMaxRectangles.Area import Area
+from pypack2d.pack2d.packer_max_rectangles.Area import Area
 
 class BinPackerMaxRectangles(BinPacker):
     def _onInitialise(self, factory, settings):

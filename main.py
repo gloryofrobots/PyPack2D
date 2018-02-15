@@ -34,3 +34,4 @@ for infile in glob.glob("img/src/*.png"):
     generator.addImage(im)
 
 generator.generate()
+

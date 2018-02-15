@@ -1,5 +1,5 @@
-from pypack2d.pack2d.BinPacker.BinPacker import BinPacker
-from pypack2d.pack2d.BinPackerGuillotine.PackNode import PackNode
+from pypack2d.pack2d.packer.BinPacker import BinPacker
+from pypack2d.pack2d.packer_guillotine.PackNode import PackNode
 
 class BinPackerGuillotine(BinPacker):
     def _onInitialise(self, factory, settings):

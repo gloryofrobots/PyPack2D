@@ -1,52 +1,94 @@
-from pypack2d.pack2d.Enum.Enum import Enum
+from pypack2d.pack2d.Enum.Enum import Enum as MyEnum
 
-SortOrder = Enum("ASC", "DESC")
-
-SortKey = Enum("AREA"
-               ,"WIDTH"
-               ,"HEIGHT"
-               ,"SHORTER_SIDE"
-               ,"LONGER_SIDE"
-               ,"PERIMETER"
-               ,"SIDE_LENGTH_DIFFERENCE"
-               ,"SIDE_RATIO")
-
-PackingMode = Enum("ONLINE", "OFFLINE", "LOCAL_SEARCH")
-
-PackingAlgorithm = Enum("SHELF", "CELL", "GUILLOTINE", "MAX_RECTANGLES")
-
-PlaceHeuristic = Enum(  "FIRST_FIT"
-                      , "BEST_WIDTH_FIT"
-                      , "BEST_HEIGHT_FIT"
-                      , "WORST_WIDTH_FIT"
-                      , "WORST_HEIGHT_FIT"
-                      , "BEST_AREA_FIT"
-                      , "BEST_SHORT_SIDE_FIT"
-                      , "BEST_LONG_SIDE_FIT"
-                      , "WORST_AREA_FIT"
-                      , "WORST_SHORT_SIDE_FIT"
-                      , "WORST_LONG_SIDE_FIT"
-                      , "BOTTOM_LEFT"
-                      , "BEST_FIT")
-
-BinSizeMode = Enum("STRICT","MINIMIZE_MAXIMAL", "MINIMIZE_POW2","MINIMIZE_POW2_MINIMIZE_LAST")
-
-PackingAlgorithmAbility = Enum("RECTANGLE_MERGE", "WASTE_MAP", "FLOOR_CEILING")
-
-GuillotineSplitRule = Enum("SHORTER_AXIS"
-                           , "LONGER_AXIS"
-                           , "SHORTER_LEFTOVER_AXIS"
-                           , "LONGER_LEFTOVER_AXIS"
-                           , "MAX_AREA"
-                           , "MIN_AREA"
-                           , "HORIZONTAL"
-                           , "VERTICAL")
-
-BorderMode = Enum("NONE","STRICT","AUTO")
-BorderType = Enum("PIXELS_FROM_EDGE", "SOLID")
+from enum import Enum
 
 
-RotateMode = Enum("NONE", "UP_RIGHT", "SIDE_WAYS", "AUTO")
+class SortOrder(Enum):
+    ASC = "ASC"
+    DESC = "DESC"
+
+
+class SortKey(Enum):
+    AREA = "AREA"
+    WIDTH = "WIDTH"
+    HEIGHT = "HEIGHT"
+    SHORTER_SIDE = "SHORTER_SIDE"
+    LONGER_SIDE = "LONGER_SIDE"
+    PERIMETER = "PERIMETER"
+    SIDE_LENGTH_DIFFERENCE = "SIDE_LENGTH_DIFFERENCE"
+    SIDE_RATIO = "SIDE_RATIO"
+
+
+class PackingMode(Enum):
+    ONLINE = "ONLINE"
+    OFFLINE = "OFFLINE"
+    LOCAL_SEARCH = "LOCAL_SEARCH"
+
+
+class PackingAlgorithm(Enum):
+    SHELF = "SHELF"
+    CELL = "CELL"
+    GUILLOTINE = "GUILLOTINE"
+    MAX_RECTANGLES = "MAX_RECTANGLES"
+
+
+class PlaceHeuristic(Enum):
+    FIRST_FIT = "FIRST_FIT"
+    BEST_WIDTH_FIT = "BEST_WIDTH_FIT"
+    BEST_HEIGHT_FIT = "BEST_HEIGHT_FIT"
+    WORST_WIDTH_FIT = "WORST_WIDTH_FIT"
+    WORST_HEIGHT_FIT = "WORST_HEIGHT_FIT"
+    BEST_AREA_FIT = "BEST_AREA_FIT"
+    BEST_SHORT_SIDE_FIT = "BEST_SHORT_SIDE_FIT"
+    BEST_LONG_SIDE_FIT = "BEST_LONG_SIDE_FIT"
+    WORST_AREA_FIT = "WORST_AREA_FIT"
+    WORST_SHORT_SIDE_FIT = "WORST_SHORT_SIDE_FIT"
+    WORST_LONG_SIDE_FIT = "WORST_LONG_SIDE_FIT"
+    BOTTOM_LEFT = "BOTTOM_LEFT"
+    BEST_FIT = "BEST_FIT"
+
+
+class BinSizeMode(Enum):
+    STRICT = "STRICT"
+    MINIMIZE_MAXIMAL = "MINIMIZE_MAXIMAL"
+    MINIMIZE_POW2 = "MINIMIZE_POW2"
+    MINIMIZE_POW2_MINIMIZE_LAST = "MINIMIZE_POW2_MINIMIZE_LAST"
+
+
+class PackingAlgorithmAbility(Enum):
+    RECTANGLE_MERGE = "RECTANGLE_MERGE"
+    WASTE_MAP = "WASTE_MAP"
+    FLOOR_CEILING = "FLOOR_CEILING"
+
+
+class GuillotineSplitRule(Enum):
+    SHORTER_AXIS = "SHORTER_AXIS"
+    LONGER_AXIS = "LONGER_AXIS"
+    SHORTER_LEFTOVER_AXIS = "SHORTER_LEFTOVER_AXIS"
+    LONGER_LEFTOVER_AXIS = "LONGER_LEFTOVER_AXIS"
+    MAX_AREA = "MAX_AREA"
+    MIN_AREA = "MIN_AREA"
+    HORIZONTAL = "HORIZONTAL"
+    VERTICAL = "VERTICAL"
+
+
+class BorderMode(Enum):
+    NONE = "NONE"
+    STRICT = "STRICT"
+    AUTO = "AUTO"
+
+
+class BorderType(Enum):
+    PIXELS_FROM_EDGE = "PIXELS_FROM_EDGE"
+    SOLID = "SOLID"
+
+
+class RotateMode(Enum):
+    NONE = "NONE"
+    UP_RIGHT = "UP_RIGHT"
+    SIDE_WAYS = "SIDE_WAYS"
+    AUTO = "AUTO"
+
 
 # Initialise factory.
 # This fat big factory is created for minimising of if elif statements in places where program choose object type for user option
@@ -66,10 +108,10 @@ packingFactory.register(PackingMode.LOCAL_SEARCH, PackingConveyerBuilderLocalSea
 
 ###################################################################################
 
-from pypack2d.pack2d.BinPackerGuillotine.BinPackerGuillotine import BinPackerGuillotine
+from pypack2d.pack2d.packer_guillotine.BinPackerGuillotine import BinPackerGuillotine
 from pypack2d.pack2d.BinPackerCell.BinPackerCell import BinPackerCell
-from pypack2d.pack2d.BinPackerShelf.BinPackerShelf import BinPackerShelf
-from pypack2d.pack2d.BinPackerMaxRectangles.BinPackerMaxRectangles import BinPackerMaxRectangles
+from pypack2d.pack2d.packer_shelf.BinPackerShelf import BinPackerShelf
+from pypack2d.pack2d.packer_max_rectangles.BinPackerMaxRectangles import BinPackerMaxRectangles
 
 packingFactory.register(PackingAlgorithm.GUILLOTINE, BinPackerGuillotine)
 packingFactory.register(PackingAlgorithm.CELL, BinPackerCell)
@@ -78,7 +120,8 @@ packingFactory.register(PackingAlgorithm.MAX_RECTANGLES, BinPackerMaxRectangles)
 
 ###################################################################################
 
-from pypack2d.pack2d.PackingConveyer.Rotator import RotatorSideWays,RotatorUpRight
+from pypack2d.pack2d.PackingConveyer.Rotator import RotatorSideWays, RotatorUpRight
+
 packingFactory.register(RotateMode.SIDE_WAYS, RotatorSideWays)
 packingFactory.register(RotateMode.UP_RIGHT, RotatorUpRight)
 
@@ -94,10 +137,10 @@ packingFactory.register(BinSizeMode.MINIMIZE_POW2_MINIMIZE_LAST, BinSizeShifterP
 
 ###################################################################################
 
-from pypack2d.pack2d.BinPacker.RectangleSorting.RectangleSorting import RectangleSortingArea, RectangleSortingLongerSide\
-                                                        , RectangleSortingPerimeter, RectangleSortingShorterSide\
-                                                        , RectangleSortingSideLengthDifference, RectangleSortingSideRatio\
-                                                        , RectangleSortingWidth ,RectangleSortingHeight
+from pypack2d.pack2d.packer.RectangleSorting.RectangleSorting import RectangleSortingArea, RectangleSortingLongerSide \
+    , RectangleSortingPerimeter, RectangleSortingShorterSide \
+    , RectangleSortingSideLengthDifference, RectangleSortingSideRatio \
+    , RectangleSortingWidth, RectangleSortingHeight
 
 ###################################################################################
 
@@ -110,13 +153,13 @@ packingFactory.register(SortKey.PERIMETER, RectangleSortingPerimeter)
 packingFactory.register(SortKey.SIDE_LENGTH_DIFFERENCE, RectangleSortingSideLengthDifference)
 packingFactory.register(SortKey.SIDE_RATIO, RectangleSortingSideRatio)
 
-
-from pypack2d.pack2d.BinPacker.PlaceChooseHeuristic.PlaceChooseHeuristic  import PlaceHeuristicBestAreaFit,PlaceHeuristicBestLongSideFit\
-                                                    ,PlaceHeuristicBestShortSideFit ,PlaceHeuristicWorstAreaFit\
-                                                    ,PlaceHeuristicWorstLongSideFit,PlaceHeuristicWorstWidthFit\
-                                                    ,PlaceHeuristicWorstShortSideFit,PlaceHeuristicBestHeightFit\
-                                                    ,PlaceHeuristicBestWidthFit,PlaceHeuristicBottomLeft\
-                                                    ,PlaceHeuristicFirstFit, PlaceHeuristicWorstHeightFit
+from pypack2d.pack2d.packer.PlaceChooseHeuristic.PlaceChooseHeuristic import PlaceHeuristicBestAreaFit, \
+    PlaceHeuristicBestLongSideFit \
+    , PlaceHeuristicBestShortSideFit, PlaceHeuristicWorstAreaFit \
+    , PlaceHeuristicWorstLongSideFit, PlaceHeuristicWorstWidthFit \
+    , PlaceHeuristicWorstShortSideFit, PlaceHeuristicBestHeightFit \
+    , PlaceHeuristicBestWidthFit, PlaceHeuristicBottomLeft \
+    , PlaceHeuristicFirstFit, PlaceHeuristicWorstHeightFit
 
 ###################################################################################
 
@@ -141,9 +184,9 @@ packingFactory.register(PlaceHeuristic.BOTTOM_LEFT, PlaceHeuristicBottomLeft)
 
 ###################################################################################
 
-from pypack2d.pack2d.BinPackerGuillotine.Splitter import SplitterHorizontal,SplitterLongerAxis \
-                                                    ,SplitterLongerLeftOverAxis,SplitterMaxArea, SplitterShorterAxis\
-                                                    ,SplitterShorterLeftOverAxis, SplitterMinArea,SplitterVertical
+from pypack2d.pack2d.packer_guillotine.Splitter import SplitterHorizontal, SplitterLongerAxis \
+    , SplitterLongerLeftOverAxis, SplitterMaxArea, SplitterShorterAxis \
+    , SplitterShorterLeftOverAxis, SplitterMinArea, SplitterVertical
 
 packingFactory.register(GuillotineSplitRule.SHORTER_AXIS, SplitterShorterAxis)
 packingFactory.register(GuillotineSplitRule.SHORTER_LEFTOVER_AXIS, SplitterShorterLeftOverAxis)

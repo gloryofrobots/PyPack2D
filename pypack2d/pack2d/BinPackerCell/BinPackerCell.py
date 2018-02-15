@@ -1,4 +1,4 @@
-from pypack2d.pack2d.BinPacker.BinPacker import BinPacker
+from pypack2d.pack2d.packer.BinPacker import BinPacker
 from pypack2d.pack2d.BinPackerCell.Cell import Cell
 
 

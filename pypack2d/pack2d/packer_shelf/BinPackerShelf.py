@@ -1,5 +1,5 @@
-from pypack2d.pack2d.BinPacker.BinPacker import BinPacker
-from pypack2d.pack2d.BinPackerShelf.Shelf import Shelf
+from pypack2d.pack2d.packer.BinPacker import BinPacker
+from pypack2d.pack2d.packer_shelf.Shelf import Shelf
 
 #TODO FLOOR CEILING
 
