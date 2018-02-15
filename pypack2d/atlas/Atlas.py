@@ -1,5 +1,3 @@
-__author__ = 'human88998999877'
-
 from PIL import Image
 class Atlas(object):
     def __init__(self):

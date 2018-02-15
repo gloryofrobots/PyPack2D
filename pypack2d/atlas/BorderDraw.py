@@ -1,5 +1,3 @@
-__author__ = 'human88998999877'
-
 from pypack2d.atlas.Field2D import Field2D
 from PIL import Image,ImageDraw
 

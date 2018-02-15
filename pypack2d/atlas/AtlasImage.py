@@ -1,6 +1,4 @@
-__author__ = 'human88998999877'
-
-from pypack2d.Packing2D import BorderType
+from pypack2d.pack2d import BorderType
 from pypack2d.atlas.BorderDraw import BorderDrawEdge,BorderDrawRectangle
 from PIL import Image
 
