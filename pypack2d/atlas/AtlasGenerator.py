@@ -1,11 +1,11 @@
 from pypack2d.atlas.Atlas import Atlas
-from pypack2d.pack2d.Packing2D import Packing2D
-from pypack2d.pack2d.Bin import Bin
+from pypack2d.pack2d.pack2d import Pack2D
+from pypack2d.pack2d.bin import Bin
 
 class AtlasGenerator(object):
     def __init__(self):
         super(AtlasGenerator,self).__init__()
-        self.packing = Packing2D()
+        self.packing = Pack2D()
         pass
 
     def initialise(self, settings, dirPath, relativeFileName, texMode, atlasType, fillColor):

@@ -1,5 +1,5 @@
-from pypack2d.pack2d.PackingConveyer.Unit import Unit,checkUnitForwardLinkDoesNotExist
-from pypack2d.pack2d.PackingConveyer.Signal import SignalType
+from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkDoesNotExist
+from pypack2d.pack2d.conveyer.signal import SignalType
 
 class Collector(Unit):
     def _onInit(self):

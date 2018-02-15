@@ -1,5 +1,5 @@
 from pypack2d.pack2d.packer.packer import BinPacker
-from pypack2d.pack2d.Rectangle import Rectangle
+from pypack2d.pack2d.rectangle import Rectangle
 
 
 class Shelf(Rectangle):

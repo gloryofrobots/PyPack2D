@@ -1,5 +1,6 @@
-from pypack2d.pack2d.PackingConveyer.Validator import Validator
-from pypack2d.pack2d import BinSizeMode,RotateMode
+from pypack2d.pack2d.conveyer.validator import Validator
+from pypack2d.pack2d import BinSizeMode, RotateMode
+
 
 class PackingConveyerBuilder(object):
     def build(self, conveyer, factory, settings):
@@ -8,7 +9,7 @@ class PackingConveyerBuilder(object):
             conveyer.pushUnit(rotator)
             pass
 
-        validator = Validator( settings.maxWidth, settings.maxHeight )
+        validator = Validator(settings.maxWidth, settings.maxHeight)
         conveyer.pushUnit(validator)
 
         self._onBuild(conveyer, factory, settings)
@@ -22,4 +23,5 @@ class PackingConveyerBuilder(object):
 
     def _onBuild(self, conveyer, factory, settings):
         pass
+
     pass

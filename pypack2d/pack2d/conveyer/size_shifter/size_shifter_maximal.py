@@ -1,4 +1,4 @@
-from pypack2d.pack2d.PackingConveyer.BinSizeShifter.BinSizeShifter import BinSizeShifter
+from pypack2d.pack2d.conveyer.size_shifter.size_shifter import BinSizeShifter
 
 class BinSizeShifterMaximal(BinSizeShifter):
     def _onShift(self, binSet):

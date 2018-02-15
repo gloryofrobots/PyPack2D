@@ -92,13 +92,13 @@ class RotateMode(Enum):
 # This fat big factory is created for minimising of if elif statements in places where program choose object type for user option
 # So we just have a dictionary with {typeName:class}. It`s bad style in memory usage aspect but it simplifies code
 
-from pypack2d.pack2d.MappedFactory import MappedFactory
+from pypack2d.pack2d.mapped_factory import MappedFactory
 
 packingFactory = MappedFactory()
 
-from pypack2d.pack2d.PackingConveyerBuilder.PackingConveyerBuilderOnline import PackingConveyerBuilderOnline
-from pypack2d.pack2d.PackingConveyerBuilder.PackingConveyerBuilderOffline import PackingConveyerBuilderOffline
-from pypack2d.pack2d.PackingConveyerBuilder.PackingConveyerBuilderLocalSearch import PackingConveyerBuilderLocalSearch
+from pypack2d.pack2d.conveyer_builder.online import PackingConveyerBuilderOnline
+from pypack2d.pack2d.conveyer_builder.offline import PackingConveyerBuilderOffline
+from pypack2d.pack2d.conveyer_builder.local_search import PackingConveyerBuilderLocalSearch
 
 packingFactory.register(PackingMode.ONLINE, PackingConveyerBuilderOnline)
 packingFactory.register(PackingMode.OFFLINE, PackingConveyerBuilderOffline)
@@ -118,16 +118,16 @@ packingFactory.register(PackingAlgorithm.MAX_RECTANGLES, BinPackerMaxRectangles)
 
 ###################################################################################
 
-from pypack2d.pack2d.PackingConveyer.Rotator import RotatorSideWays, RotatorUpRight
+from pypack2d.pack2d.conveyer.rotator import RotatorSideWays, RotatorUpRight
 
 packingFactory.register(RotateMode.SIDE_WAYS, RotatorSideWays)
 packingFactory.register(RotateMode.UP_RIGHT, RotatorUpRight)
 
 ###################################################################################
 
-from pypack2d.pack2d.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2
-from pypack2d.pack2d.PackingConveyer.BinSizeShifter.BinSizeShifterMaximal import BinSizeShifterMaximal
-from pypack2d.pack2d.PackingConveyer.BinSizeShifter.BinSizeShifterPow2MinimizeLast import BinSizeShifterPow2MinimizeLast
+from pypack2d.pack2d.conveyer.size_shifter.size_shifter_pow2 import BinSizeShifterPow2
+from pypack2d.pack2d.conveyer.size_shifter.size_shifter_maximal import BinSizeShifterMaximal
+from pypack2d.pack2d.conveyer.size_shifter.size_shifter_pow2_minimize_last import BinSizeShifterPow2MinimizeLast
 
 packingFactory.register(BinSizeMode.MINIMIZE_MAXIMAL, BinSizeShifterMaximal)
 packingFactory.register(BinSizeMode.MINIMIZE_POW2, BinSizeShifterPow2)

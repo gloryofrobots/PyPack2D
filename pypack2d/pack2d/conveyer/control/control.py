@@ -1,7 +1,8 @@
-from pypack2d.pack2d.PackingConveyer.Unit import Unit
-from pypack2d.pack2d.PackingConveyer.Signal import SignalType,Signal
+from pypack2d.pack2d.conveyer.unit import Unit
+from pypack2d.pack2d.conveyer.signal import SignalType, Signal
 
-def getLowPow2( x ):
+
+def getLowPow2(x):
     y = 2
     if y >= x:
         return None
@@ -13,6 +14,7 @@ def getLowPow2( x ):
         pass
     pass
 
+
 class PackingControl(Unit):
     def _onInit(self, packer, factory, settings):
         self.packer = packer
@@ -20,7 +22,7 @@ class PackingControl(Unit):
         self.packer.setSize(settings.maxWidth, settings.maxHeight)
 
         self.result = []
-        self.lastPack  = False
+        self.lastPack = False
 
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)
         self.connect(SignalType.PREPARE_TO_PACK, self._onPrepareToPack)
@@ -28,7 +30,7 @@ class PackingControl(Unit):
         pass
 
     def packBins(self, input):
-        self.lastPack  = False
+        self.lastPack = False
         index = 0
         while True:
             if index == len(input):
@@ -64,15 +66,16 @@ class PackingControl(Unit):
         pass
 
     def _onStartPack(self, dummy):
-        #TODO REFACTOR
+        # TODO REFACTOR
         self.checkLastPack()
-        self.processSignal( Signal(SignalType.END_PACK, self.result) )
+        self.processSignal(Signal(SignalType.END_PACK, self.result))
         return True
         pass
 
     def _onPrepareToPack(self, dummy):
-        self.processSignal( Signal(SignalType.CREATE_PACKER, self.packer) )
+        self.processSignal(Signal(SignalType.CREATE_PACKER, self.packer))
         self.result = []
         return True
         pass
+
     pass

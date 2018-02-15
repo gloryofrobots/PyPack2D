@@ -1,11 +1,11 @@
-from pypack2d.pack2d.PackingConveyer.Conveyer import Conveyer
+from pypack2d.pack2d.conveyer.conveyer import Conveyer
 from pypack2d.pack2d import packingFactory
 
-from pypack2d.pack2d.PackingConveyer.Signal import SignalType,Signal
+from pypack2d.pack2d.conveyer.signal import SignalType,Signal
 
-class Packing2D(object):
+class Pack2D(object):
     def __init__(self):
-        super(Packing2D, self).__init__()
+        super(Pack2D, self).__init__()
         self.conveyer = None
 
         self.factory = packingFactory

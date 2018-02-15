@@ -1,4 +1,4 @@
-from pypack2d.pack2d.PackingConveyer.BinSizeShifter.BinSizeShifterPow2 import BinSizeShifterPow2,getLowPow2
+from pypack2d.pack2d.conveyer.size_shifter.size_shifter_pow2 import BinSizeShifterPow2,getLowPow2
 
 class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
     def _onEndToPack(self, result):

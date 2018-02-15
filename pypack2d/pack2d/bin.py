@@ -1,5 +1,5 @@
-from pypack2d.pack2d.Rectangle import Rectangle
-from pypack2d.pack2d.Border import Border
+from pypack2d.pack2d.rectangle import Rectangle
+from pypack2d.pack2d.border import Border
 
 class BinBase(Rectangle):
     def _onInit(self):

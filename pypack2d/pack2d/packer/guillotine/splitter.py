@@ -1,4 +1,4 @@
-from pypack2d.pack2d.Rectangle import Rectangle
+from pypack2d.pack2d.rectangle import Rectangle
 
 class Splitter(object):
     def split(self, hostRect, rect):

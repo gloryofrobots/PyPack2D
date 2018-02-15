@@ -1,6 +1,6 @@
-from pypack2d.pack2d.PackingConveyer.Unit import Unit,checkUnitForwardLinkExist
-from pypack2d.pack2d.PackingConveyer.Signal import SignalType
-from pypack2d.pack2d.PackingConveyer.Collector import Collector
+from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkExist
+from pypack2d.pack2d.conveyer.signal import SignalType
+from pypack2d.pack2d.conveyer.collector import Collector
 
 
 class Conveyer(Unit):

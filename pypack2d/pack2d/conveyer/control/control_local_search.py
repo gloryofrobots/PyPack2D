@@ -1,6 +1,6 @@
-from pypack2d.pack2d.PackingConveyer.PackingControl.PackingControl import PackingControl
+from pypack2d.pack2d.conveyer.control.control import PackingControl
 from pypack2d.pack2d import BinSizeMode
-from pypack2d.pack2d.PackingConveyer.Signal import SignalType,Signal
+from pypack2d.pack2d.conveyer.signal import SignalType,Signal
 
 #def createAreas(maxWidth, maxHeight):
 #    width = maxWidth

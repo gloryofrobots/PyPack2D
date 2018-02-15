@@ -1,5 +1,5 @@
-from pypack2d.pack2d.PackingConveyer.BinSizeShifter.BinSizeShifter import BinSizeShifter
-from pypack2d.pack2d.Rectangle import Rectangle
+from pypack2d.pack2d.conveyer.size_shifter.size_shifter import BinSizeShifter
+from pypack2d.pack2d.rectangle import Rectangle
 
 def getLowPow2( x ):
     y = 2

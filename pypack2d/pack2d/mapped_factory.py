@@ -1,18 +1,19 @@
 class MappedFactoryError(BaseException):
     pass
 
+
 class MappedFactory(object):
     def __init__(self):
         super(MappedFactory, self).__init__()
         self._types = {}
-        #self._cache = {}
+        # self._cache = {}
         pass
 
     def register(self, name, classType):
-        if self.hasType( name ):
+        if self.hasType(name):
             raise MappedFactoryError("TypeName already register %s" % name)
             pass
-        
+
         self._types[name] = classType
         pass
 
@@ -24,21 +25,21 @@ class MappedFactory(object):
         return True
         pass
 
-#    def _getCachedInstance(self, name):
-#        if name not in self._cache:
-#            instance = self.createInstance(name)
-#            if instance is None:
-#                return None
-#                pass
-#
-#            self._cache[name] = instance
-#
-#            return instance
-#            pass
-#
-#        instance =  self._cache[name]
-#        return instance
-#        pass
+    #    def _getCachedInstance(self, name):
+    #        if name not in self._cache:
+    #            instance = self.createInstance(name)
+    #            if instance is None:
+    #                return None
+    #                pass
+    #
+    #            self._cache[name] = instance
+    #
+    #            return instance
+    #            pass
+    #
+    #        instance =  self._cache[name]
+    #        return instance
+    #        pass
 
     def __createInstance(self, name):
         instanceT = self._types[name]
@@ -55,4 +56,5 @@ class MappedFactory(object):
         instance = self.__createInstance(name)
         return instance
         pass
+
     pass
