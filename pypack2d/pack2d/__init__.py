@@ -96,9 +96,9 @@ from pypack2d.pack2d.mapped_factory import MappedFactory
 
 packingFactory = MappedFactory()
 
-from pypack2d.pack2d.conveyer_builder.online import PackingConveyerBuilderOnline
-from pypack2d.pack2d.conveyer_builder.offline import PackingConveyerBuilderOffline
-from pypack2d.pack2d.conveyer_builder.local_search import PackingConveyerBuilderLocalSearch
+from pypack2d.pack2d.conveyer.builder.online import PackingConveyerBuilderOnline
+from pypack2d.pack2d.conveyer.builder.offline import PackingConveyerBuilderOffline
+from pypack2d.pack2d.conveyer.builder.local_search import PackingConveyerBuilderLocalSearch
 
 packingFactory.register(PackingMode.ONLINE, PackingConveyerBuilderOnline)
 packingFactory.register(PackingMode.OFFLINE, PackingConveyerBuilderOffline)

@@ -1,11 +1,12 @@
 from pypack2d.pack2d import BorderType
-from pypack2d.atlas.border_draw import BorderDrawEdge,BorderDrawRectangle
+from pypack2d.atlas.border_draw import BorderDrawEdge, BorderDrawRectangle
 from PIL import Image
 
+
 class AtlasImage(object):
-    def __init__(self, path = None, img = None):
+    def __init__(self, path=None, img=None):
         super(AtlasImage, self).__init__()
-        if  path != None:
+        if path != None:
             self._initFromFilename(path)
             pass
         elif img is not None:
@@ -13,7 +14,7 @@ class AtlasImage(object):
             pass
 
         self._initialise()
-        self.uv = (0,0,0,0)
+        self.uv = (0, 0, 0, 0)
         self.bin = None
         pass
 
@@ -28,7 +29,7 @@ class AtlasImage(object):
         pass
 
     def __repr__(self):
-        return "<%s %s (%i,%i)>" %( self.__class__.__name__, self.path, self.width, self.height)
+        return "<%s %s (%i,%i)>" % (self.__class__.__name__, self.path, self.width, self.height)
         pass
 
     def getBin(self):
@@ -45,7 +46,7 @@ class AtlasImage(object):
         pass
 
     def getPath(self):
-        return  self.path
+        return self.path
         pass
 
     def getWidth(self):
@@ -108,21 +109,24 @@ class AtlasImage(object):
             raise BaseException("Atlas Image pack error. Bin not determined")
             pass
 
-        canvas.paste(self.img, box = (self.bin.left, self.bin.top))
+        canvas.paste(self.img, box=(self.bin.left, self.bin.top))
         self._onPack(atlas)
         pass
 
-    def _onPack(self,atlas):
+    def _onPack(self, atlas):
         pass
+
     pass
 
+
 class AtlasImagePyBuilder(AtlasImage):
-    def __init__(self, path, onPackCallback = None):
+    def __init__(self, path, onPackCallback=None):
         super(AtlasImagePyBuilder, self).__init__(path)
         self.onPackCallback = onPackCallback
         pass
 
-    def _onPack(self,atlas):
+    def _onPack(self, atlas):
         self.onPackCallback(self, atlas)
         pass
+
     pass

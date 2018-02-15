@@ -1,7 +1,7 @@
 from pypack2d.pack2d.conveyer.accumulator import Accumulator
 from pypack2d.pack2d.conveyer.sorter import Sorter
 from pypack2d.pack2d.conveyer.control.control import PackingControl
-from pypack2d.pack2d.conveyer_builder.builder import PackingConveyerBuilder
+from pypack2d.pack2d.conveyer.builder.builder import PackingConveyerBuilder
 
 
 class PackingConveyerBuilderOffline(PackingConveyerBuilder):
