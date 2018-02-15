@@ -1,8 +1,6 @@
-from pypack2d.pack2d.packer.BinPacker import BinPacker
+from pypack2d.pack2d.packer.packer import BinPacker
+from pypack2d.pack2d.Rectangle import Rectangle as Area
 
-#TODO DEBUG AND AREA TO BASIC
-
-from pypack2d.pack2d.packer_max_rectangles.Area import Area
 
 class BinPackerMaxRectangles(BinPacker):
     def _onInitialise(self, factory, settings):
@@ -10,7 +8,7 @@ class BinPackerMaxRectangles(BinPacker):
         pass
 
     def _onSetSize(self):
-        self.areas = [Area.fromWH(self.maxWidth,self.maxHeight)]
+        self.areas = [Area.fromWH(self.maxWidth, self.maxHeight)]
         pass
 
     def _onPackBin(self, bin):
@@ -56,11 +54,11 @@ class BinPackerMaxRectangles(BinPacker):
         pass
 
     def normaliseRectangles(self):
-        sortedAreas = sorted(self.areas, key = lambda rect: rect.getArea(), reverse = False)
+        sortedAreas = sorted(self.areas, key=lambda rect: rect.getArea(), reverse=False)
 
         for i in range(len(sortedAreas)):
             checked = sortedAreas[i]
-            for rect in sortedAreas[i + 1 : len(self.areas)]:
+            for rect in sortedAreas[i + 1: len(self.areas)]:
                 if rect.isContain(checked):
                     self.waste.append(checked)
                     break
@@ -91,7 +89,7 @@ class BinPackerMaxRectangles(BinPacker):
             pass
 
         if splitRect.right != bigRect.right:
-            rect = Area(splitRect.right, bigRect.top, bigRect.right - splitRect.right,  bigRect.height)
+            rect = Area(splitRect.right, bigRect.top, bigRect.right - splitRect.right, bigRect.height)
             destination.append(rect)
             pass
 
@@ -108,7 +106,7 @@ class BinPackerMaxRectangles(BinPacker):
                 continue
                 pass
 
-            best,worth = heuristic.choose(bin, bestRect, rect)
+            best, worth = heuristic.choose(bin, bestRect, rect)
 
             if best is not bestRect:
                 bestRect = best
@@ -120,33 +118,31 @@ class BinPackerMaxRectangles(BinPacker):
 
     def _onDebug(self):
         return
-        from PIL import  Image,ImageDraw
-        from random import choice,randrange
+        from PIL import Image, ImageDraw
+        from random import choice, randrange
 
         COLORS = []
         for i in range(1000):
-            r = randrange(0,255)
-            g = randrange(0,255)
-            b = randrange(0,255)
-            COLORS.append((r,g,b))
+            r = randrange(0, 255)
+            g = randrange(0, 255)
+            b = randrange(0, 255)
+            COLORS.append((r, g, b))
             pass
 
-        canvas = Image.new("RGBA", (self.binSet.getWidth(), self.binSet.getHeight()), color = (128,128,128))
+        canvas = Image.new("RGBA", (self.binSet.getWidth(), self.binSet.getHeight()), color=(128, 128, 128))
         draw = ImageDraw.Draw(canvas)
 
         for area in self.areas:
-            draw.rectangle([area.left, area.top, area.right - 1, area.bottom - 1], outline = choice(COLORS))
+            draw.rectangle([area.left, area.top, area.right - 1, area.bottom - 1], outline=choice(COLORS))
             pass
 
         for bin in self.binSet:
-            #img = Image.new("RGBA", (bin.width, bin.height), color = choice(COLORS))
-            draw.rectangle([bin.left, bin.top, bin.right - 1, bin.bottom - 1], fill = choice(COLORS))
-            #canvas.paste(img, (bin.left, bin.top))
+            # img = Image.new("RGBA", (bin.width, bin.height), color = choice(COLORS))
+            draw.rectangle([bin.left, bin.top, bin.right - 1, bin.bottom - 1], fill=choice(COLORS))
+            # canvas.paste(img, (bin.left, bin.top))
             pass
 
         canvas.show()
         pass
+
     pass
-
-
-
