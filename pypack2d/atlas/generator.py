@@ -1,4 +1,4 @@
-from pypack2d.atlas.Atlas import Atlas
+from pypack2d.atlas.atlas import Atlas
 from pypack2d.pack2d.pack2d import Pack2D
 from pypack2d.pack2d.bin import Bin
 

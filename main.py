@@ -1,7 +1,7 @@
 import pypack2d.pack2d as packing
 from pypack2d.pack2d.settings import PackingSettings
-from pypack2d.atlas.AtlasGenerator import AtlasGenerator
-from pypack2d.atlas.AtlasImage import AtlasImage
+from pypack2d.atlas.generator import AtlasGenerator
+from pypack2d.atlas.atlas_image import AtlasImage
 from PIL import Image
 import glob, os
 

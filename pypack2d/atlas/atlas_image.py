@@ -1,5 +1,5 @@
 from pypack2d.pack2d import BorderType
-from pypack2d.atlas.BorderDraw import BorderDrawEdge,BorderDrawRectangle
+from pypack2d.atlas.border_draw import BorderDrawEdge,BorderDrawRectangle
 from PIL import Image
 
 class AtlasImage(object):

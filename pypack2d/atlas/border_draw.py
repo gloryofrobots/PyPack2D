@@ -1,4 +1,4 @@
-from pypack2d.atlas.Field2D import Field2D
+from pypack2d.atlas.field2d import Field2D
 from PIL import Image,ImageDraw
 
 class BorderDraw(object):
