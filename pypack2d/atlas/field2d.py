@@ -6,7 +6,7 @@ class Field2D(object):
         self.height = height
         pass
 
-    def copyLine(self, field2d, y1, y2):
+    def copy_line(self, field2d, y1, y2):
         for x1 in range(0, self.width):
             index1 = self.width * y1 + x1
             index2 = self.width * y2 + x1
@@ -14,7 +14,7 @@ class Field2D(object):
             pass
         pass
 
-    def copyColumn(self, field2d, x1, x2):
+    def copy_column(self, field2d, x1, x2):
         for y1 in range(0, self.height):
             index1 = self.width * y1 + x1
             index2 = field2d.width * y1 + x2
@@ -22,4 +22,3 @@ class Field2D(object):
             pass
         pass
 
-  

@@ -2,29 +2,30 @@ from pypack2d.atlas.atlas import Atlas
 from pypack2d.pack2d.pack2d import Pack2D
 from pypack2d.pack2d.bin import Bin
 
+
 class AtlasGenerator(object):
     def __init__(self):
-        super(AtlasGenerator,self).__init__()
+        super(AtlasGenerator, self).__init__()
         self.packing = Pack2D()
         pass
 
     def initialise(self, settings, dirPath, relativeFileName, texMode, atlasType, fillColor):
-        self.dirPath = dirPath
-        self.relativeFileName = relativeFileName
+        self.dir_path = dirPath
+        self.relative_filename = relativeFileName
 
         self.settings = settings
-        self.texMode = texMode
-        self.atlasType = atlasType
-        self.fillColor = fillColor
+        self.tex_mode = texMode
+        self.atlas_type = atlasType
+        self.fill_color = fillColor
 
         self.images = {}
-        self.wastedImages = []
+        self.wasted_images = []
         self.atlases = []
 
         self.packing.initialise(settings)
         pass
 
-    def getNewAtlas(self, binSet):
+    def get_new_atlas(self, binSet):
         index = len(self.atlases)
         counter = ""
         if index > 0:
@@ -32,57 +33,55 @@ class AtlasGenerator(object):
             pass
 
         atlas = Atlas()
-        atlasFileName = self.relativeFileName + counter + "." + self.atlasType
+        atlasFileName = self.relative_filename + counter + "." + self.atlas_type
         binWidth = binSet.getWidth()
         binHeight = binSet.getHeight()
-        atlas.initialise(binWidth, binHeight, self.dirPath, atlasFileName, self.texMode, self.atlasType, self.fillColor)
+        atlas.initialise(binWidth, binHeight, self.dir_path, atlasFileName, self.tex_mode, self.atlas_type, self.fill_color)
         return atlas
         pass
 
-    def addImages(self, images):
+    def add_images(self, images):
         for image in images:
-            self.addImage(image)
+            self.add_image(image)
             pass
         pass
 
-    def addImage(self, image):
-        width = image.getWidth()
-        height = image.getHeight()
-        bin = Bin(0, 0, width, height)
+    def add_image(self, image):
+        bin = Bin(0, 0, image.width, image.height)
         idBin = len(self.images)
         bin.setId(idBin)
         self.packing.push(bin)
         self.images[idBin] = image
         pass
 
-    def _workWithWaste(self, wasted):
+    def _work_with_waste(self, wasted):
         for wasteImage in wasted:
-            image = self._getImageForBin(wasteImage)
-            self.wastedImages.append(image)
+            image = self._get_image_for_bin(wasteImage)
+            self.wasted_images.append(image)
             pass
         pass
 
-    def _getImageForBin(self, bin):
+    def _get_image_for_bin(self, bin):
         idBin = bin.getId()
         image = self.images[idBin]
         return image
         pass
 
-    def _workWithResult(self, binSets):
+    def _work_with_result(self, binSets):
         for binSet in binSets:
-            atlas = self.getNewAtlas(binSet)
+            atlas = self.get_new_atlas(binSet)
             for bin in binSet:
-                image = self._getImageForBin(bin)
+                image = self._get_image_for_bin(bin)
 
-                image.setBin(bin)
-                atlas.addImage(image)
+                image.set_bin(bin)
+                atlas.add_image(image)
                 pass
 
             atlas.pack()
             atlas.save()
 
             if self.settings.isDebug is True:
-                #atlas.show()
+                # atlas.show()
                 pass
 
             self.atlases.append(atlas)
@@ -100,25 +99,25 @@ class AtlasGenerator(object):
             pass
 
         middle = total / len(binSets)
-        print ("Count images: %i efficiency : %4.2f " % (len(binSets), middle) )
+        print("Count images: %i efficiency : %4.2f " % (len(binSets), middle))
         pass
 
     def generate(self):
         self.packing.pack()
 
         wasted = self.packing.getWaste()
-        self._workWithWaste(wasted)
+        self._work_with_waste(wasted)
 
         binSets = self.packing.getResult()
-        self._workWithResult(binSets)
+        self._work_with_result(binSets)
 
         if self.settings.isDebug is True:
             self.report(binSets)
             pass
         pass
 
-
-    def getWastedImages(self):
-        return self.wastedImages
+    def get_wasted_images(self):
+        return self.wasted_images
         pass
+
     pass

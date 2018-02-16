@@ -31,7 +31,7 @@ generator.initialise(settings, "img/res", "atlas", "RGB", "png", "#fff")
 
 for infile in glob.glob("img/src/*.png"):
     im = AtlasImage(infile)
-    generator.addImage(im)
+    generator.add_image(im)
 
 generator.generate()
 

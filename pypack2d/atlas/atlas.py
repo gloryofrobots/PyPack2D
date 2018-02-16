@@ -24,12 +24,12 @@ class Atlas(object):
         self.fillColor = fillColor
         pass
 
-    def addImage(self, image):
+    def add_image(self, image):
         self.images.append(image)
         return True
         pass
 
-    def getCanvas(self):
+    def get_canvas(self):
         return self.canvas
         pass
 

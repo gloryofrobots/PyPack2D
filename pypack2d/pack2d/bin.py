@@ -43,7 +43,7 @@ class BinBase(Rectangle):
         pass
 
     def flip(self):
-        if self.isRotate() is False:
+        if self.is_rotate() is False:
             self.setRotate(True)
             pass
         else:
@@ -67,7 +67,7 @@ class BinBase(Rectangle):
         self.flip()
         pass
 
-    def isRotate(self):
+    def is_rotate(self):
         return self.rotate
         pass
 
