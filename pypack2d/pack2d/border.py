@@ -1,29 +1,27 @@
 class Border(object):
-    def __init__(self, bbox=None, border=None, border_size=None, type=None, color=None):
-        self.left = None
-        self.top = None
-        self.right = None
-        self.bottom = None
-        self.type = None
-        self.color = None
-
-        if bbox is not None:
-            self.init(bbox[0], bbox[1], bbox[2], bbox[3], type, color)
-
-        elif border is not None:
-            self.init(border.left, border.top, border.right, border.bottom, border.type, border.color)
-            return
-
-        elif border_size is not None:
-            self.init(border_size, border_size, border_size, border_size, type, color)
-
-    def init(self, left, top, right, bottom, type=None, color=None):
+    def __init__(self, border_type, color, left, top, right, bottom):
         self.left = left
         self.top = top
         self.right = right
         self.bottom = bottom
-        self.type = type
+        self.type = border_type
         self.color = color
+
+    @staticmethod
+    def empty():
+        return Border.from_size(None, None, 0)
+
+    @staticmethod
+    def from_border(border):
+        return Border(border.type, border.color, border.left, border.top, border.right, border.bottom)
+
+    @staticmethod
+    def from_size(border_type, color, size):
+        return Border(border_type, color, size, size, size, size)
+
+    @staticmethod
+    def from_rect(border_type, color, rect):
+        return Border(border_type, color, rect[0], rect[1], rect[2], rect[3])
 
     def is_empty(self):
         if self.left == 0 and self.right == 0 and self.top == 0 and self.bottom == 0:

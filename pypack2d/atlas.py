@@ -215,10 +215,6 @@ class AtlasGenerator(object):
         eff = total / len(binSets)
         return dict(count=len(binSets), efficiency=eff)
 
-    def report(self, binSets):
-        stats = self.stats(binSets)
-        print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
-
     def generate(self):
         self.packing.pack()
 
@@ -228,8 +224,8 @@ class AtlasGenerator(object):
         binSets = self.packing.get_result()
         self._work_with_result(binSets)
 
-        if self.packing_settings.debug is True:
-            self.report(binSets)
+        stats = self.stats(binSets)
+        return stats
 
     def get_wasted_images(self):
         return self.wasted_images

@@ -1,11 +1,13 @@
 from pypack2d.pack2d.packer.bin_set import BinSet
-from pypack2d.pack2d.settings import BorderMode, RotateMode
+from pypack2d.pack2d.settings import BorderMode, RotateMode, BorderType
 from pypack2d.pack2d.border import Border
 
 
-class BinPackerError(BaseException):
+class BinPackerError(Exception):
     pass
 
+class AbortError(Exception):
+    pass
 
 class ManualAbort(object):
     def __init__(self):
@@ -14,7 +16,7 @@ class ManualAbort(object):
 
     def abort_on_count(self, limit):
         if self.debugCount >= limit:
-            raise BaseException()
+            raise AbortError("Abort on count")
 
         self.debugCount += 1
 
@@ -75,24 +77,33 @@ class BinPacker(object):
         raise NotImplementedError()
 
     def set_border(self, bin):
-        if self.settings.border_mode == BorderMode.NONE:
+        border = self.settings.border
+        border_mode = self.settings.border_mode
+        if border is None or border_mode == BorderMode.NONE:
             return
+        border_type = border.get("type", BorderType.SOLID)
+        border_color = border.get("color", "#000")
 
-        elif self.settings.border_mode == BorderMode.STRICT:
-            border = Border(border=self.settings.border)
-            bin.set_border(border)
+        if "rect" in border:
+            bin_border = Border.from_rect(border_type, border_color, border["rect"])
+            if border_mode != BorderMode.STRICT:
+                raise BinPackerError("Border rect can be specified only for STRICT border mode")
+        elif "size" in border:
+            bin_border = Border.from_size(border_type, border_color, border["size"])
+        else:
+            raise BinPackerError("border settings must have either rect or size attribute")
+            # border=Border(self.settings.type, self.settings.color, bbox=self.settings.border.bbox)
 
-        elif self.settings.border_mode == BorderMode.AUTO:
-            border = Border(border_size=self.settings.border_size, type=self.settings.border.type,
-                            color=self.settings.border.color)
-            bin.set_border(border)
+        if border_mode != BorderMode.AUTO and "size" not in border:
+            raise BinPackerError("Border mode AUTO expects size attribute")
+
+        bin.set_border(bin_border)
 
     def normalise_border(self):
-
         realWidth = self.max_width - self.settings.border_size * 2
         realHeight = self.max_height - self.settings.border_size * 2
         for bin in self.binSet:
-            border = bin.getBorder()
+            border = bin.border
             if bin.top is 0:
                 border.top = 0
 

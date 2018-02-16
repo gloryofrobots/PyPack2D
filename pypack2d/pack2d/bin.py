@@ -5,7 +5,7 @@ from pypack2d.pack2d.border import Border
 class BinBase(Rectangle):
     def _on_init(self):
         self.rotate = False
-        self.border = Border(bbox=(0, 0, 0, 0))
+        self.border = Border.empty()
 
     def set_border(self, border):
         self.border = border

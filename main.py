@@ -1,5 +1,3 @@
-import glob
-
 import pypack2d
 from pypack2d.pack2d.border import Border
 
@@ -14,17 +12,16 @@ settings = dict(
     rotate_mode=pypack2d.RotateMode.AUTO,
     max_width=256,
     max_height=256,
-    border=Border(border_size=1, type=pypack2d.BorderType.SOLID, color="#000"),
-    border_mode = pypack2d.BorderMode.STRICT,
-    # border_mode=pypack2d.BorderMode,
-    border_size=0,
+    # border=dict(rect=(1, 1, 1, 1), type=pypack2d.BorderType.SOLID, color="#000"),
+    border=dict(size=1, type=pypack2d.BorderType.SOLID, color="#000"),
+    border_mode=pypack2d.BorderMode.AUTO,
     split_rule=pypack2d.GuillotineSplitRule.SHORTER_AXIS,
     debug=True,
 )
-
 
 generator = pypack2d.generator("img/res", settings, file_prefix="atlas")
 
 generator.add_glob("img/src/*.png")
 
-generator.generate()
+stats = generator.generate()
+print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))

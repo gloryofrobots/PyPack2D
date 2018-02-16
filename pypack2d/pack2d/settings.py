@@ -101,7 +101,6 @@ class PackingSettings(object):
                  max_height=1024,
                  border=None,
                  border_mode=BorderMode.NONE,
-                 border_size=None,
                  split_rule=None,
                  debug=False
                  ):
@@ -118,7 +117,10 @@ class PackingSettings(object):
         self.max_height = max_height
         self.border = border
         self.border_mode = border_mode
-        self.border_size = border_size
 
         self.split_rule = split_rule
         self.debug = debug
+
+    @property
+    def border_size(self):
+        return self.border["size"]
