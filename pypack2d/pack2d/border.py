@@ -1,5 +1,12 @@
 class Border(object):
     def __init__(self, bbox=None, border=None, border_size=None, type=None, color=None):
+        self.left = None
+        self.top = None
+        self.right = None
+        self.bottom = None
+        self.type = None
+        self.color = None
+
         if bbox is not None:
             self.init(bbox[0], bbox[1], bbox[2], bbox[3], type, color)
 

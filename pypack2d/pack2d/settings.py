@@ -100,7 +100,7 @@ class PackingSettings(object):
                  max_width=1024,
                  max_height=1024,
                  border=None,
-                 border_mode=None,
+                 border_mode=BorderMode.NONE,
                  border_size=None,
                  split_rule=None,
                  debug=False

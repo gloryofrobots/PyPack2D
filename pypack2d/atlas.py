@@ -127,7 +127,7 @@ class Atlas(object):
 class AtlasGenerator(object):
     def __init__(self, destination_directory, packing_settings, *,
                  file_prefix="atlas",
-                 texture_mode="RGB",
+                 texture_mode="RGBA",
                  file_type="png",
                  fill_color="#000"):
         super().__init__()
