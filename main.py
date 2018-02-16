@@ -1,5 +1,4 @@
 import pypack2d
-from pypack2d.pack2d.border import Border
 
 settings = dict(
     algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
@@ -12,8 +11,15 @@ settings = dict(
     rotate_mode=pypack2d.RotateMode.AUTO,
     max_width=256,
     max_height=256,
-    # border=dict(rect=(1, 1, 1, 1), type=pypack2d.BorderType.SOLID, color="#000"),
-    border=dict(size=1, type=pypack2d.BorderType.SOLID, color="#000"),
+    # border=dict(
+    #         rect=dict(left=1, top=1, right=1, bottom=1),
+    #         type=pypack2d.BorderType.SOLID,
+    #         color="#000"
+    # ),
+    border=dict(size=1,
+                type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+                color="#fff"
+    ),
     border_mode=pypack2d.BorderMode.AUTO,
     split_rule=pypack2d.GuillotineSplitRule.SHORTER_AXIS,
     debug=True,

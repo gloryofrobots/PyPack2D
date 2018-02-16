@@ -85,16 +85,27 @@ class BinPacker(object):
         border_color = border.get("color", "#000")
 
         if "rect" in border:
-            bin_border = Border.from_rect(border_type, border_color, border["rect"])
+            rect = border["rect"]
+            if isinstance(rect, dict):
+                try:
+                    rect = (rect["left"], rect["top"], rect["right"], rect["bottom"])
+                except KeyError:
+                    raise BinPackerError("Border rect can be tuple (left, top, right, bottom) "
+                                         "or dict {left=, top=, right=, bottom=}")
+
+            bin_border = Border.from_rect(border_type, border_color, rect)
             if border_mode != BorderMode.STRICT:
                 raise BinPackerError("Border rect can be specified only for STRICT border mode")
         elif "size" in border:
+            size = int(border["size"])
+            if size <= 0:
+                raise BinPackerError("Border size must be > 0")
+
             bin_border = Border.from_size(border_type, border_color, border["size"])
         else:
             raise BinPackerError("border settings must have either rect or size attribute")
-            # border=Border(self.settings.type, self.settings.color, bbox=self.settings.border.bbox)
 
-        if border_mode != BorderMode.AUTO and "size" not in border:
+        if border_mode == BorderMode.AUTO and "size" not in border:
             raise BinPackerError("Border mode AUTO expects size attribute")
 
         bin.set_border(bin_border)

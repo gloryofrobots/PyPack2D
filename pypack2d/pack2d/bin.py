@@ -10,11 +10,11 @@ class BinBase(Rectangle):
     def set_border(self, border):
         self.border = border
 
-    # overloaded
+    # override
     def _get_width(self):
         return self._width + self.border.width
 
-    # overloaded
+    # override
     def _get_height(self):
         return self._height + self.border.height
 
