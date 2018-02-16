@@ -1,5 +1,5 @@
 from pypack2d.pack2d.conveyer.conveyer import Conveyer
-from pypack2d.pack2d import packingFactory
+from pypack2d.pack2d import Factories
 
 from pypack2d.pack2d.conveyer.signal import SignalType, Signal
 
@@ -7,10 +7,10 @@ from pypack2d.pack2d.conveyer.signal import SignalType, Signal
 class Pack2D(object):
     def __init__(self, settings):
         super(Pack2D, self).__init__()
-        self.factory = packingFactory
+        self.factories = Factories
         self.conveyer = Conveyer()
-        builder = self.factory.create_instance(settings.packing_mode)
-        builder.build(self.conveyer, self.factory, settings)
+        builder = self.factories.conveyer_builder.create_instance(settings.packing_mode)
+        builder.build(self.conveyer, self.factories, settings)
         signal = Signal(SignalType.PREPARE_TO_PACK, None)
         self.conveyer.process_signal(signal)
 

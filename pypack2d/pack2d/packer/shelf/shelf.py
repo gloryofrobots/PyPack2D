@@ -30,7 +30,7 @@ class Shelf(Rectangle):
 # TODO FLOOR CEILING
 
 class BinPackerShelf(BinPacker):
-    def _on_init(self, factory, settings):
+    def _on_init(self, factories, settings):
         self.shelves = []
 
     def _on_pack_bin(self, bin):

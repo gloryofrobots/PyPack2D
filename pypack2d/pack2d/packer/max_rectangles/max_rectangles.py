@@ -3,7 +3,7 @@ from pypack2d.pack2d.rectangle import Rectangle as Area
 
 
 class BinPackerMaxRectangles(BinPacker):
-    def _on_init(self, factory, settings):
+    def _on_init(self, factories, settings):
         self.waste = []
 
     def _on_set_size(self):

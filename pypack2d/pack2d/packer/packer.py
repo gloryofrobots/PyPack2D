@@ -70,10 +70,10 @@ class BinPacker(object):
         self.max_width = 0
         self.max_height = 0
 
-    def initialise(self, factory, settings):
-        self.heuristic = factory.create_instance(settings.place_heuristic)
+    def initialise(self, factories, settings):
+        self.heuristic = factories.heuristic.create_instance(settings.place_heuristic)
         self.settings = settings
-        self._on_init(factory, settings)
+        self._on_init(factories, settings)
 
     def set_size(self, width, height):
         self.max_width = width
@@ -89,7 +89,7 @@ class BinPacker(object):
     def _on_set_size(self):
         raise NotImplementedError()
 
-    def _on_init(self, factory, settings):
+    def _on_init(self, factories, settings):
         pass
 
     def pack_bin(self, bin):
