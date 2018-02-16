@@ -2,7 +2,7 @@ class Rectangle:
     @classmethod
     def from_bb(cls, left, top, right, bottom):
         rect = cls(0, 0, 0, 0)
-        rect.set_bb(left, top , right, bottom)
+        rect.set_bb(left, top, right, bottom)
         return rect
         pass
 
@@ -61,30 +61,28 @@ class Rectangle:
         return self.width * self.height
 
     def get_bb(self):
-        return ( self.left, self.top, self.right , self.bottom )
+        return (self.left, self.top, self.right, self.bottom)
         pass
 
     @property
     def width(self):
-        return self._getWidth()
+        return self._get_width()
 
-    def _getWidth(self):
+    def _get_width(self):
         return self._width
         pass
 
     @property
     def height(self):
-        return self._getHeight()
+        return self._get_height()
 
-    def _getHeight(self):
+    def _get_height(self):
         return self._height
         pass
-
 
     @property
     def left(self):
         return self._x
-
 
     @property
     def right(self):
@@ -92,7 +90,6 @@ class Rectangle:
             return
         return self.left + self.width
         pass
-
 
     @property
     def top(self):
@@ -104,8 +101,7 @@ class Rectangle:
         return self.top + self.height
         pass
 
-
-    def getLongerSide(self):
+    def get_longer_side(self):
         if self.width > self.height:
             return self.width
             pass
@@ -113,7 +109,7 @@ class Rectangle:
         return self.height
         pass
 
-    def getShorterSide(self):
+    def get_shorter_side(self):
         if self.width < self.height:
             return self.width
             pass
@@ -121,18 +117,18 @@ class Rectangle:
         return self.height
         pass
 
-    def isContain(self, rect):
+    def is_contain(self, rect):
         if self.right < rect.right \
-            or self.bottom < rect.bottom \
-            or self.left > rect.left \
-            or self.top >  rect.top:
+                or self.bottom < rect.bottom \
+                or self.left > rect.left \
+                or self.top > rect.top:
             return False
             pass
 
         return True
         pass
 
-    def isPossibleToFit(self, rect):
+    def is_possible_to_fit(self, rect):
         if self.height < rect.height or self.width < rect.width:
             return False
             pass
@@ -140,7 +136,7 @@ class Rectangle:
         return True
         pass
 
-    def isIntersect(self, rect):
+    def is_intersect(self, rect):
         if self.left >= rect.right or self.top >= rect.bottom or self.right <= rect.left or self.bottom <= rect.top:
             return False
             pass
@@ -148,19 +144,21 @@ class Rectangle:
         return True
         pass
 
-    def getIntersection(self, rect):
-        if self.isIntersect(rect) is False:
+    def get_intersection(self, rect):
+        if self.is_intersect(rect) is False:
             return None
             pass
 
         left = max(self.left, rect.left)
-        top = max(self.top,rect.top)
+        top = max(self.top, rect.top)
         width = min(self.width, rect.width)
         height = min(self.height, rect.height)
         return Rectangle(left, top, width, height)
         pass
 
     def __repr__(self):
-        return "Rectangle %s : %s <left %d top : %d right : %d bottom: %d>" % (str(self.__class__.__name__), hex(id(self)), self.left, self.top, self.right, self.bottom)
+        return "Rectangle %s : %s <left %d top : %d right : %d bottom: %d>" % (
+        str(self.__class__.__name__), hex(id(self)), self.left, self.top, self.right, self.bottom)
         pass
+
     pass

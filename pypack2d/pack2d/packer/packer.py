@@ -75,7 +75,7 @@ class BinPacker(object):
 
     def validate(self, bin):
         for binCheck in self.binSet:
-            if binCheck.isIntersect(bin) is True:
+            if binCheck.is_intersect(bin) is True:
                 raise BinPackerError("Validate Error bins are intersected : %s with %s" % (binCheck, bin))
                 pass
             pass

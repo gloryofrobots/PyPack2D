@@ -1,5 +1,5 @@
 class Border(object):
-    def __init__(self, bbox = None, border = None, borderSize = None, type = None, color = None):
+    def __init__(self, bbox=None, border=None, borderSize=None, type=None, color=None):
         if bbox != None:
             self.init(bbox[0], bbox[1], bbox[2], bbox[3], type, color)
             pass
@@ -12,7 +12,7 @@ class Border(object):
             pass
         pass
 
-    def init(self, left, top, right, bottom, type = None, color = None):
+    def init(self, left, top, right, bottom, type=None, color=None):
         self.left = left
         self.top = top
         self.right = right

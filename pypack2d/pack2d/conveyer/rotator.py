@@ -25,12 +25,12 @@ class Rotator(Unit):
 
 class RotatorUpRight(Rotator):
     def _on_rotate(self, bin):
-        bin.rotateUpRight()
+        bin.rotate_up_right()
         pass
     pass
 
 class RotatorSideWays(Rotator):
     def _on_rotate(self, bin):
-        bin.rotateSideWays()
+        bin.rotate_side_ways()
         pass
     pass

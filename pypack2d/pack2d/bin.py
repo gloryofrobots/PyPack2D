@@ -1,39 +1,34 @@
 from pypack2d.pack2d.rectangle import Rectangle
 from pypack2d.pack2d.border import Border
 
+
 class BinBase(Rectangle):
     def _on_init(self):
         self.rotate = False
-        self.border = Border(bbox = (0,0,0,0))
+        self.border = Border(bbox=(0, 0, 0, 0))
         pass
 
-    def setBorder(self, border):
+    def set_border(self, border):
         self.border = border
         pass
 
-    def getBorder(self):
-        return self.border
-        pass
-
-    #overloaded
-    def _getWidth(self):
+    # overloaded
+    def _get_width(self):
         return self._width + self.border.width
-        pass
 
-    #overloaded
-    def _getHeight(self):
+    # overloaded
+    def _get_height(self):
         return self._height + self.border.height
-        pass
 
-    def getRectangleWithoutBorder(self):
+    def get_rectangle_without_border(self):
         left = self.left + self.border.left
         top = self.top + self.border.top
         width = self.width - self.border.width
         height = self.height - self.border.height
-        return Rectangle( left, top, width, height )
+        return Rectangle(left, top, width, height)
         pass
 
-    def setRotate(self, rotate):
+    def set_rotate(self, rotate):
         if self.rotate == rotate:
             return
             pass
@@ -44,14 +39,14 @@ class BinBase(Rectangle):
 
     def flip(self):
         if self.is_rotate() is False:
-            self.setRotate(True)
+            self.set_rotate(True)
             pass
         else:
-            self.setRotate(False)
+            self.set_rotate(False)
             pass
         pass
 
-    def rotateUpRight(self):
+    def rotate_up_right(self):
         if self.width <= self.height:
             return
             pass
@@ -59,7 +54,7 @@ class BinBase(Rectangle):
         self.flip()
         pass
 
-    def rotateSideWays(self):
+    def rotate_side_ways(self):
         if self.width >= self.height:
             return
             pass
@@ -71,7 +66,7 @@ class BinBase(Rectangle):
         return self.rotate
         pass
 
-    def getUV(self, width, height):
+    def get_uv(self, width, height):
         left = (self.left + self.border.left) / width
         top = (self.top + self.border.top) / height
         right = (self.right - self.border.right) / width
@@ -81,28 +76,8 @@ class BinBase(Rectangle):
         return uv
         pass
 
-#class BinShadow(BinBase):
-#    def setBin(self, bin):
-#        self.bin = bin
-#        self.set(bin.x, bin.y, bin.width, bin.height)
-#        self.setRotate(bin.getRotate())
-#        pass
-#
-#    def apply(self):
-#        self.bin.setCoord(self.x, self.y)
-#        self.bin.setRotate(self.rotate)
-#        pass
 
 class Bin(BinBase):
-#    id = 0
-#
-#    @staticmethod
-#    def initInstance():
-#        id = Bin.id
-#        Bin.id += 1
-#        return id
-#        pass
-
     def clone(self):
         if self.rotate is True:
             bin = Bin(0, 0, self._height, self._width)
@@ -111,23 +86,23 @@ class Bin(BinBase):
             bin = Bin(0, 0, self._width, self._height)
             pass
 
-        bin.setRotate(self.rotate)
-        bin.setId(self.id)
+        bin.set_rotate(self.rotate)
+        bin.set_id(self.id)
         return bin
         pass
 
     def _on_init(self):
-        super(Bin,self)._on_init()
+        super(Bin, self)._on_init()
         self.id = None
-        #self.id = Bin.initInstance()
+        # self.id = Bin.initInstance()
         pass
 
-    def setId(self, id):
+    def set_id(self, id):
         self.id = id
         pass
 
-    def getId(self):
+    def get_id(self):
         return self.id
         pass
-    pass
 
+    pass

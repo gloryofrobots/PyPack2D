@@ -49,7 +49,7 @@ class AtlasGenerator(object):
     def add_image(self, image):
         bin = Bin(0, 0, image.width, image.height)
         idBin = len(self.images)
-        bin.setId(idBin)
+        bin.set_id(idBin)
         self.packing.push(bin)
         self.images[idBin] = image
         pass
@@ -62,7 +62,7 @@ class AtlasGenerator(object):
         pass
 
     def _get_image_for_bin(self, bin):
-        idBin = bin.getId()
+        idBin = bin.get_id()
         image = self.images[idBin]
         return image
         pass

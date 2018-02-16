@@ -11,7 +11,7 @@ class StaticMappedFactory(object):
         if StaticMappedFactory.hasType( name ):
             raise StaticMappedFactoryError("TypeName already register %s" % name)
             pass
-        
+
         StaticMappedFactory._types[name] = classType
         pass
 
@@ -31,7 +31,7 @@ class StaticMappedFactory(object):
             if instance is None:
                 return None
                 pass
-            
+
             StaticMappedFactory._cache[name] = instance
 
             return instance

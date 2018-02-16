@@ -53,7 +53,7 @@ class AtlasImage(object):
             self.rotate()
             pass
 
-        border = self.bin.getBorder()
+        border = self.bin.border
 
         if border.is_empty() is True:
             return
@@ -87,7 +87,7 @@ class AtlasImage(object):
 
         canvas = atlas.get_canvas()
 
-        self.uv = self.bin.getUV(atlas.width, atlas.height)
+        self.uv = self.bin.get_uv(atlas.width, atlas.height)
 
         if self.bin is None:
             raise BaseException("Atlas Image pack error. Bin not determined")

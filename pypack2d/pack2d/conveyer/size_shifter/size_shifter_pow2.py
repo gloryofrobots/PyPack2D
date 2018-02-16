@@ -47,7 +47,7 @@ class BinSizeShifterPow2(BinSizeShifter):
 
     def can_change_rect(self, binSet, newRect):
         for bin in binSet:
-            if newRect.isContain(bin) is False:
+            if newRect.is_contain(bin) is False:
                 return False
                 pass
             pass

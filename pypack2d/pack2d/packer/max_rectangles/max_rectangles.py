@@ -36,7 +36,7 @@ class BinPackerMaxRectangles(BinPacker):
         newRects = []
 
         for rect in self.areas:
-            intersection = rect.getIntersection(bin)
+            intersection = rect.get_intersection(bin)
             if intersection is None:
                 continue
                 pass
@@ -59,7 +59,7 @@ class BinPackerMaxRectangles(BinPacker):
         for i in range(len(sortedAreas)):
             checked = sortedAreas[i]
             for rect in sortedAreas[i + 1: len(self.areas)]:
-                if rect.isContain(checked):
+                if rect.is_contain(checked):
                     self.waste.append(checked)
                     break
                     pass
@@ -102,7 +102,7 @@ class BinPackerMaxRectangles(BinPacker):
     def get_best_rectangle(self, bin, heuristic):
         bestRect = None
         for rect in self.areas:
-            if rect.isPossibleToFit(bin) is False:
+            if rect.is_possible_to_fit(bin) is False:
                 continue
                 pass
 
