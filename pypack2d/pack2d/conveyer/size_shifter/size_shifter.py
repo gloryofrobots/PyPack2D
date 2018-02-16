@@ -7,18 +7,18 @@ class BinSizeShifter(Unit):
         self.connect(SignalType.END_PACK, self._on_end_to_pack)
         self.connect(SignalType.CREATE_PACKER, self._on_create_packer)
 
-    def shift(self, binSet):
-        self._on_shift(binSet)
+    def shift(self, bin_set):
+        self._on_shift(bin_set)
 
     def _on_create_packer(self, packer):
         self.packer = packer
         return True
 
     def _on_end_to_pack(self, result):
-        for binSet in result:
-            self.shift(binSet)
+        for bin_set in result:
+            self.shift(bin_set)
 
         return True
 
-    def _on_shift(self, binSet):
+    def _on_shift(self, bs):
         raise NotImplementedError()

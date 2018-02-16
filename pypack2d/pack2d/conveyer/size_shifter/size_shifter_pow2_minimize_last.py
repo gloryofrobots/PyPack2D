@@ -22,18 +22,18 @@ class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
 
         return True
 
-    def find_minimal_size(self, binSet):
-        width = get_low_pow2(binSet.width)
-        height = get_low_pow2(binSet.height)
+    def find_minimal_size(self, bin_set):
+        width = get_low_pow2(bin_set.width)
+        height = get_low_pow2(bin_set.height)
         if width is None or height is None:
-            return binSet
+            return bin_set
 
         self.packer.set_size(int(width), int(height))
-        bins = binSet.getBins()
+        bins = bin_set.getBins()
         for bin in bins:
             clone = bin.clone()
             if self.packer.pack_bin(clone) is False:
-                return binSet
+                return bin_set
 
         result = self.packer.flush()
         return self.find_minimal_size(result)

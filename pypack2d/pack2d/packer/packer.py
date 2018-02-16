@@ -6,8 +6,10 @@ from pypack2d.pack2d.border import Border
 class BinPackerError(Exception):
     pass
 
+
 class AbortError(Exception):
     pass
+
 
 class ManualAbort(object):
     def __init__(self):

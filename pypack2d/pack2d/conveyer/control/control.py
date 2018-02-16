@@ -9,14 +9,14 @@ class PackingControl(Unit):
         self.packer.set_size(settings.max_width, settings.max_height)
 
         self.result = []
-        self.lastPack = False
+        self.last_pack = False
 
         self.connect(SignalType.PUSH_INPUT, self._on_push_input)
         self.connect(SignalType.PREPARE_TO_PACK, self._on_prepare_to_pack)
         self.connect(SignalType.START_PACK, self._on_start_pack)
 
     def pack_bins(self, input):
-        self.lastPack = False
+        self.last_pack = False
         index = 0
         while True:
             if index == len(input):
@@ -24,25 +24,25 @@ class PackingControl(Unit):
 
             bin = input[index]
 
-            self.lastPack = self.packer.pack_bin(bin)
+            self.last_pack = self.packer.pack_bin(bin)
 
-            if self.lastPack is True:
+            if self.last_pack is True:
                 index += 1
                 continue
 
-            binSet = self.packer.flush()
-            self.result.append(binSet)
+            bin_set = self.packer.flush()
+            self.result.append(bin_set)
 
     def _on_push_input(self, input):
         self.pack_bins(input)
         return True
 
     def check_last_pack(self):
-        if self.lastPack is False:
+        if self.last_pack is False:
             return
 
-        binSet = self.packer.flush()
-        self.result.append(binSet)
+        bin_set = self.packer.flush()
+        self.result.append(bin_set)
 
     def _on_start_pack(self, dummy):
         # TODO REFACTOR

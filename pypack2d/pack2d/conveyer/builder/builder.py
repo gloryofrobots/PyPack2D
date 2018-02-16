@@ -12,7 +12,7 @@ class PackingConveyerBuilder(object):
         conveyer.push_unit(validator)
 
         self._on_build(conveyer, factory, settings)
-        if settings.bin_size_mode == None or settings.bin_size_mode == BinSizeMode.STRICT:
+        if settings.bin_size_mode is None or settings.bin_size_mode == BinSizeMode.STRICT:
             return
 
         shifter = factory.create_instance(settings.bin_size_mode)
