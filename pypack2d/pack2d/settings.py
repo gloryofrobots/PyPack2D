@@ -89,24 +89,39 @@ class RotateMode(Enum):
 
 
 class PackingSettings(object):
-    def __init__(self):
+    def __init__(self, *,
+                 algo=PackingAlgorithm.MAX_RECTANGLES,
+                 heuristic=PlaceHeuristic.BEST_AREA_FIT,
+                 sort_key=SortKey.WIDTH,
+                 sort_order=SortOrder.ASC,
+                 bin_size_mode=BinSizeMode.MINIMIZE_MAXIMAL,
+                 packing_mode=PackingMode.ONLINE,
+                 rotate_mode=RotateMode.AUTO,
+                 max_width=1024,
+                 max_height=1024,
+                 border=None,
+                 border_mode=None,
+                 border_size=None,
+                 split_rule=None,
+                 debug=False
+                 ):
         super(PackingSettings, self).__init__()
-        self.packing_algo = None
-        self.place_heuristic = None
-        self.sort_order = None
-        self.sort_key = None
-        self.bin_size_mode = None
-        self.packing_mode = None
+        self.packing_algo = algo
+        self.place_heuristic = heuristic
+        self.sort_key = sort_key
+        self.sort_order = sort_order
+        self.bin_size_mode = bin_size_mode
+        self.packing_mode = packing_mode
 
-        self.rotate_mode = None
-        self.max_width = None
-        self.max_height = None
-        self.border = None
-        self.border_mode = None
-        self.debug = False
-        self.border_size = None
+        self.rotate_mode = rotate_mode
+        self.max_width = max_width
+        self.max_height = max_height
+        self.border = border
+        self.border_mode = border_mode
+        self.border_size = border_size
 
-        self.split_rule = None
+        self.split_rule = split_rule
+        self.debug = debug
         pass
 
     pass
