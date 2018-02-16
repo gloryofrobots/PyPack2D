@@ -1,14 +1,14 @@
 class Border(object):
-    def __init__(self, bbox=None, border=None, borderSize=None, type=None, color=None):
-        if bbox != None:
+    def __init__(self, bbox=None, border=None, border_size=None, type=None, color=None):
+        if bbox is not None:
             self.init(bbox[0], bbox[1], bbox[2], bbox[3], type, color)
             pass
-        elif border != None:
+        elif border is not None:
             self.init(border.left, border.top, border.right, border.bottom, border.type, border.color)
             return
             pass
-        elif borderSize != None:
-            self.init(borderSize, borderSize, borderSize, borderSize, type, color)
+        elif border_size is not None:
+            self.init(border_size, border_size, border_size, border_size, type, color)
             pass
         pass
 

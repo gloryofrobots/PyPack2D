@@ -8,7 +8,7 @@ class BinPackerMaxRectangles(BinPacker):
         pass
 
     def _on_set_size(self):
-        self.areas = [Area.from_wh(self.maxWidth, self.maxHeight)]
+        self.areas = [Area.from_wh(self.max_width, self.max_height)]
         pass
 
     def _on_pack_bin(self, bin):

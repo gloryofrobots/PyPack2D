@@ -67,11 +67,11 @@ class BinPackerShelf(BinPacker):
             y = topShelf.bottom
             pass
 
-        if y + bin.height > self.maxHeight:
+        if y + bin.height > self.max_height:
             return None
             pass
 
-        shelf = Shelf(0, y, self.maxWidth, bin.height)
+        shelf = Shelf(0, y, self.max_width, bin.height)
         self.shelves.append(shelf)
         return shelf
         pass

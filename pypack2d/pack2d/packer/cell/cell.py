@@ -34,7 +34,7 @@ class Cell(Rectangle):
 
 class BinPackerCell(BinPacker):
     def _on_set_size(self):
-        self.cells = [Cell(0, 0, self.maxWidth, self.maxHeight)]
+        self.cells = [Cell(0, 0, self.max_width, self.max_height)]
         pass
 
     def _on_pack_bin(self, bin):
@@ -72,7 +72,7 @@ class BinPackerCell(BinPacker):
 
         rightEdge = cell.left + rect.width
 
-        if rightEdge > self.maxWidth:
+        if rightEdge > self.max_width:
             return False
             pass
 
@@ -89,7 +89,7 @@ class BinPackerCell(BinPacker):
 
     def get_best_cell(self, bin):
         bestCell = None
-        minTopLeft = self.maxHeight * 2
+        minTopLeft = self.max_height * 2
         for cell in self.cells:
             if self.can_place(cell, bin) is False:
                 continue

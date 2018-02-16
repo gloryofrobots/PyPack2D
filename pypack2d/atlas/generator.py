@@ -80,7 +80,7 @@ class AtlasGenerator(object):
             atlas.pack()
             atlas.save()
 
-            if self.settings.isDebug is True:
+            if self.settings.debug is True:
                 # atlas.show()
                 pass
 
@@ -105,13 +105,13 @@ class AtlasGenerator(object):
     def generate(self):
         self.packing.pack()
 
-        wasted = self.packing.getWaste()
+        wasted = self.packing.get_waste()
         self._work_with_waste(wasted)
 
-        binSets = self.packing.getResult()
+        binSets = self.packing.get_result()
         self._work_with_result(binSets)
 
-        if self.settings.isDebug is True:
+        if self.settings.debug is True:
             self.report(binSets)
             pass
         pass

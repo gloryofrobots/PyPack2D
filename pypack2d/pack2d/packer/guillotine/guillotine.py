@@ -67,11 +67,11 @@ class PackNode(Rectangle):
 
 class BinPackerGuillotine(BinPacker):
     def _on_init(self, factory, settings):
-        self.splitter = factory.create_instance(settings.splitRule)
+        self.splitter = factory.create_instance(settings.split_rule)
         pass
 
     def _on_set_size(self):
-        self.packNode = PackNode(0, 0, self.maxWidth, self.maxHeight)
+        self.packNode = PackNode(0, 0, self.max_width, self.max_height)
         pass
 
     def _on_pack_bin(self, bin):
@@ -85,7 +85,7 @@ class BinPackerGuillotine(BinPacker):
         pass
 
     def _on_flush(self):
-        self.packNode = PackNode(0, 0, self.maxWidth, self.maxHeight)
+        self.packNode = PackNode(0, 0, self.max_width, self.max_height)
         pass
 
     pass

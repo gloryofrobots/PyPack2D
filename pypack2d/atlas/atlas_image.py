@@ -1,4 +1,4 @@
-from pypack2d.pack2d import BorderType
+from pypack2d.pack2d.settings import BorderType
 from pypack2d.atlas.border_draw import BorderDrawEdge, BorderDrawRectangle
 from PIL import Image
 

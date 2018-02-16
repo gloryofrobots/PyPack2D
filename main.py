@@ -1,32 +1,30 @@
-import pypack2d.pack2d as packing
-from pypack2d.pack2d.settings import PackingSettings
+from pypack2d.pack2d import settings
 from pypack2d.atlas.generator import AtlasGenerator
 from pypack2d.atlas.atlas_image import AtlasImage
-from PIL import Image
-import glob, os
+import glob
 
-settings = PackingSettings()
-settings.packingAlgorithm = packing.PackingAlgorithm.MAX_RECTANGLES
-settings.placeHeuristic = packing.PlaceHeuristic.BEST_WIDTH_FIT
-settings.sortOrder = packing.SortOrder.ASC
-settings.sortKey = packing.SortKey.AREA
-settings.binSizeMode = packing.BinSizeMode.STRICT
-settings.packingMode = packing.PackingMode.OFFLINE
+options = settings.PackingSettings()
+options.packing_algo = settings.PackingAlgorithm.MAX_RECTANGLES
+options.place_heuristic = settings.PlaceHeuristic.BEST_WIDTH_FIT
+options.sort_order = settings.SortOrder.ASC
+options.sort_key = settings.SortKey.AREA
+options.bin_size_mode = settings.BinSizeMode.STRICT
+options.packing_mode = settings.PackingMode.OFFLINE
 
-settings.rotateMode = packing.RotateMode.AUTO
-settings.maxWidth = 256
-settings.maxHeight = 256
-settings.border = None
-# settings.borderMode = packing.BorderMode.STRICT
-settings.borderMode = None
-settings.isDebug = True
-settings.borderSize = 0
+options.rotate_mode = settings.RotateMode.AUTO
+options.max_width = 256
+options.max_height = 256
+options.border = None
+# options.border_mode = settings.BorderMode.STRICT
+options.border_mode = None
+options.debug = True
+options.border_size = 0
 
-settings.splitRule = packing.GuillotineSplitRule.SHORTER_AXIS
+options.split_rule = settings.GuillotineSplitRule.SHORTER_AXIS
 
 
 generator = AtlasGenerator()
-generator.initialise(settings, "img/res", "atlas", "RGB", "png", "#fff")
+generator.initialise(options, "img/res", "atlas", "RGB", "png", "#fff")
 
 
 for infile in glob.glob("img/src/*.png"):

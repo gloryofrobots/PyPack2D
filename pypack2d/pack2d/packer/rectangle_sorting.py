@@ -1,4 +1,4 @@
-from pypack2d.pack2d import SortOrder
+from pypack2d.pack2d.settings import SortOrder
 
 
 class RectangleSorting(object):

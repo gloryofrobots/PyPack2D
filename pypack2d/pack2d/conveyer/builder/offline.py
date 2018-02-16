@@ -9,13 +9,13 @@ class PackingConveyerBuilderOffline(PackingConveyerBuilder):
         accumulator = Accumulator()
         conveyer.push_unit(accumulator)
 
-        if settings.sortOrder is not None:
-            sorting = factory.create_instance(settings.sortKey)
-            sorter = Sorter(sorting, settings.sortOrder)
+        if settings.sort_order is not None:
+            sorting = factory.create_instance(settings.sort_key)
+            sorter = Sorter(sorting, settings.sort_order)
             conveyer.push_unit(sorter)
             pass
 
-        packer = factory.create_instance(settings.packingAlgorithm)
+        packer = factory.create_instance(settings.packing_algo)
         control = PackingControl(packer, factory, settings)
         conveyer.push_unit(control)
         pass
