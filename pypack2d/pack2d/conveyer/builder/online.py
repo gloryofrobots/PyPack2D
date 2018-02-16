@@ -7,7 +7,7 @@ class PackingConveyerBuilderOnline(PackingConveyerBuilder):
     def _on_build(self, conveyer, factory, settings):
         filter = Filter(1)
         conveyer.push_unit(filter)
-        packer = factory.getInstance(settings.packingAlgorithm)
+        packer = factory.create_instance(settings.packingAlgorithm)
         control = PackingControl(packer, factory, settings)
         conveyer.push_unit(control)
         pass

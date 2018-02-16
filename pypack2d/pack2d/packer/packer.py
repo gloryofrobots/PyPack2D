@@ -31,7 +31,7 @@ class BinPacker(object):
 
     def initialise(self, factory, settings):
         self.settings = settings
-        self.heuristic = factory.getInstance(settings.placeHeuristic)
+        self.heuristic = factory.create_instance(settings.placeHeuristic)
 
         self.settings = settings
         self._on_init(factory, settings)

@@ -14,7 +14,7 @@ class Pack2D(object):
 
     def initialise(self, settings):
         self.conveyer = Conveyer()
-        builder = self.factory.getInstance(settings.packingMode)
+        builder = self.factory.create_instance(settings.packingMode)
         builder.build(self.conveyer, self.factory, settings)
         signal = Signal(SignalType.PREPARE_TO_PACK, None)
         self.conveyer.process_signal(signal)

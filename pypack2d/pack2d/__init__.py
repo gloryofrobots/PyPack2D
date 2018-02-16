@@ -92,9 +92,9 @@ class RotateMode(Enum):
 # This fat big factory is created for minimising of if elif statements in places where program choose object type for user option
 # So we just have a dictionary with {typeName:class}. It`s bad style in memory usage aspect but it simplifies code
 
-from pypack2d.pack2d.mapped_factory import MappedFactory
+from pypack2d.pack2d.factory import Factory
 
-packingFactory = MappedFactory()
+packingFactory = Factory()
 
 from pypack2d.pack2d.conveyer.builder.online import PackingConveyerBuilderOnline
 from pypack2d.pack2d.conveyer.builder.offline import PackingConveyerBuilderOffline

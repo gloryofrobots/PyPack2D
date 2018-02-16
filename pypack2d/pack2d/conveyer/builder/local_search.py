@@ -10,7 +10,7 @@ class PackingConveyerBuilderLocalSearch(PackingConveyerBuilder):
         conveyer.push_unit(accumulator)
 
         if settings.sortOrder is not None:
-            sorting = factory.getInstance(settings.sortKey)
+            sorting = factory.create_instance(settings.sortKey)
             sorter = Sorter(sorting, settings.sortOrder)
             conveyer.push_unit(sorter)
             pass

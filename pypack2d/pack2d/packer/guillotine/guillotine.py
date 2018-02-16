@@ -67,7 +67,7 @@ class PackNode(Rectangle):
 
 class BinPackerGuillotine(BinPacker):
     def _on_init(self, factory, settings):
-        self.splitter = factory.getInstance(settings.splitRule)
+        self.splitter = factory.create_instance(settings.splitRule)
         pass
 
     def _on_set_size(self):

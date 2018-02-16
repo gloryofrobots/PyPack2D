@@ -5,7 +5,7 @@ from pypack2d.pack2d import BinSizeMode, RotateMode
 class PackingConveyerBuilder(object):
     def build(self, conveyer, factory, settings):
         if settings.rotateMode == RotateMode.UP_RIGHT or settings.rotateMode == RotateMode.SIDE_WAYS:
-            rotator = factory.getInstance(settings.rotateMode)
+            rotator = factory.create_instance(settings.rotateMode)
             conveyer.push_unit(rotator)
             pass
 
@@ -17,7 +17,7 @@ class PackingConveyerBuilder(object):
             return
             pass
 
-        shifter = factory.getInstance(settings.binSizeMode)
+        shifter = factory.create_instance(settings.binSizeMode)
         conveyer.push_unit(shifter)
         pass
 
