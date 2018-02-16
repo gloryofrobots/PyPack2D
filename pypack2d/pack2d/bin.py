@@ -77,12 +77,10 @@ class Bin(BinBase):
         return bin
 
     def _on_init(self):
-        super(Bin, self)._on_init()
+        super()._on_init()
         self.id = None
         # self.id = Bin.initInstance()
 
     def set_id(self, id):
         self.id = id
 
-    def get_id(self):
-        return self.id

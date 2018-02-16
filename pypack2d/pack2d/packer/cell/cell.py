@@ -19,9 +19,9 @@ class Cell(Rectangle):
     def place(self, rect):
         left = self.left
         top = self.top
-        destinationRect = Rectangle(left, top, rect.width, rect.height)
+        destination_rect = Rectangle(left, top, rect.width, rect.height)
         self.cut(rect.width)
-        return destinationRect
+        return destination_rect
 
 
 class BinPackerCell(BinPacker):
@@ -29,24 +29,24 @@ class BinPackerCell(BinPacker):
         self.cells = [Cell(0, 0, self.max_width, self.max_height)]
 
     def _on_pack_bin(self, bin):
-        bestCell = self.get_best_cell(bin)
+        best_cell = self.get_best_cell(bin)
 
-        if bestCell is None:
+        if best_cell is None:
             return False
 
-        destinationRect = bestCell.place(bin)
+        destination_rect = best_cell.place(bin)
 
-        newLine = Cell(destinationRect.left, destinationRect.bottom, destinationRect.width,
-                       bestCell.height - bin.height)
+        new_line = Cell(destination_rect.left, destination_rect.bottom,
+                        destination_rect.width, best_cell.height - bin.height)
 
-        if bestCell.is_over() is True:
-            self.cells.remove(bestCell)
+        if best_cell.is_over() is True:
+            self.cells.remove(best_cell)
 
-        self.cells.append(newLine)
+        self.cells.append(new_line)
 
-        self.normalise(destinationRect)
+        self.normalise(destination_rect)
 
-        bin.set_coord(destinationRect.left, destinationRect.top)
+        bin.set_coord(destination_rect.left, destination_rect.top)
         return True
 
     def can_place(self, cell, rect):
@@ -56,47 +56,47 @@ class BinPackerCell(BinPacker):
         if cell.width >= rect.width:
             return True
 
-        rightEdge = cell.left + rect.width
+        right_edge = cell.left + rect.width
 
-        if rightEdge > self.max_width:
+        if right_edge > self.max_width:
             return False
 
-        for bin in self.binSet:
-            if bin.left < rightEdge and bin.bottom > cell.top:
+        for bin in self.bin_set:
+            if bin.left < right_edge and bin.bottom > cell.top:
                 return False
 
         return True
 
     def get_best_cell(self, bin):
-        bestCell = None
-        minTopLeft = self.max_height * 2
+        best_cell = None
+        min_top_left = self.max_height * 2
         for cell in self.cells:
             if self.can_place(cell, bin) is False:
                 continue
 
-            topLeft = cell.top + bin.height
+            top_left = cell.top + bin.height
 
-            if minTopLeft < topLeft:
+            if min_top_left < top_left:
                 continue
 
-            bestCell = cell
-            minTopLeft = topLeft
+            best_cell = cell
+            min_top_left = top_left
 
-        return bestCell
+        return best_cell
 
-    def normalise(self, destinationRect):
-        newCells = []
+    def normalise(self, destination_rect):
+        new_cells = []
         for cell in self.cells:
-            if cell.left < destinationRect.right \
-                    and cell.top < destinationRect.top:
+            if cell.left < destination_rect.right \
+                    and cell.top < destination_rect.top:
 
-                if cell.right < destinationRect.right:
-                    cell.set_bb(cell.left, cell.top, cell.right, destinationRect.top)
+                if cell.right < destination_rect.right:
+                    cell.set_bb(cell.left, cell.top, cell.right, destination_rect.top)
 
                 else:
-                    newCell = Cell(cell.left, cell.top, destinationRect.right, destinationRect.top)
-                    cell.cut(newCell.width)
-                    newCells.append(newCell)
+                    new_cell = Cell(cell.left, cell.top, destination_rect.right, destination_rect.top)
+                    cell.cut(new_cell.width)
+                    new_cells.append(new_cell)
 
-        if len(newCells) is not 0:
-            self.cells.extend(newCells)
+        if len(new_cells) is not 0:
+            self.cells.extend(new_cells)

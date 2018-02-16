@@ -1,4 +1,5 @@
 class Rectangle:
+    # classmethod factories for providing api to subclasses
     @classmethod
     def from_bb(cls, left, top, right, bottom):
         rect = cls(0, 0, 0, 0)
@@ -21,6 +22,10 @@ class Rectangle:
         return rect
 
     def __init__(self, x, y, width, height):
+        self._x = 0
+        self._y = 0
+        self._width = 0
+        self._height = 0
         self.set(x, y, width, height)
         self._on_init()
 

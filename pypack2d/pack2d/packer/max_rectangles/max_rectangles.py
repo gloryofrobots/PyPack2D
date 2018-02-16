@@ -10,12 +10,12 @@ class BinPackerMaxRectangles(BinPacker):
         self.areas = [Area.from_wh(self.max_width, self.max_height)]
 
     def _on_pack_bin(self, bin):
-        bestRect = self.get_best_rectangle(bin, self.heuristic)
+        best_rect = self.get_best_rectangle(bin, self.heuristic)
 
-        if bestRect is None:
+        if best_rect is None:
             return False
 
-        destination = self.place_bin_to_rect(bestRect, bin)
+        destination = self.place_bin_to_rect(best_rect, bin)
         bin.set_coord(destination.left, destination.top)
         return True
 
@@ -28,28 +28,28 @@ class BinPackerMaxRectangles(BinPacker):
         return destination
 
     def check_bin_intersections(self, bin):
-        newRects = []
+        new_rects = []
 
         for rect in self.areas:
             intersection = rect.get_intersection(bin)
             if intersection is None:
                 continue
 
-            self.split_on_max_rectangles(rect, intersection, newRects)
+            self.split_on_max_rectangles(rect, intersection, new_rects)
             self.waste.append(rect)
 
-        if len(newRects) is 0:
+        if len(new_rects) is 0:
             return
 
         self.remove_bad()
-        self.areas.extend(newRects)
+        self.areas.extend(new_rects)
 
     def normalise_rectangles(self):
-        sortedAreas = sorted(self.areas, key=lambda rect: rect.area, reverse=False)
+        sorted_areas = sorted(self.areas, key=lambda rect: rect.area, reverse=False)
 
-        for i in range(len(sortedAreas)):
-            checked = sortedAreas[i]
-            for rect in sortedAreas[i + 1: len(self.areas)]:
+        for i in range(len(sorted_areas)):
+            checked = sorted_areas[i]
+            for rect in sorted_areas[i + 1: len(self.areas)]:
                 if rect.is_contain(checked):
                     self.waste.append(checked)
                     break
@@ -62,57 +62,32 @@ class BinPackerMaxRectangles(BinPacker):
 
         self.waste = []
 
-    def split_on_max_rectangles(self, bigRect, splitRect, destination):
-        if splitRect.left != bigRect.left:
-            rect = Area(bigRect.left, bigRect.top, splitRect.left - bigRect.left, bigRect.height)
+    def split_on_max_rectangles(self, big_rect, split_rect, destination):
+        if split_rect.left != big_rect.left:
+            rect = Area(big_rect.left, big_rect.top, split_rect.left - big_rect.left, big_rect.height)
             destination.append(rect)
 
-        if splitRect.top != bigRect.top:
-            rect = Area(bigRect.left, bigRect.top, bigRect.width, splitRect.top - bigRect.top)
+        if split_rect.top != big_rect.top:
+            rect = Area(big_rect.left, big_rect.top, big_rect.width, split_rect.top - big_rect.top)
             destination.append(rect)
 
-        if splitRect.right != bigRect.right:
-            rect = Area(splitRect.right, bigRect.top, bigRect.right - splitRect.right, bigRect.height)
+        if split_rect.right != big_rect.right:
+            rect = Area(split_rect.right, big_rect.top, big_rect.right - split_rect.right, big_rect.height)
             destination.append(rect)
 
-        if splitRect.bottom != bigRect.bottom:
-            rect = Area(bigRect.left, splitRect.bottom, bigRect.width, bigRect.bottom - splitRect.bottom)
+        if split_rect.bottom != big_rect.bottom:
+            rect = Area(big_rect.left, split_rect.bottom, big_rect.width, big_rect.bottom - split_rect.bottom)
             destination.append(rect)
 
     def get_best_rectangle(self, bin, heuristic):
-        bestRect = None
+        best_rect = None
         for rect in self.areas:
             if rect.is_possible_to_fit(bin) is False:
                 continue
 
-            best, worth = heuristic.choose(bin, bestRect, rect)
+            best, worth = heuristic.choose(bin, best_rect, rect)
 
-            if best is not bestRect:
-                bestRect = best
+            if best is not best_rect:
+                best_rect = best
 
-        return bestRect
-
-    def _on_debug(self):
-        return
-        from PIL import Image, ImageDraw
-        from random import choice, randrange
-
-        COLORS = []
-        for i in range(1000):
-            r = randrange(0, 255)
-            g = randrange(0, 255)
-            b = randrange(0, 255)
-            COLORS.append((r, g, b))
-
-        canvas = Image.new("RGBA", (self.binSet.width, self.binSet.height), color=(128, 128, 128))
-        draw = ImageDraw.Draw(canvas)
-
-        for area in self.areas:
-            draw.rectangle([area.left, area.top, area.right - 1, area.bottom - 1], outline=choice(COLORS))
-
-        for bin in self.binSet:
-            # img = Image.new("RGBA", (bin.width, bin.height), color = choice(COLORS))
-            draw.rectangle([bin.left, bin.top, bin.right - 1, bin.bottom - 1], fill=choice(COLORS))
-            # canvas.paste(img, (bin.left, bin.top))
-
-        canvas.show()
+        return best_rect

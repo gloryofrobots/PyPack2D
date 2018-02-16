@@ -12,7 +12,7 @@ class AtlasImage(object):
     def __init__(self, path=None, img=None):
         super(AtlasImage, self).__init__()
         self.img = None
-        if path != None:
+        if path is not None:
             self._init_from_filename(path)
 
         elif img is not None:
@@ -33,14 +33,11 @@ class AtlasImage(object):
     def __repr__(self):
         return "<%s %s (%i,%i)>" % (self.__class__.__name__, self.path, self.width, self.height)
 
-    def getBin(self):
-        return self.bin
-
     def _initialise(self):
         self.width = self.img.size[0]
         self.height = self.img.size[1]
 
-    def get_image_PIL(self):
+    def get_pil_image(self):
         return self.img
 
     def set_bin(self, bin):
@@ -91,15 +88,15 @@ class AtlasImage(object):
 
 
 class Atlas(object):
-    def __init__(self, width, height, dirPath, fileName, texMode, atlasType, fillColor):
+    def __init__(self, width, height, dir_path, filename, tex_mode, atlas_type, fill_color):
         super(Atlas, self).__init__()
         self.width = width
         self.height = height
-        self.dirPath = dirPath
-        self.fileName = fileName
-        self.textureMode = texMode
-        self.atlasType = atlasType
-        self.fillColor = fillColor
+        self.dir_path = dir_path
+        self.filename = filename
+        self.texture_mode = tex_mode
+        self.atlas_type = atlas_type
+        self.fill_color = fill_color
 
         self.canvas = None
         self.images = []
@@ -111,15 +108,18 @@ class Atlas(object):
     def get_canvas(self):
         return self.canvas
 
+    @property
+    def path(self):
+        return os.path.join(self.dir_path, self.filename)
+
     def save(self):
-        path = os.path.join(self.dirPath, self.fileName)
-        self.canvas.save(path, self.atlasType)
+        self.canvas.save(self.path, self.atlas_type)
 
     def show(self):
         self.canvas.show()
 
     def pack(self):
-        self.canvas = Image.new(self.textureMode, (self.width, self.height), self.fillColor)
+        self.canvas = Image.new(self.texture_mode, (self.width, self.height), self.fill_color)
         for img in self.images:
             img.pack(self)
 
@@ -144,16 +144,16 @@ class AtlasGenerator(object):
         self.atlases = []
         self.packing = Pack2D(packing_settings)
 
-    def get_new_atlas(self, binSet):
+    def get_new_atlas(self, bin_set):
         index = len(self.atlases)
         counter = ""
         if index > 0:
             counter = "%i" % index
 
-        atlasFileName = self.relative_filename + counter + "." + self.atlas_type
-        binWidth = binSet.width
-        binHeight = binSet.height
-        atlas = Atlas(binWidth, binHeight, self.dir_path, atlasFileName, self.tex_mode, self.atlas_type,
+        atlas_filename = self.relative_filename + counter + "." + self.atlas_type
+        bin_width = bin_set.width
+        bin_height = bin_set.height
+        atlas = Atlas(bin_width, bin_height, self.dir_path, atlas_filename, self.tex_mode, self.atlas_type,
                       self.fill_color)
         return atlas
 
@@ -171,10 +171,10 @@ class AtlasGenerator(object):
 
     def _add_image(self, image):
         bin = Bin(0, 0, image.width, image.height)
-        idBin = len(self.images)
-        bin.set_id(idBin)
+        bin_id = len(self.images)
+        bin.set_id(bin_id)
         self.packing.push(bin)
-        self.images[idBin] = image
+        self.images[bin_id] = image
 
     def _work_with_waste(self, wasted):
         for wasteImage in wasted:
@@ -182,12 +182,11 @@ class AtlasGenerator(object):
             self.wasted_images.append(image)
 
     def _get_image_for_bin(self, bin):
-        idBin = bin.get_id()
-        image = self.images[idBin]
+        image = self.images[bin.id]
         return image
 
-    def _work_with_result(self, binSets):
-        for binSet in binSets:
+    def _work_with_result(self, bin_sets):
+        for binSet in bin_sets:
             atlas = self.get_new_atlas(binSet)
             for bin in binSet:
                 image = self._get_image_for_bin(bin)
@@ -198,22 +197,19 @@ class AtlasGenerator(object):
             atlas.pack()
             atlas.save()
 
-            if self.packing_settings.debug is True:
-                pass
-                # atlas.show()
-
             self.atlases.append(atlas)
 
-    def stats(self, binSets):
-        if len(binSets) is 0:
+    @staticmethod
+    def stats(bin_sets):
+        if len(bin_sets) is 0:
             return
 
         total = 0
-        for binSet in binSets:
-            total += binSet.get_efficiency()
+        for bin_set in bin_sets:
+            total += bin_set.get_efficiency()
 
-        eff = total / len(binSets)
-        return dict(count=len(binSets), efficiency=eff)
+        eff = total / len(bin_sets)
+        return dict(count=len(bin_sets), efficiency=eff)
 
     def generate(self):
         self.packing.pack()
@@ -221,10 +217,10 @@ class AtlasGenerator(object):
         wasted = self.packing.get_waste()
         self._work_with_waste(wasted)
 
-        binSets = self.packing.get_result()
-        self._work_with_result(binSets)
+        bin_sets = self.packing.get_result()
+        self._work_with_result(bin_sets)
 
-        stats = self.stats(binSets)
+        stats = self.stats(bin_sets)
         return stats
 
     def get_wasted_images(self):

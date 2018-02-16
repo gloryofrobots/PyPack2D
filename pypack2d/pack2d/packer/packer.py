@@ -1,5 +1,4 @@
-from pypack2d.pack2d.packer.bin_set import BinSet
-from pypack2d.pack2d.settings import BorderMode, RotateMode, BorderType
+from pypack2d.pack2d.settings import BorderMode, BorderType
 from pypack2d.pack2d.border import Border
 
 
@@ -14,23 +13,65 @@ class AbortError(Exception):
 class ManualAbort(object):
     def __init__(self):
         super(ManualAbort, self).__init__()
-        self.debugCount = 0
+        self.debug_count = 0
 
     def abort_on_count(self, limit):
-        if self.debugCount >= limit:
+        if self.debug_count >= limit:
             raise AbortError("Abort on count")
 
-        self.debugCount += 1
+        self.debug_count += 1
+
+
+class BinSet(object):
+    def __init__(self, width, height):
+        super(BinSet, self).__init__()
+        self.bins = []
+        self.width = width
+        self.height = height
+
+    def set_size(self, width, height):
+        self.width = width
+        self.height = height
+
+    def add(self, bin):
+        self.bins.append(bin)
+
+    def get_bins(self):
+        return self.bins
+
+    def __iter__(self):
+        return self.bins.__iter__()
+
+    def get_efficiency(self):
+        area = self.width * self.height
+        bins_area = self.get_bins_area()
+        efficiency = (bins_area * 100) / area
+        return efficiency
+
+    def get_free_space(self):
+        area = self.width * self.height
+        bins_area = self.get_bins_area()
+        return area - bins_area
+
+    def get_bins_area(self):
+        bins_area = 0
+        for bin in self.bins:
+            bins_area += bin.area
+
+        return bins_area
 
 
 class BinPacker(object):
     def __init__(self):
         super(BinPacker, self).__init__()
+        self.bin_set = None
+        self.heuristic = None
+        self.settings = None
+        self.max_width = 0
+        self.max_height = 0
 
     def initialise(self, factory, settings):
-        self.settings = settings
         self.heuristic = factory.create_instance(settings.place_heuristic)
-
         self.settings = settings
         self._on_init(factory, settings)
 
@@ -42,7 +83,7 @@ class BinPacker(object):
             self.max_height += self.settings.border_size * 2
             self.max_width += self.settings.border_size * 2
 
-        self.binSet = BinSet(self.max_width, self.max_height)
+        self.bin_set = BinSet(self.max_width, self.max_height)
         self._on_set_size()
 
     def _on_set_size(self):
@@ -57,23 +98,15 @@ class BinPacker(object):
         if self._on_pack_bin(bin) is False:
             return False
 
-        if self.settings.debug is True:
-            self.validate(bin)
-            self.on_debug()
+        self.validate(bin)
 
-        self.binSet.add(bin)
+        self.bin_set.add(bin)
         return True
 
     def validate(self, bin):
-        for binCheck in self.binSet:
+        for binCheck in self.bin_set:
             if binCheck.is_intersect(bin) is True:
                 raise BinPackerError("Validate Error bins are intersected : %s with %s" % (binCheck, bin))
-
-    def on_debug(self):
-        self._on_debug()
-
-    def _on_debug(self):
-        pass
 
     def _on_pack_bin(self, bin):
         raise NotImplementedError()
@@ -113,9 +146,9 @@ class BinPacker(object):
         bin.set_border(bin_border)
 
     def normalise_border(self):
-        realWidth = self.max_width - self.settings.border_size * 2
-        realHeight = self.max_height - self.settings.border_size * 2
-        for bin in self.binSet:
+        real_width = self.max_width - self.settings.border_size * 2
+        real_height = self.max_height - self.settings.border_size * 2
+        for bin in self.bin_set:
             border = bin.border
             if bin.top is 0:
                 border.top = 0
@@ -129,20 +162,20 @@ class BinPacker(object):
             else:
                 bin.set_coord(bin.left - self.settings.border_size, bin.top)
 
-            if bin.right > realWidth:
+            if bin.right > real_width:
                 border.right = 0
 
-            if bin.bottom > realHeight:
+            if bin.bottom > real_height:
                 border.bottom = 0
 
-            self.binSet.set_size(realWidth, realHeight)
+            self.bin_set.set_size(real_width, real_height)
 
     def flush(self):
         if self.settings.border_mode == BorderMode.AUTO:
             self.normalise_border()
 
-        result = self.binSet
-        self.binSet = BinSet(self.max_width, self.max_height)
+        result = self.bin_set
+        self.bin_set = BinSet(self.max_width, self.max_height)
         self._on_flush()
         self._on_set_size()
         return result

@@ -5,19 +5,19 @@ from pypack2d.pack2d.rectangle import Rectangle
 
 class PackNode(Rectangle):
     def _on_init(self):
-        self.firstChild = None
-        self.secondChild = None
+        self.first_child = None
+        self.second_child = None
 
     def has_children(self):
-        if self.secondChild is None \
-                and self.firstChild is None:
+        if self.second_child is None \
+                and self.first_child is None:
             return False
 
         return True
 
     def get_free_branch(self, rect, placer):
         if self.has_children() is True:
-            best, worth = placer.getPlace(self.firstChild, self.secondChild)
+            best, worth = placer.getPlace(self.first_child, self.second_child)
             leaf = best.get_free_branch(rect)
             if leaf is None:
                 return worth.get_free_branch(rect)
@@ -32,7 +32,7 @@ class PackNode(Rectangle):
 
     def insert(self, rect, splitter, placer):
         if self.has_children() is True:
-            best, worth = placer.choose(rect, self.firstChild, self.secondChild)
+            best, worth = placer.choose(rect, self.first_child, self.second_child)
             leaf = best.insert(rect, splitter, placer)
             if leaf is None:
                 return worth.insert(rect, splitter, placer)
@@ -45,8 +45,8 @@ class PackNode(Rectangle):
 
         rectangles = splitter.split(self, rect)
 
-        self.firstChild = PackNode.from_rectangle(rectangles[0])
-        self.secondChild = PackNode.from_rectangle(rectangles[1])
+        self.first_child = PackNode.from_rectangle(rectangles[0])
+        self.second_child = PackNode.from_rectangle(rectangles[1])
 
         leaf = PackNode.from_rectangle(Rectangle(self.left, self.top, self.left + rect.width, self.top + rect.height))
         return leaf

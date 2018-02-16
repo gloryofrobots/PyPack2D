@@ -29,7 +29,7 @@ class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
             return bin_set
 
         self.packer.set_size(int(width), int(height))
-        bins = bin_set.getBins()
+        bins = bin_set.get_bins()
         for bin in bins:
             clone = bin.clone()
             if self.packer.pack_bin(clone) is False:

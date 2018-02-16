@@ -3,11 +3,11 @@ from pypack2d.pack2d.settings import SortOrder
 
 class RectangleSorting(object):
     def sort(self, input, order):
-        isReverse = self.get_reverse_from_order(order)
-        self._on_sort(input, isReverse)
+        is_reverse = self.get_reverse_from_order(order)
+        self._on_sort(input, is_reverse)
 
-    def _on_sort(self, input, isReverse):
-        input.sort(key=lambda image: self.get_sorting_attribute(image), reverse=isReverse)
+    def _on_sort(self, input, reverse):
+        input.sort(key=lambda image: self.get_sorting_attribute(image), reverse=reverse)
 
     def get_sorting_attribute(self, image):
         pass

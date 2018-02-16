@@ -30,74 +30,74 @@ class PlaceHeuristicFirstFit(PlaceHeuristic):
 
 class PlaceHeuristicBestWidthFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = first.width - rect.width
-        leftOver2 = second.width - rect.width
-        return min_sort(leftOver1, leftOver2, first, second)
+        left_over1 = first.width - rect.width
+        left_over2 = second.width - rect.width
+        return min_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicWorstWidthFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = first.width - rect.width
-        leftOver2 = second.width - rect.width
-        return max_sort(leftOver1, leftOver2, first, second)
+        left_over1 = first.width - rect.width
+        left_over2 = second.width - rect.width
+        return max_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicBestHeightFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = first.height - rect.height
-        leftOver2 = second.height - rect.height
-        return min_sort(leftOver1, leftOver2, first, second)
+        left_over1 = first.height - rect.height
+        left_over2 = second.height - rect.height
+        return min_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicWorstHeightFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = first.height - rect.height
-        leftOver2 = second.height - rect.height
-        return max_sort(leftOver1, leftOver2, first, second)
+        left_over1 = first.height - rect.height
+        left_over2 = second.height - rect.height
+        return max_sort(left_over1, left_over2, first, second)
 
 
 ### GUILLOTINE
 
 class PlaceHeuristicBestShortSideFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = min(first.width - rect.width, first.height - rect.height)
-        leftOver2 = min(second.width - rect.width, second.height - rect.height)
-        return min_sort(leftOver1, leftOver2, first, second)
+        left_over1 = min(first.width - rect.width, first.height - rect.height)
+        left_over2 = min(second.width - rect.width, second.height - rect.height)
+        return min_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicWorstShortSideFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = min(first.width - rect.width, first.height - rect.height)
-        leftOver2 = min(second.width - rect.width, second.height - rect.height)
-        return max_sort(leftOver1, leftOver2, first, second)
+        left_over1 = min(first.width - rect.width, first.height - rect.height)
+        left_over2 = min(second.width - rect.width, second.height - rect.height)
+        return max_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicWorstLongSideFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = max(first.width - rect.width, first.height - rect.height)
-        leftOver2 = max(second.width - rect.width, second.height - rect.height)
-        return max_sort(leftOver1, leftOver2, first, second)
+        left_over1 = max(first.width - rect.width, first.height - rect.height)
+        left_over2 = max(second.width - rect.width, second.height - rect.height)
+        return max_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicBestLongSideFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = max(first.width - rect.width, first.height - rect.height)
-        leftOver2 = max(second.width - rect.width, second.height - rect.height)
-        return min_sort(leftOver1, leftOver2, first, second)
+        left_over1 = max(first.width - rect.width, first.height - rect.height)
+        left_over2 = max(second.width - rect.width, second.height - rect.height)
+        return min_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicBestAreaFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = first.area - rect.area
-        leftOver2 = second.area - rect.area
-        return min_sort(leftOver1, leftOver2, first, second)
+        left_over1 = first.area - rect.area
+        left_over2 = second.area - rect.area
+        return min_sort(left_over1, left_over2, first, second)
 
 
 class PlaceHeuristicWorstAreaFit(PlaceHeuristic):
     def _choose(self, rect, first, second):
-        leftOver1 = first.area - rect.area
-        leftOver2 = second.area - rect.area
-        return max_sort(leftOver1, leftOver2, first, second)
+        left_over1 = first.area - rect.area
+        left_over2 = second.area - rect.area
+        return max_sort(left_over1, left_over2, first, second)
 
 
 # MaxRects
