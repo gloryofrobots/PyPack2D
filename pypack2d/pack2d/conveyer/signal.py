@@ -11,12 +11,7 @@ class SignalType(Enum):
 
 
 class Signal(object):
-    def __init__(self, signalType, data):
+    def __init__(self, signal_type, data):
         super(Signal, self).__init__()
-        self._type = signalType
-        self._data = data
-        pass
-
-    type = property(lambda self: self._type)
-    data = property(lambda self: self._data)
-    pass
+        self.type = signal_type
+        self.data = data

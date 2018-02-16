@@ -5,10 +5,10 @@ from pypack2d.pack2d.conveyer.signal import Signal,SignalType
 class Filter(Unit):
     def _on_init(self, count):
         self.count = count
-        self.connect(SignalType.PUSH_INPUT, self._onPushInput)
+        self.connect(SignalType.PUSH_INPUT, self._on_push_input)
         pass
 
-    def _onPushInput(self, input):
+    def _on_push_input(self, input):
         if self.count <= 0:
             return
             pass

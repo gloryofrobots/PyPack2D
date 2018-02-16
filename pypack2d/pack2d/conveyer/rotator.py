@@ -1,13 +1,13 @@
-from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkExist
+from pypack2d.pack2d.conveyer.unit import Unit,check_unit_forward_link_exist
 from pypack2d.pack2d.conveyer.signal import SignalType
 
 class Rotator(Unit):
     def _on_init(self):
-        self.connect(SignalType.PUSH_INPUT, self._onPushInput)
+        self.connect(SignalType.PUSH_INPUT, self._on_push_input)
         pass
 
-    @checkUnitForwardLinkExist
-    def _onPushInput(self, input):
+    @check_unit_forward_link_exist
+    def _on_push_input(self, input):
         for bin in input:
             self.rotate(bin)
 
@@ -15,22 +15,22 @@ class Rotator(Unit):
         pass
 
     def rotate(self, bin):
-        self._onRotate(bin)
+        self._on_rotate(bin)
         pass
 
-    def _onRotate(self, bin):
+    def _on_rotate(self, bin):
         raise NotImplementedError()
         pass
     pass
 
 class RotatorUpRight(Rotator):
-    def _onRotate(self, bin):
+    def _on_rotate(self, bin):
         bin.rotateUpRight()
         pass
     pass
 
 class RotatorSideWays(Rotator):
-    def _onRotate(self, bin):
+    def _on_rotate(self, bin):
         bin.rotateSideWays()
         pass
     pass

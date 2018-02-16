@@ -2,10 +2,10 @@ class UnitError(BaseException):
     pass
 
 
-def checkUnitForwardLinkExist(fn):
+def check_unit_forward_link_exist(fn):
     def wrap(self, *args, **kwargs):
         if self.nextUnit is None:
-            raise UnitError("Unit doesn`t has forward link")
+            raise UnitError("Unit does not has forward link")
             pass
 
         return fn(self, *args, **kwargs)
@@ -15,7 +15,7 @@ def checkUnitForwardLinkExist(fn):
     pass
 
 
-def checkUnitForwardLinkDoesNotExist(fn):
+def check_unit_forward_link_does_not_exist(fn):
     def wrap(self, *args, **kwargs):
         if self.nextUnit is not None:
             raise UnitError("Unit has forward link. It must be None.")
