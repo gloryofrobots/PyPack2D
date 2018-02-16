@@ -17,12 +17,12 @@ class Pack2D(object):
         builder = self.factory.getInstance(settings.packingMode)
         builder.build(self.conveyer, self.factory, settings)
         signal = Signal(SignalType.PREPARE_TO_PACK, None)
-        self.conveyer.processSignal(signal)
+        self.conveyer.process_signal(signal)
         pass
 
     def pack(self):
         signal = Signal(SignalType.START_PACK, None)
-        self.conveyer.processSignal(signal)
+        self.conveyer.process_signal(signal)
         pass
 
     def getResult(self):
@@ -40,6 +40,6 @@ class Pack2D(object):
             pass
 
         signal = Signal(SignalType.PUSH_INPUT, _input)
-        self.conveyer.processSignal(signal)
+        self.conveyer.process_signal(signal)
         pass
     pass

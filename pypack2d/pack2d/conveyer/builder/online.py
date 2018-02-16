@@ -4,12 +4,12 @@ from pypack2d.pack2d.conveyer.builder.builder import PackingConveyerBuilder
 
 
 class PackingConveyerBuilderOnline(PackingConveyerBuilder):
-    def _onBuild(self, conveyer, factory, settings):
+    def _on_build(self, conveyer, factory, settings):
         filter = Filter(1)
-        conveyer.pushUnit(filter)
+        conveyer.push_unit(filter)
         packer = factory.getInstance(settings.packingAlgorithm)
         control = PackingControl(packer, factory, settings)
-        conveyer.pushUnit(control)
+        conveyer.push_unit(control)
         pass
 
     pass

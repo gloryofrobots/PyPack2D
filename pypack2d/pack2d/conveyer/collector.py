@@ -2,7 +2,7 @@ from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkDoesNotExist
 from pypack2d.pack2d.conveyer.signal import SignalType
 
 class Collector(Unit):
-    def _onInit(self):
+    def _on_init(self):
         self.connect(SignalType.END_PACK, self._onEndToPack)
         self.connect(SignalType.WASTE_INPUT, self._onWasteInput)
         self.result = None

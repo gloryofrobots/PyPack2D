@@ -3,7 +3,7 @@ from pypack2d.pack2d.conveyer.signal import Signal,SignalType
 
 #split input sequence S on groups of sub sequences S1..Sn where  length each of them == count
 class Filter(Unit):
-    def _onInit(self, count):
+    def _on_init(self, count):
         self.count = count
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)
         pass
@@ -28,7 +28,7 @@ class Filter(Unit):
                 pass
 
             newSignal = Signal(SignalType.PUSH_INPUT, newInput)
-            self._processNext(newSignal)
+            self._process_next(newSignal)
 
             newInput = []
             count = self.count

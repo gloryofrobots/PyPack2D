@@ -2,21 +2,8 @@ from pypack2d.pack2d.conveyer.unit import Unit
 from pypack2d.pack2d.conveyer.signal import SignalType, Signal
 
 
-def getLowPow2(x):
-    y = 2
-    if y >= x:
-        return None
-    while True:
-        if y >= x:
-            return y / 2
-            pass
-        y *= 2
-        pass
-    pass
-
-
 class PackingControl(Unit):
-    def _onInit(self, packer, factory, settings):
+    def _on_init(self, packer, factory, settings):
         self.packer = packer
         self.packer.initialise(factory, settings)
         self.packer.setSize(settings.maxWidth, settings.maxHeight)
@@ -24,12 +11,12 @@ class PackingControl(Unit):
         self.result = []
         self.lastPack = False
 
-        self.connect(SignalType.PUSH_INPUT, self._onPushInput)
-        self.connect(SignalType.PREPARE_TO_PACK, self._onPrepareToPack)
-        self.connect(SignalType.START_PACK, self._onStartPack)
+        self.connect(SignalType.PUSH_INPUT, self._on_push_input)
+        self.connect(SignalType.PREPARE_TO_PACK, self._on_prepare_to_pack)
+        self.connect(SignalType.START_PACK, self._on_start_pack)
         pass
 
-    def packBins(self, input):
+    def pack_bins(self, input):
         self.lastPack = False
         index = 0
         while True:
@@ -51,12 +38,12 @@ class PackingControl(Unit):
             pass
         pass
 
-    def _onPushInput(self, input):
-        self.packBins(input)
+    def _on_push_input(self, input):
+        self.pack_bins(input)
         return True
         pass
 
-    def checkLastPack(self):
+    def check_last_pack(self):
         if self.lastPack is False:
             return
             pass
@@ -65,15 +52,15 @@ class PackingControl(Unit):
         self.result.append(binSet)
         pass
 
-    def _onStartPack(self, dummy):
+    def _on_start_pack(self, dummy):
         # TODO REFACTOR
-        self.checkLastPack()
-        self.processSignal(Signal(SignalType.END_PACK, self.result))
+        self.check_last_pack()
+        self.process_signal(Signal(SignalType.END_PACK, self.result))
         return True
         pass
 
-    def _onPrepareToPack(self, dummy):
-        self.processSignal(Signal(SignalType.CREATE_PACKER, self.packer))
+    def _on_prepare_to_pack(self, dummy):
+        self.process_signal(Signal(SignalType.CREATE_PACKER, self.packer))
         self.result = []
         return True
         pass

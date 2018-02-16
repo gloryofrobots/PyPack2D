@@ -2,7 +2,7 @@ from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkExist
 from pypack2d.pack2d.conveyer.signal import SignalType
 
 class Sorter(Unit):
-    def _onInit(self, sorting, order):
+    def _on_init(self, sorting, order):
         self.order = order
         self.sorting = sorting
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)

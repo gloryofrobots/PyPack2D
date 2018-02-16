@@ -5,19 +5,19 @@ from pypack2d.pack2d.conveyer.builder.builder import PackingConveyerBuilder
 
 
 class PackingConveyerBuilderOffline(PackingConveyerBuilder):
-    def _onBuild(self, conveyer, factory, settings):
+    def _on_build(self, conveyer, factory, settings):
         accumulator = Accumulator()
-        conveyer.pushUnit(accumulator)
+        conveyer.push_unit(accumulator)
 
         if settings.sortOrder is not None:
             sorting = factory.getInstance(settings.sortKey)
             sorter = Sorter(sorting, settings.sortOrder)
-            conveyer.pushUnit(sorter)
+            conveyer.push_unit(sorter)
             pass
 
         packer = factory.getInstance(settings.packingAlgorithm)
         control = PackingControl(packer, factory, settings)
-        conveyer.pushUnit(control)
+        conveyer.push_unit(control)
         pass
 
     pass

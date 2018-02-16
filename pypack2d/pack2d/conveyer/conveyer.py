@@ -4,7 +4,7 @@ from pypack2d.pack2d.conveyer.collector import Collector
 
 
 class Conveyer(Unit):
-    def _onInit(self):
+    def _on_init(self):
         self.connect(SignalType.PREPARE_TO_PACK, self._onPrepareToPack)
         self.collector = Collector()
         self.waste = []
@@ -12,7 +12,7 @@ class Conveyer(Unit):
 
     @checkUnitForwardLinkExist
     def _onPrepareToPack(self, dummy):
-        self.pushUnit(self.collector)
+        self.push_unit(self.collector)
         return True
         pass
 

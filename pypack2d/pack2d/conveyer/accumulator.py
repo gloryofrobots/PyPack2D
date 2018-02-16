@@ -2,7 +2,7 @@ from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkExist
 from pypack2d.pack2d.conveyer.signal import SignalType,Signal
 
 class Accumulator(Unit):
-    def _onInit(self):
+    def _on_init(self):
         self.connect(SignalType.START_PACK, self._onStartPack)
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)
 
@@ -12,7 +12,7 @@ class Accumulator(Unit):
     @checkUnitForwardLinkExist
     def _onStartPack(self, dummy):
         newSignal = Signal(SignalType.PUSH_INPUT, self.input)
-        self._processNext(newSignal)
+        self._process_next(newSignal)
         return True
         pass
 

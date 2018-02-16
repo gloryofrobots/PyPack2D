@@ -1,7 +1,7 @@
 from pypack2d.pack2d.conveyer.size_shifter.size_shifter import BinSizeShifter
 
 class BinSizeShifterMaximal(BinSizeShifter):
-    def _onShift(self, binSet):
+    def _on_shift(self, binSet):
         maxRight = 0
         maxBottom = 0
         for bin in binSet:

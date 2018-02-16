@@ -2,7 +2,7 @@ from pypack2d.pack2d.conveyer.unit import Unit,checkUnitForwardLinkExist
 from pypack2d.pack2d.conveyer.signal import SignalType
 
 class Rotator(Unit):
-    def _onInit(self):
+    def _on_init(self):
         self.connect(SignalType.PUSH_INPUT, self._onPushInput)
         pass
 
