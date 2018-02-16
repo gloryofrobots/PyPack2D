@@ -11,8 +11,8 @@ class Accumulator(Unit):
 
     @check_unit_forward_link_exist
     def _on_start_pack(self, dummy):
-        newSignal = Signal(SignalType.PUSH_INPUT, self.input)
-        self._process_next(newSignal)
+        new_signal = Signal(SignalType.PUSH_INPUT, self.input)
+        self._process_next(new_signal)
         return True
 
     @check_unit_forward_link_exist

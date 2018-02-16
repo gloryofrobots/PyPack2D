@@ -12,24 +12,23 @@ class Filter(Unit):
         if self.count <= 0:
             return
 
-        if self.nextUnit is None:
+        if self.next_unit is None:
             return
 
-        newInput = []
+        new_input = []
         count = self.count
         for image in input:
-            newInput.append(image)
+            new_input.append(image)
             count -= 1
 
             if count > 0:
                 continue
 
-            newSignal = Signal(SignalType.PUSH_INPUT, newInput)
-            self._process_next(newSignal)
+            new_signal = Signal(SignalType.PUSH_INPUT, new_input)
+            self._process_next(new_signal)
 
-            newInput = []
+            new_input = []
             count = self.count
-
 
         # return False to stop this signal
         return False

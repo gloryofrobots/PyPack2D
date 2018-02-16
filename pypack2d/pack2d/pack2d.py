@@ -19,10 +19,10 @@ class Pack2D(object):
         self.conveyer.process_signal(signal)
 
     def get_result(self):
-        return self.conveyer.getResult()
+        return self.conveyer.get_result()
 
     def get_waste(self):
-        return self.conveyer.getWaste()
+        return self.conveyer.get_waste()
 
     def push(self, input):
         _input = input

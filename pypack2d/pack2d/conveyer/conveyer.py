@@ -5,17 +5,17 @@ from pypack2d.pack2d.conveyer.collector import Collector
 
 class Conveyer(Unit):
     def _on_init(self):
-        self.connect(SignalType.PREPARE_TO_PACK, self._onPrepareToPack)
+        self.connect(SignalType.PREPARE_TO_PACK, self._on_prepare_to_pack)
         self.collector = Collector()
         self.waste = []
 
     @check_unit_forward_link_exist
-    def _onPrepareToPack(self, dummy):
+    def _on_prepare_to_pack(self, dummy):
         self.push_unit(self.collector)
         return True
 
-    def getResult(self):
+    def get_result(self):
         return self.collector.get_result()
 
-    def getWaste(self):
+    def get_waste(self):
         return self.collector.get_waste()
