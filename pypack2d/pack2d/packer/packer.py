@@ -1,28 +1,32 @@
 from pypack2d.pack2d.packer.bin_set import BinSet
-from pypack2d.pack2d import BorderMode,RotateMode
+from pypack2d.pack2d import BorderMode, RotateMode
 from pypack2d.pack2d.border import Border
+
 
 class BinPackerError(BaseException):
     pass
 
+
 class ManualAbort(object):
     def __init__(self):
-        super(ManualAbort,self ).__init__()
+        super(ManualAbort, self).__init__()
         self.debugCount = 0
         pass
 
-    def abortOnCount(self, limit):
+    def abort_on_count(self, limit):
         if self.debugCount >= limit:
             raise BaseException()
             pass
 
-        self.debugCount+=1
+        self.debugCount += 1
         pass
+
     pass
+
 
 class BinPacker(object):
     def __init__(self):
-        super(BinPacker,self ).__init__()
+        super(BinPacker, self).__init__()
         pass
 
     def initialise(self, factory, settings):
@@ -30,10 +34,10 @@ class BinPacker(object):
         self.heuristic = factory.getInstance(settings.placeHeuristic)
 
         self.settings = settings
-        self._onInitialise( factory, settings )
+        self._on_init(factory, settings)
         pass
 
-    def setSize(self, width, height):
+    def set_size(self, width, height):
         self.maxWidth = width
         self.maxHeight = height
 
@@ -43,26 +47,26 @@ class BinPacker(object):
             pass
 
         self.binSet = BinSet(self.maxWidth, self.maxHeight)
-        self._onSetSize()
+        self._on_set_size()
         pass
 
-    def _onSetSize(self):
+    def _on_set_size(self):
         raise NotImplementedError()
         pass
 
-    def _onInitialise(self, factory, settings):
+    def _on_init(self, factory, settings):
         pass
 
-    def packBin(self, bin):
-        self.setBorder(bin)
+    def pack_bin(self, bin):
+        self.set_border(bin)
 
-        if self._onPackBin(bin) is False:
+        if self._on_pack_bin(bin) is False:
             return False
             pass
 
         if self.settings.isDebug is True:
             self.validate(bin)
-            self.onDebug()
+            self.on_debug()
             pass
 
         self.binSet.add(bin)
@@ -72,37 +76,38 @@ class BinPacker(object):
     def validate(self, bin):
         for binCheck in self.binSet:
             if binCheck.isIntersect(bin) is True:
-                raise BinPackerError( "Validate Error bins are intersected : %s with %s" % (binCheck,bin) )
+                raise BinPackerError("Validate Error bins are intersected : %s with %s" % (binCheck, bin))
                 pass
             pass
         pass
 
-    def onDebug(self):
-        self._onDebug()
+    def on_debug(self):
+        self._on_debug()
         pass
 
-    def _onDebug(self):
+    def _on_debug(self):
         pass
 
-    def _onPackBin(self, bin):
+    def _on_pack_bin(self, bin):
         raise NotImplementedError()
         pass
 
-    def setBorder(self, bin):
+    def set_border(self, bin):
         if self.settings.borderMode == BorderMode.NONE:
             return
             pass
         elif self.settings.borderMode == BorderMode.STRICT:
-            border = Border(border = self.settings.border)
-            bin.setBorder(border)
+            border = Border(border=self.settings.border)
+            bin.set_border(border)
             pass
         elif self.settings.borderMode == BorderMode.AUTO:
-            border = Border( borderSize = self.settings.borderSize, type = self.settings.border.type, color = self.settings.border.color )
-            bin.setBorder(border)
+            border = Border(borderSize=self.settings.borderSize, type=self.settings.border.type,
+                            color=self.settings.border.color)
+            bin.set_border(border)
             pass
         pass
 
-    def normaliseBorder(self):
+    def normalise_border(self):
 
         realWidth = self.maxWidth - self.settings.borderSize * 2
         realHeight = self.maxHeight - self.settings.borderSize * 2
@@ -112,13 +117,13 @@ class BinPacker(object):
                 border.top = 0
                 pass
             else:
-                bin.setCoord(bin.left, bin.top - self.settings.borderSize)
+                bin.set_coord(bin.left, bin.top - self.settings.borderSize)
                 pass
             if bin.left is 0:
                 border.left = 0
                 pass
             else:
-                bin.setCoord(bin.left - self.settings.borderSize, bin.top)
+                bin.set_coord(bin.left - self.settings.borderSize, bin.top)
                 pass
             if bin.right > realWidth:
                 border.right = 0
@@ -128,23 +133,23 @@ class BinPacker(object):
                 pass
             pass
 
-
-            self.binSet.setSize(realWidth, realHeight)
+            self.binSet.set_size(realWidth, realHeight)
             pass
         pass
 
     def flush(self):
         if self.settings.borderMode == BorderMode.AUTO:
-            self.normaliseBorder()
+            self.normalise_border()
             pass
 
         result = self.binSet
         self.binSet = BinSet(self.maxWidth, self.maxHeight)
-        self._onFlush()
-        self._onSetSize()
+        self._on_flush()
+        self._on_set_size()
         return result
         pass
 
-    def _onFlush(self):
+    def _on_flush(self):
         pass
+
     pass

@@ -6,7 +6,7 @@ class PackingControl(Unit):
     def _on_init(self, packer, factory, settings):
         self.packer = packer
         self.packer.initialise(factory, settings)
-        self.packer.setSize(settings.maxWidth, settings.maxHeight)
+        self.packer.set_size(settings.maxWidth, settings.maxHeight)
 
         self.result = []
         self.lastPack = False
@@ -26,7 +26,7 @@ class PackingControl(Unit):
 
             bin = input[index]
 
-            self.lastPack = self.packer.packBin(bin)
+            self.lastPack = self.packer.pack_bin(bin)
 
             if self.lastPack is True:
                 index += 1

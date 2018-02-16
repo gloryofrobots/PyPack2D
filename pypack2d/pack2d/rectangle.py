@@ -1,8 +1,8 @@
 class Rectangle:
     @classmethod
-    def fromBB(cls, left, top, right, bottom):
+    def from_bb(cls, left, top, right, bottom):
         rect = cls(0, 0, 0, 0)
-        rect.setBB(left, top , right, bottom)
+        rect.set_bb(left, top , right, bottom)
         return rect
         pass
 
@@ -13,25 +13,25 @@ class Rectangle:
         pass
 
     @classmethod
-    def fromRectangle(cls, rect):
+    def from_rectangle(cls, rect):
         rect = cls(rect.left, rect.top, rect.width, rect.height)
         return rect
         pass
 
     @classmethod
-    def fromWH(cls, width, height):
+    def from_wh(cls, width, height):
         rect = cls(0, 0, width, height)
         return rect
         pass
-    
+
     def __init__(self, x, y, width, height):
         self.set(x, y, width, height)
-        self._onInit()
+        self._on_init()
         pass
 
-    def _onInit(self):
+    def _on_init(self):
         pass
-    
+
     def set(self, x, y, width, height):
         self._x = x
         self._y = y
@@ -39,88 +39,71 @@ class Rectangle:
         self._height = height
         pass
 
-    def setBB(self, left, top, right, bottom):
+    def set_bb(self, left, top, right, bottom):
         self.set(left, top, (right - left), (bottom - top))
         pass
 
-    def setCoord(self, x, y):
+    def set_coord(self, x, y):
         self._x = x
         self._y = y
         pass
-    
-    def isZeroSize(self):
+
+    def is_zero_size(self):
         if self.left == 0 and self.width == 0 and self.top == 0 and self.height == 0:
             return True
             pass
-        
+
         return False
         pass
-    
-    def getArea(self):
+
+    @property
+    def area(self):
         return self.width * self.height
-        pass
 
-    area = property(fget=getArea)
-
-    def getBBox(self):
+    def get_bb(self):
         return ( self.left, self.top, self.right , self.bottom )
         pass
 
-    def getWidth(self):
+    @property
+    def width(self):
         return self._getWidth()
-        pass
 
     def _getWidth(self):
-        return  self._width
+        return self._width
         pass
 
-#    def setWidth(self, width):
-#        raise NotImplemented()
-#        self._width = width
-#        pass
-#
-    width = property(fget = getWidth)
-
-    def getHeight(self):
+    @property
+    def height(self):
         return self._getHeight()
-        pass
 
     def _getHeight(self):
         return self._height
         pass
 
-#    def setHeight(self, height):
-#        raise NotImplemented()
-#        self._height = height
-#        pass
 
-    height = property(fget = getHeight)
-
-    def getLeft(self):
+    @property
+    def left(self):
         return self._x
-        pass
-    
-    left = property(fget=getLeft)
-    
-    def getRight(self):
+
+
+    @property
+    def right(self):
         if self.width is None:
             return
         return self.left + self.width
         pass
-    
-    right = property(fget=getRight)
-    
-    def getTop(self):
+
+
+    @property
+    def top(self):
         return self._y
         pass
 
-    top = property(fget=getTop)
-
-    def getBottom(self):
+    @property
+    def bottom(self):
         return self.top + self.height
         pass
 
-    bottom = property(fget=getBottom)
 
     def getLongerSide(self):
         if self.width > self.height:

@@ -16,7 +16,7 @@ class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
         #compare last minimized binSet with old last binSet
         self.normalise_size(minimized)
         old = result[index]
-        if old.getEfficiency() < minimized.getEfficiency():
+        if old.get_efficiency() < minimized.getEfficiency():
             result[index] = minimized
             pass
 
@@ -24,17 +24,17 @@ class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
         pass
 
     def find_minimal_size(self, binSet):
-        width = get_low_pow2(binSet.getWidth())
-        height = get_low_pow2(binSet.getHeight())
+        width = get_low_pow2(binSet.width)
+        height = get_low_pow2(binSet.height)
         if width is None or height is None:
             return binSet
             pass
 
-        self.packer.setSize(int(width), int(height))
+        self.packer.set_size(int(width), int(height))
         bins = binSet.getBins()
         for bin in bins:
             clone = bin.clone()
-            if self.packer.packBin(clone) is False:
+            if self.packer.pack_bin(clone) is False:
                 return binSet
                 pass
             pass

@@ -13,6 +13,6 @@ class BinSizeShifterMaximal(BinSizeShifter):
                 pass
             pass
 
-        binSet.setSize(maxRight, maxBottom)
+        binSet.set_size(maxRight, maxBottom)
         pass
     pass

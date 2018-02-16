@@ -2,7 +2,7 @@ from pypack2d.pack2d.rectangle import Rectangle
 from pypack2d.pack2d.border import Border
 
 class BinBase(Rectangle):
-    def _onInit(self):
+    def _on_init(self):
         self.rotate = False
         self.border = Border(bbox = (0,0,0,0))
         pass
@@ -116,8 +116,8 @@ class Bin(BinBase):
         return bin
         pass
 
-    def _onInit(self):
-        super(Bin,self)._onInit()
+    def _on_init(self):
+        super(Bin,self)._on_init()
         self.id = None
         #self.id = Bin.initInstance()
         pass

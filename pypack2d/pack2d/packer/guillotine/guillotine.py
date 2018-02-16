@@ -4,12 +4,12 @@ from pypack2d.pack2d.rectangle import Rectangle
 
 
 class PackNode(Rectangle):
-    def _onInit(self):
+    def _on_init(self):
         self.firstChild = None
         self.secondChild = None
         pass
 
-    def hasChildren(self):
+    def has_children(self):
         if self.secondChild is None \
                 and self.firstChild is None:
             return False
@@ -18,19 +18,19 @@ class PackNode(Rectangle):
         return True
         pass
 
-    def getFreeBranch(self, rect, placer):
-        if self.hasChildren() is True:
+    def get_free_branch(self, rect, placer):
+        if self.has_children() is True:
             best, worth = placer.getPlace(self.firstChild, self.secondChild)
-            leaf = best.getFreeBranch(rect)
+            leaf = best.get_free_branch(rect)
             if leaf is None:
-                return worth.getFreeBranch(rect)
+                return worth.get_free_branch(rect)
                 pass
             else:
                 return leaf
                 pass
             pass
 
-        if rect.width > self.getWidth() or rect.height > self.getHeight():
+        if rect.width > self.width or rect.height > self.height:
             return None
             pass
 
@@ -38,7 +38,7 @@ class PackNode(Rectangle):
         pass
 
     def insert(self, rect, splitter, placer):
-        if self.hasChildren() is True:
+        if self.has_children() is True:
             best, worth = placer.choose(rect, self.firstChild, self.secondChild)
             leaf = best.insert(rect, splitter, placer)
             if leaf is None:
@@ -55,10 +55,10 @@ class PackNode(Rectangle):
 
         rectangles = splitter.split(self, rect)
 
-        self.firstChild = PackNode.fromRectangle(rectangles[0])
-        self.secondChild = PackNode.fromRectangle(rectangles[1])
+        self.firstChild = PackNode.from_rectangle(rectangles[0])
+        self.secondChild = PackNode.from_rectangle(rectangles[1])
 
-        leaf = PackNode.fromRectangle(Rectangle(self.left, self.top, self.left + rect.width, self.top + rect.height))
+        leaf = PackNode.from_rectangle(Rectangle(self.left, self.top, self.left + rect.width, self.top + rect.height))
         return leaf
         pass
 
@@ -66,25 +66,25 @@ class PackNode(Rectangle):
 
 
 class BinPackerGuillotine(BinPacker):
-    def _onInitialise(self, factory, settings):
+    def _on_init(self, factory, settings):
         self.splitter = factory.getInstance(settings.splitRule)
         pass
 
-    def _onSetSize(self):
+    def _on_set_size(self):
         self.packNode = PackNode(0, 0, self.maxWidth, self.maxHeight)
         pass
 
-    def _onPackBin(self, bin):
+    def _on_pack_bin(self, bin):
         leaf = self.packNode.insert(bin, self.splitter, self.heuristic)
         if leaf == None:
             return False
             pass
 
-        bin.setCoord(leaf.left, leaf.top)
+        bin.set_coord(leaf.left, leaf.top)
         return True
         pass
 
-    def _onFlush(self):
+    def _on_flush(self):
         self.packNode = PackNode(0, 0, self.maxWidth, self.maxHeight)
         pass
 

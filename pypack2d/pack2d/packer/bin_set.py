@@ -6,19 +6,11 @@ class BinSet(object):
         self.height = height
         pass
 
-    def getWidth(self):
-        return self.width
-        pass
-
-    def getHeight(self):
-        return self.height
-        pass
-    
-    def setSize(self, width, height):
+    def set_size(self, width, height):
         self.width = width
         self.height = height
         pass
-    
+
     def add(self, bin):
         self.bins.append(bin)
         pass
@@ -31,25 +23,25 @@ class BinSet(object):
         return self.bins.__iter__()
         pass
 
-    def getEfficiency(self):
+    def get_efficiency(self):
         area =  self.width * self.height
-        binsArea = self.getBinsArea()
+        binsArea = self.get_bins_area()
         efficiency = (binsArea * 100) / area
         return efficiency
         pass
 
-    def getFreeSpace(self):
+    def get_free_space(self):
         area =  self.width * self.height
-        binsArea = self.getBinsArea()
+        binsArea = self.get_bins_area()
         return area - binsArea
         pass
 
-    def getBinsArea(self):
+    def get_bins_area(self):
         binsArea = 0
         for bin in self.bins:
-            binsArea += bin.getArea()
+            binsArea += bin.area
             pass
-        
+
         return binsArea
         pass
     pass

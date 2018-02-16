@@ -3,36 +3,36 @@ from pypack2d.pack2d.rectangle import Rectangle as Area
 
 
 class BinPackerMaxRectangles(BinPacker):
-    def _onInitialise(self, factory, settings):
+    def _on_init(self, factory, settings):
         self.waste = []
         pass
 
-    def _onSetSize(self):
-        self.areas = [Area.fromWH(self.maxWidth, self.maxHeight)]
+    def _on_set_size(self):
+        self.areas = [Area.from_wh(self.maxWidth, self.maxHeight)]
         pass
 
-    def _onPackBin(self, bin):
-        bestRect = self.getBestRectangle(bin, self.heuristic)
+    def _on_pack_bin(self, bin):
+        bestRect = self.get_best_rectangle(bin, self.heuristic)
 
         if bestRect is None:
             return False
             pass
 
-        destination = self.placeBinToRect(bestRect, bin)
-        bin.setCoord(destination.left, destination.top)
+        destination = self.place_bin_to_rect(bestRect, bin)
+        bin.set_coord(destination.left, destination.top)
         return True
         pass
 
-    def placeBinToRect(self, rect, bin):
+    def place_bin_to_rect(self, rect, bin):
         destination = Area(rect.left, rect.top, bin.width, bin.height)
-        self.splitOnMaxRectangles(rect, destination, self.areas)
+        self.split_on_max_rectangles(rect, destination, self.areas)
         self.areas.remove(rect)
-        self.checkBinIntersections(destination)
-        self.normaliseRectangles()
+        self.check_bin_intersections(destination)
+        self.normalise_rectangles()
         return destination
         pass
 
-    def checkBinIntersections(self, bin):
+    def check_bin_intersections(self, bin):
         newRects = []
 
         for rect in self.areas:
@@ -41,7 +41,7 @@ class BinPackerMaxRectangles(BinPacker):
                 continue
                 pass
 
-            self.splitOnMaxRectangles(rect, intersection, newRects)
+            self.split_on_max_rectangles(rect, intersection, newRects)
             self.waste.append(rect)
             pass
 
@@ -49,12 +49,12 @@ class BinPackerMaxRectangles(BinPacker):
             return
             pass
 
-        self.removeBad()
+        self.remove_bad()
         self.areas.extend(newRects)
         pass
 
-    def normaliseRectangles(self):
-        sortedAreas = sorted(self.areas, key=lambda rect: rect.getArea(), reverse=False)
+    def normalise_rectangles(self):
+        sortedAreas = sorted(self.areas, key=lambda rect: rect.area, reverse=False)
 
         for i in range(len(sortedAreas)):
             checked = sortedAreas[i]
@@ -66,10 +66,10 @@ class BinPackerMaxRectangles(BinPacker):
                 pass
             pass
 
-        self.removeBad()
+        self.remove_bad()
         pass
 
-    def removeBad(self):
+    def remove_bad(self):
         for area in self.waste:
             self.areas.remove(area)
             pass
@@ -77,7 +77,7 @@ class BinPackerMaxRectangles(BinPacker):
         self.waste = []
         pass
 
-    def splitOnMaxRectangles(self, bigRect, splitRect, destination):
+    def split_on_max_rectangles(self, bigRect, splitRect, destination):
         if splitRect.left != bigRect.left:
             rect = Area(bigRect.left, bigRect.top, splitRect.left - bigRect.left, bigRect.height)
             destination.append(rect)
@@ -99,7 +99,7 @@ class BinPackerMaxRectangles(BinPacker):
             pass
         pass
 
-    def getBestRectangle(self, bin, heuristic):
+    def get_best_rectangle(self, bin, heuristic):
         bestRect = None
         for rect in self.areas:
             if rect.isPossibleToFit(bin) is False:
@@ -116,7 +116,7 @@ class BinPackerMaxRectangles(BinPacker):
         return bestRect
         pass
 
-    def _onDebug(self):
+    def _on_debug(self):
         return
         from PIL import Image, ImageDraw
         from random import choice, randrange
@@ -129,7 +129,7 @@ class BinPackerMaxRectangles(BinPacker):
             COLORS.append((r, g, b))
             pass
 
-        canvas = Image.new("RGBA", (self.binSet.getWidth(), self.binSet.getHeight()), color=(128, 128, 128))
+        canvas = Image.new("RGBA", (self.binSet.width, self.binSet.height), color=(128, 128, 128))
         draw = ImageDraw.Draw(canvas)
 
         for area in self.areas:

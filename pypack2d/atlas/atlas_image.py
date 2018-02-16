@@ -55,7 +55,7 @@ class AtlasImage(object):
 
         border = self.bin.getBorder()
 
-        if border.isEmpty() is True:
+        if border.is_empty() is True:
             return
             pass
 

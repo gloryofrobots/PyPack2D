@@ -34,8 +34,8 @@ class AtlasGenerator(object):
 
         atlas = Atlas()
         atlasFileName = self.relative_filename + counter + "." + self.atlas_type
-        binWidth = binSet.getWidth()
-        binHeight = binSet.getHeight()
+        binWidth = binSet.width
+        binHeight = binSet.height
         atlas.initialise(binWidth, binHeight, self.dir_path, atlasFileName, self.tex_mode, self.atlas_type, self.fill_color)
         return atlas
         pass
@@ -95,7 +95,7 @@ class AtlasGenerator(object):
 
         total = 0
         for binSet in binSets:
-            total += binSet.getEfficiency()
+            total += binSet.get_efficiency()
             pass
 
         middle = total / len(binSets)

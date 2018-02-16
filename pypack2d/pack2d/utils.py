@@ -1,4 +1,4 @@
-def get_low_pow2( x ):
+def get_low_pow2(x):
     y = 2
     if y > x:
         return None
@@ -10,7 +10,8 @@ def get_low_pow2( x ):
         pass
     pass
 
-def get_nearest_pow2( x ):
+
+def get_nearest_pow2(x):
     y = 1
     if y > x:
         return None
@@ -20,4 +21,22 @@ def get_nearest_pow2( x ):
             pass
         y *= 2
         pass
+    pass
+
+
+def max_sort(val1, val2, first, second):
+    if val1 > val2:
+        return first, second
+        pass
+
+    return second, first
+    pass
+
+
+def min_sort(val1, val2, first, second):
+    if val1 < val2:
+        return first, second
+        pass
+
+    return second, first
     pass

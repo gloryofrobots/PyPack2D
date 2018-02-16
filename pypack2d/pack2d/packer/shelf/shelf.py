@@ -3,16 +3,16 @@ from pypack2d.pack2d.rectangle import Rectangle
 
 
 class Shelf(Rectangle):
-    def _onInit(self):
+    def _on_init(self):
         self.bins = []
         self.freeRect = Rectangle(self.left, self.top, self.width, self.height)
         pass
 
-    def getFreeRect(self):
+    def get_free_rect(self):
         return self.freeRect
         pass
 
-    def canPlace(self, rect):
+    def can_place(self, rect):
         if self.freeRect.height < rect.height or self.freeRect.width < rect.width:
             return False
             pass
@@ -20,14 +20,14 @@ class Shelf(Rectangle):
         return True
         pass
 
-    def isEmpty(self):
+    def is_empty(self):
         return len(self.bins) == 0
         pass
 
     def place(self, bin):
         destinationRect = Rectangle(self.freeRect.left, self.freeRect.top, bin.width, bin.height)
 
-        self.freeRect = Rectangle.fromBB(destinationRect.right, self.freeRect.top, self.right, self.bottom)
+        self.freeRect = Rectangle.from_bb(destinationRect.right, self.freeRect.top, self.right, self.bottom)
         self.bins.append(bin)
         return destinationRect
         pass
@@ -38,12 +38,12 @@ class Shelf(Rectangle):
 # TODO FLOOR CEILING
 
 class BinPackerShelf(BinPacker):
-    def _onInitialise(self, factory, settings):
+    def _on_init(self, factory, settings):
         self.shelves = []
         pass
 
-    def _onPackBin(self, bin):
-        shelf = self.getShelf(bin, self.heuristic)
+    def _on_pack_bin(self, bin):
+        shelf = self.get_shelf(bin, self.heuristic)
 
         # TODO ROTATE
         if shelf is None:
@@ -52,15 +52,15 @@ class BinPackerShelf(BinPacker):
 
         destination = shelf.place(bin)
 
-        bin.setCoord(destination.left, destination.top)
+        bin.set_coord(destination.left, destination.top)
         return True
         pass
 
-    def _onFlush(self):
+    def _on_flush(self):
         self.shelves = []
         pass
 
-    def createNewShelf(self, bin):
+    def create_new_shelf(self, bin):
         y = 0
         if len(self.shelves) is not 0:
             topShelf = self.shelves[len(self.shelves) - 1]
@@ -76,15 +76,15 @@ class BinPackerShelf(BinPacker):
         return shelf
         pass
 
-    def getShelf(self, bin, heuristic):
+    def get_shelf(self, bin, heuristic):
         bestShelf = None
         bestRect = None
         for shelf in self.shelves:
-            if shelf.canPlace(bin) is False:
+            if shelf.can_place(bin) is False:
                 continue
                 pass
 
-            rect = shelf.getFreeRect()
+            rect = shelf.get_free_rect()
             best, worth = heuristic.choose(bin, bestRect, rect)
 
             if best is not bestRect:
@@ -94,7 +94,7 @@ class BinPackerShelf(BinPacker):
             pass
 
         if bestShelf is None:
-            shelf = self.createNewShelf(bin)
+            shelf = self.create_new_shelf(bin)
             return shelf
             pass
 

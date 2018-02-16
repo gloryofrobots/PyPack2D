@@ -11,7 +11,7 @@ class Border(object):
             self.init(borderSize, borderSize, borderSize, borderSize, type, color)
             pass
         pass
-    
+
     def init(self, left, top, right, bottom, type = None, color = None):
         self.left = left
         self.top = top
@@ -21,23 +21,19 @@ class Border(object):
         self.color = color
         pass
 
-    def isEmpty(self):
+    def is_empty(self):
         if self.left == 0 and self.right == 0 and self.top == 0 and self.bottom == 0:
             return True
             pass
 
         return False
         pass
-    
-    def getWidth(self):
+
+    @property
+    def width(self):
         return self.left + self.right
         pass
 
-    width = property(fget = getWidth)
-
-    def getHeight(self):
+    @property
+    def height(self):
         return self.top + self.bottom
-        pass
-
-    height = property(fget = getHeight)
-    pass

@@ -4,16 +4,16 @@ from pypack2d.pack2d.rectangle import Rectangle
 
 class Cell(Rectangle):
     def cut(self, width):
-        self.setBB(self.left + width, self.top, self.right, self.bottom)
+        self.set_bb(self.left + width, self.top, self.right, self.bottom)
         pass
 
-    def isOver(self):
+    def is_over(self):
         if self.width == 0 or self.height == 0:
             return True
             pass
         pass
 
-    def canPlace(self, rect):
+    def can_place(self, rect):
         if self.height < rect.height or self.width < rect.width:
             return False
             pass
@@ -33,12 +33,12 @@ class Cell(Rectangle):
 
 
 class BinPackerCell(BinPacker):
-    def _onSetSize(self):
+    def _on_set_size(self):
         self.cells = [Cell(0, 0, self.maxWidth, self.maxHeight)]
         pass
 
-    def _onPackBin(self, bin):
-        bestCell = self.getBestCell(bin)
+    def _on_pack_bin(self, bin):
+        bestCell = self.get_best_cell(bin)
 
         if bestCell is None:
             return False
@@ -49,7 +49,7 @@ class BinPackerCell(BinPacker):
         newLine = Cell(destinationRect.left, destinationRect.bottom, destinationRect.width,
                        bestCell.height - bin.height)
 
-        if bestCell.isOver() is True:
+        if bestCell.is_over() is True:
             self.cells.remove(bestCell)
             pass
 
@@ -57,11 +57,11 @@ class BinPackerCell(BinPacker):
 
         self.normalise(destinationRect)
 
-        bin.setCoord(destinationRect.left, destinationRect.top)
+        bin.set_coord(destinationRect.left, destinationRect.top)
         return True
         pass
 
-    def canPlace(self, cell, rect):
+    def can_place(self, cell, rect):
         if cell.height < rect.height:
             return False
             pass
@@ -87,11 +87,11 @@ class BinPackerCell(BinPacker):
 
     pass
 
-    def getBestCell(self, bin):
+    def get_best_cell(self, bin):
         bestCell = None
         minTopLeft = self.maxHeight * 2
         for cell in self.cells:
-            if self.canPlace(cell, bin) is False:
+            if self.can_place(cell, bin) is False:
                 continue
                 pass
 
@@ -115,11 +115,11 @@ class BinPackerCell(BinPacker):
                     and cell.top < destinationRect.top:
 
                 if cell.right < destinationRect.right:
-                    cell.setBB(cell.left, cell.top, cell.right, destinationRect.top)
+                    cell.set_bb(cell.left, cell.top, cell.right, destinationRect.top)
                     pass
                 else:
                     newCell = Cell(cell.left, cell.top, destinationRect.right, destinationRect.top)
-                    cell.cut(newCell.getWidth())
+                    cell.cut(newCell.width)
                     newCells.append(newCell)
                     pass
 
