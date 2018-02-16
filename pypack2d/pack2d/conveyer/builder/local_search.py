@@ -13,11 +13,7 @@ class PackingConveyerBuilderLocalSearch(PackingConveyerBuilder):
             sorting = factory.create_instance(settings.sort_key)
             sorter = Sorter(sorting, settings.sort_order)
             conveyer.push_unit(sorter)
-            pass
 
         packer = factory.createInstance(settings.packingAlgorithm)
         control = PackingControlLocalSearch(packer, factory, settings)
         conveyer.push_unit(control)
-        pass
-
-    pass

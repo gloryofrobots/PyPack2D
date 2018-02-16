@@ -10,6 +10,3 @@ class PackingConveyerBuilderOnline(PackingConveyerBuilder):
         packer = factory.create_instance(settings.packingAlgorithm)
         control = PackingControl(packer, factory, settings)
         conveyer.push_unit(control)
-        pass
-
-    pass

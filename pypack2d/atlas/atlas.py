@@ -1,7 +1,9 @@
 from PIL import Image
+
+
 class Atlas(object):
     def __init__(self):
-        super(Atlas,self).__init__()
+        super(Atlas, self).__init__()
         self.width = 0
         self.height = 0
         self.dirPath = None
@@ -12,7 +14,6 @@ class Atlas(object):
 
         self.canvas = None
         self.images = []
-        pass
 
     def initialise(self, width, height, dirPath, fileName, texMode, atlasType, fillColor):
         self.width = width
@@ -22,30 +23,22 @@ class Atlas(object):
         self.textureMode = texMode
         self.atlasType = atlasType
         self.fillColor = fillColor
-        pass
 
     def add_image(self, image):
         self.images.append(image)
         return True
-        pass
 
     def get_canvas(self):
         return self.canvas
-        pass
 
     def save(self):
         path = self.dirPath + "\\" + self.fileName
         self.canvas.save(path, self.atlasType)
-        pass
 
     def show(self):
         self.canvas.show()
-        pass
 
     def pack(self):
         self.canvas = Image.new(self.textureMode, (self.width, self.height), self.fillColor)
         for img in self.images:
             img.pack(self)
-            pass
-        pass
-    pass

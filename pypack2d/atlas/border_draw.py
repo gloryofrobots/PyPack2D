@@ -5,13 +5,9 @@ from PIL import Image, ImageDraw
 class BorderDraw(object):
     def draw(self, atlasImage, border):
         return self._on_draw(atlasImage, border)
-        pass
 
     def _on_draw(self, atlasImage, border):
         raise NotImplementedError()
-        pass
-
-    pass
 
 
 class BorderDrawRectangle(BorderDraw):
@@ -29,24 +25,20 @@ class BorderDrawRectangle(BorderDraw):
         if border.left is not 0:
             line = [(0, 0), (0, bottomEdge)]
             draw.line(line, fill=border.color, width=border.left)
-            pass
+
         if border.top is not 0:
             line = [(0, 0), (rightEdge, 0)]
             draw.line(line, fill=border.color, width=border.top)
-            pass
+
         if border.right is not 0:
             line = [(rightEdge, 0), (rightEdge, bottomEdge)]
             draw.line(line, fill=border.color, width=border.right)
-            pass
+
         if border.bottom is not 0:
             line = [(0, bottomEdge), (rightEdge, bottomEdge)]
             draw.line(line, fill=border.color, width=border.bottom)
-            pass
 
         return newImage
-        pass
-
-    pass
 
 
 class BorderDrawEdge(BorderDraw):
@@ -68,7 +60,6 @@ class BorderDrawEdge(BorderDraw):
             sourceLine = border.top
             lineNumbers = range(0, sourceLine)
             self.copy_lines(field2D, sourceLine, lineNumbers)
-            pass
 
         if border.bottom is not 0:
             # print("copy bottom")
@@ -77,7 +68,6 @@ class BorderDrawEdge(BorderDraw):
             lineNumbers = range(sourceLine + 1, newHeight)
 
             self.copy_lines(field2D, sourceLine, lineNumbers)
-            pass
 
         if border.left is not 0:
             # print("copy left")
@@ -85,7 +75,6 @@ class BorderDrawEdge(BorderDraw):
             sourceColumn = border.left
             columnNumbers = range(0, sourceColumn)
             self.copy_columns(field2D, sourceColumn, columnNumbers)
-            pass
 
         if border.right is not 0:
             # print("copy right")
@@ -94,24 +83,16 @@ class BorderDrawEdge(BorderDraw):
             columnNumbers = range(sourceColumn + 1, newWidth)
 
             self.copy_columns(field2D, sourceColumn, columnNumbers)
-            pass
 
         newImage.putdata(data)
         return newImage
-        pass
 
     def copy_lines(self, field2D, sourceLineNumber, lineNumbers):
         for lineNumber in lineNumbers:
             # print("copyLine",sourceLineNumber,lineNumber)
             field2D.copy_line(field2D, sourceLineNumber, lineNumber)
-            pass
-        pass
 
     def copy_columns(self, field2D, sourceColumnNumber, columnNumbers):
         for columnNumber in columnNumbers:
             # print("copyColumn",sourceColumnNumber,columnNumber)
             field2D.copy_column(field2D, sourceColumnNumber, columnNumber)
-            pass
-        pass
-
-    pass

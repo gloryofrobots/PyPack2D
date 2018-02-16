@@ -11,37 +11,27 @@ class Pack2D(object):
 
         self.factory = packingFactory
 
-        pass
-
     def initialise(self, settings):
         self.conveyer = Conveyer()
         builder = self.factory.create_instance(settings.packing_mode)
         builder.build(self.conveyer, self.factory, settings)
         signal = Signal(SignalType.PREPARE_TO_PACK, None)
         self.conveyer.process_signal(signal)
-        pass
 
     def pack(self):
         signal = Signal(SignalType.START_PACK, None)
         self.conveyer.process_signal(signal)
-        pass
 
     def get_result(self):
         return self.conveyer.getResult()
-        pass
 
     def get_waste(self):
         return self.conveyer.getWaste()
-        pass
 
     def push(self, input):
         _input = input
         if isinstance(input, list) is False:
             _input = [input]
-            pass
 
         signal = Signal(SignalType.PUSH_INPUT, _input)
         self.conveyer.process_signal(signal)
-        pass
-
-    pass

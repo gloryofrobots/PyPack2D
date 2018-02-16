@@ -2,15 +2,13 @@ class Border(object):
     def __init__(self, bbox=None, border=None, border_size=None, type=None, color=None):
         if bbox is not None:
             self.init(bbox[0], bbox[1], bbox[2], bbox[3], type, color)
-            pass
+
         elif border is not None:
             self.init(border.left, border.top, border.right, border.bottom, border.type, border.color)
             return
-            pass
+
         elif border_size is not None:
             self.init(border_size, border_size, border_size, border_size, type, color)
-            pass
-        pass
 
     def init(self, left, top, right, bottom, type=None, color=None):
         self.left = left
@@ -19,20 +17,16 @@ class Border(object):
         self.bottom = bottom
         self.type = type
         self.color = color
-        pass
 
     def is_empty(self):
         if self.left == 0 and self.right == 0 and self.top == 0 and self.bottom == 0:
             return True
-            pass
 
         return False
-        pass
 
     @property
     def width(self):
         return self.left + self.right
-        pass
 
     @property
     def height(self):

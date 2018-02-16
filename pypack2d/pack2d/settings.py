@@ -122,6 +122,3 @@ class PackingSettings(object):
 
         self.split_rule = split_rule
         self.debug = debug
-        pass
-
-    pass

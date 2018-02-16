@@ -1,5 +1,6 @@
 from pypack2d.pack2d.conveyer.size_shifter.size_shifter import BinSizeShifter
 
+
 class BinSizeShifterMaximal(BinSizeShifter):
     def _on_shift(self, binSet):
         maxRight = 0
@@ -7,12 +8,8 @@ class BinSizeShifterMaximal(BinSizeShifter):
         for bin in binSet:
             if bin.right > maxRight:
                 maxRight = bin.right
-                pass
+
             if bin.bottom > maxBottom:
                 maxBottom = bin.bottom
-                pass
-            pass
 
         binSet.set_size(maxRight, maxBottom)
-        pass
-    pass
