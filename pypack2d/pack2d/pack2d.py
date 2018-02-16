@@ -5,13 +5,9 @@ from pypack2d.pack2d.conveyer.signal import SignalType, Signal
 
 
 class Pack2D(object):
-    def __init__(self):
+    def __init__(self, settings):
         super(Pack2D, self).__init__()
-        self.conveyer = None
-
         self.factory = packingFactory
-
-    def initialise(self, settings):
         self.conveyer = Conveyer()
         builder = self.factory.create_instance(settings.packing_mode)
         builder.build(self.conveyer, self.factory, settings)
