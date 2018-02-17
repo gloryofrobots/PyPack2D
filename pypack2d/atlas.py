@@ -54,7 +54,7 @@ class AtlasImage(object):
         self.draw_border(border)
 
     def __rotate(self):
-        self.img = self.img.rotate(-90)
+        self.img = self.img.rotate(-90, expand=True)
         self._initialise()
 
     def draw_border(self, border):

@@ -53,7 +53,7 @@ def pack(pathname, atlasdir):
         #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
         #     color="#fff"
         # ),
-        border_mode=pypack2d.BorderMode.STRICT,
+        border_mode=pypack2d.BorderMode.NONE,
 
         atlas=dict(
             file_prefix="atlas",
@@ -78,18 +78,19 @@ def extract_image(atlas, uv, rotated):
     bottom = height * uv_bottom
     image = atlas.crop((left, top, right, bottom))
     image.load()
-    # if rotated:
-    #     image = image.rotate(-90)
+    if rotated:
+        image = image.rotate(-90, expand=True)
     return image
 
 
 def equal(im1, im2):
     from PIL import ImageChops
-    # check equality in 2 ways
+    # check image equality in many ways
     # it is redundant but I want to be sure
+    check0 = im1.size == im2.size
     check1 = ImageChops.difference(im1, im2).getbbox() is None
     check2 = im1.tobytes() == im2.tobytes()
-    return check1 is True and check2 is True
+    return check0 is True and check1 is True and check2 is True
 
 
 def unpack(atlasdir, dirname):
