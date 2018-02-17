@@ -22,14 +22,18 @@ pack_settings = dict(
                 ),
     border_mode=pypack2d.BorderMode.AUTO,
     split_rule=pypack2d.GuillotineSplitRule.SHORTER_AXIS,
+    atlas=dict(
+        file_prefix="atlas",
+        file_type="png",
+        texture_mode="RGBA"
+    )
 )
 
 
-# stats = pypack2d.generate(["img/src/001.png", "img/src/000.png"], "img/res", pack_settings, file_prefix="atlas")
-stats = pypack2d.generate(["img/src/*.png"], "img/res", pack_settings, file_prefix="atlas")
-# generator = pypack2d.generator("img/res", settings,  src="img/src/*.png", file_prefix="atlas",)
-# generator.add_glob("img/src/*.png")
-# stats = generator.generate()
+stats = pypack2d.generate(["img/src/*.png"], "img/res", **pack_settings)
+stats = pypack2d.generate(["img/src/*.png"], "img/res", pack_settings)
+stats = pypack2d.generate(["img/src/*.png"], "img/res")
+
 
 print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
 

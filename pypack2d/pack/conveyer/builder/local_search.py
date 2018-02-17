@@ -14,6 +14,6 @@ class PackingConveyerBuilderLocalSearch(PackingConveyerBuilder):
             sorter = Sorter(sorting, settings.sort_order)
             conveyer.push_unit(sorter)
 
-        packer = factories.packer.create_instance(settings.packingAlgorithm)
-        control = PackingControlLocalSearch(packer, factories, settings)
+        packer = factories.packer.create_instance(settings.packing_algo, factories, settings)
+        control = PackingControlLocalSearch(packer, settings)
         conveyer.push_unit(control)
