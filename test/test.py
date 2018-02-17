@@ -35,61 +35,122 @@ def callback(atlas):
         f.write(json.dumps(data))
 
 
-class TestPack(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # SIZES = [100, 60, 30, 180, 200, 10, 2, 140, 70, 50]
-        # PRESETS = [(510, 10), (10, 510), (100, 100), (2, 10), (10, 2), (10, 10)]
-        #
-        # pypack2d.utils.clear_dir(TEST_DIR)
-        # from test import image_gen
-        # image_gen.generate(TEST_DIR, 100, sizes=SIZES, presets=PRESETS)
-        pass
+def create_settings(custom=None):
+    if custom is None:
+        custom = {}
 
+    pack_settings = dict(
+        callback=callback,
+        # algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.MAX_AREA),
+        algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
+        heuristic=pypack2d.PlaceHeuristic.BEST_AREA_FIT,
+        sort_order=pypack2d.SortOrder.ASC,
+        sort_key=pypack2d.SortKey.SIDE_RATIO,
+        resize_mode=pypack2d.ResizeMode.NONE,
+        packing_mode=pypack2d.PackingMode.ONLINE,
+
+        rotate_mode=pypack2d.RotateMode.SIDE_WAYS,
+        max_width=512,
+        max_height=512,
+        border=dict(
+            rect=dict(left=1, top=1, right=1, bottom=1),
+            type=pypack2d.BorderType.SOLID,
+            color="#000"
+        ),
+        # border=dict(
+        #     size=1,
+        #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+        #     color="#fff"
+        # ),
+        border_mode=pypack2d.BorderMode.NONE,
+
+        atlas=dict(
+            file_prefix="atlas",
+            file_type="png",
+            texture_mode="RGBA"
+        )
+    )
+
+    pack_settings.update(custom)
+    return pack_settings
+
+
+class TestPack(unittest.TestCase):
     def setUp(self):
         pypack2d.utils.clear_dir(ATLAS_DIR)
         pypack2d.utils.clear_dir(UNPACKED_IMAGES_DIR)
 
-        self.pack_settings = dict(
-            callback=callback,
-            # algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.MAX_AREA),
-            algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
-            heuristic=pypack2d.PlaceHeuristic.BEST_AREA_FIT,
-            sort_order=pypack2d.SortOrder.ASC,
-            sort_key=pypack2d.SortKey.SIDE_RATIO,
-            resize_mode=pypack2d.ResizeMode.NONE,
-            packing_mode=pypack2d.PackingMode.ONLINE,
+    # def test_border_strict_solid(self):
+    #     self.pack_unpack(dict(
+    #         border_mode=pypack2d.BorderMode.STRICT,
+    #         border=dict(
+    #             rect=dict(left=1, top=1, right=1, bottom=1),
+    #             type=pypack2d.BorderType.SOLID,
+    #             color="#000"
+    #         ),
+    #     ))
+    #
+    # def test_border_strict_from_edge(self):
+    #     self.pack_unpack(dict(
+    #         border_mode=pypack2d.BorderMode.STRICT,
+    #         border=dict(
+    #             rect=dict(left=1, top=1, right=1, bottom=1),
+    #             type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+    #         ),
+    #     ))
+    #
+    # @unittest.expectedFailure
+    # def test_border_auto_from_edge_failure(self):
+    #     self.pack_unpack(dict(
+    #         border_mode=pypack2d.BorderMode.AUTO,
+    #         border=dict(
+    #             rect=dict(left=1, top=1, right=1, bottom=1),
+    #             type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+    #         ),
+    #     ))
+    #
+    # def test_border_auto_from_edge(self):
+    #     self.pack_unpack(dict(
+    #         border_mode=pypack2d.BorderMode.AUTO,
+    #         border=dict(
+    #             size=1,
+    #             type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+    #         ),
+    #     ))
 
-            rotate_mode=pypack2d.RotateMode.SIDE_WAYS,
-            max_width=512,
-            max_height=512,
-            border=dict(
-                rect=dict(left=1, top=1, right=1, bottom=1),
-                type=pypack2d.BorderType.SOLID,
-                color="#000"
-            ),
-            # border=dict(
-            #     size=1,
-            #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
-            #     color="#fff"
-            # ),
-            border_mode=pypack2d.BorderMode.NONE,
+    # def test_shelf(self):
+    #     self.pack_unpack(dict(
+    #         algo=pypack2d.PackingAlgorithm.SHELF
+    #     ))
 
-            atlas=dict(
-                file_prefix="atlas",
-                file_type="png",
-                texture_mode="RGBA"
-            )
-        )
+    # def test_cell(self):
+    #     self.pack_unpack(dict(
+    #         algo=pypack2d.PackingAlgorithm.CELL
+    #     ))
 
-    def pack(self, pathname, atlasdir, pack_settings):
-        stats = pypack2d.pack(pathname, atlasdir, pack_settings)
+    def test_guillotine(self):
+        self.pack_unpack(dict(
+            algo=pypack2d.PackingAlgorithm.GUILLOTINE
+        ))
+
+    def test_guillotine2(self):
+        self.pack_unpack(dict(
+            algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.SHORTER_AXIS)
+        ))
+
+    def pack_unpack(self, settings):
+        self.pack(settings)
+        self.unpack()
+
+    def pack(self, custom_settings):
+        pack_settings = create_settings(custom_settings)
+        stats = pypack2d.pack(TEST_PATHNAME, ATLAS_DIR, pack_settings)
         print("\nCount images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
 
-    def test_pack(self):
-        self.pack(TEST_PATHNAME, ATLAS_DIR, self.pack_settings)
+    def unpack(self, save=False):
+        self._unpack(ATLAS_META_PATHNAME, UNPACKED_IMAGES_DIR, save)
 
-    def unpack(self, atlasdir, dirname, save=False):
+    def _unpack(self, atlasdir, dirname, save):
         for filename in glob.glob(atlasdir):
             datafile = open(filename, "r")
             data = datafile.read()
@@ -111,10 +172,6 @@ class TestPack(unittest.TestCase):
                 if save:
                     result_path = os.path.join(dirname, image_filename)
                     image.save(result_path)
-
-    def test_unpack(self):
-        # self.pack(TEST_PATHNAME, ATLAS_DIR, self.pack_settings)
-        self.unpack(ATLAS_META_PATHNAME, UNPACKED_IMAGES_DIR, True)
 
 
 if __name__ == "__main__":
