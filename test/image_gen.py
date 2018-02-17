@@ -1,7 +1,10 @@
 from PIL import Image, ImageDraw
 import random
 import os
-
+"""
+you can use this script to generate test images for atlas packer
+also it will create necessary folders
+"""
 COLORS = []
 for i in range(1000):
     r = random.randrange(0, 255)
@@ -41,4 +44,12 @@ def generate(dirname, max_count):
         generate_image(name, size)
 
 if __name__ == "__main__":
+    dirs = ["img/unpacked", "img/test", "img/atlas"]
+    for path in dirs:
+        try:
+            os.makedirs(path)
+        except os.error as e:
+            # dir already exists
+            pass
+
     generate("img/test", len(PRESETS))

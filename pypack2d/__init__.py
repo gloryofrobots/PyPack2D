@@ -1,6 +1,6 @@
 from pypack2d.pack2d.settings import (PackingMode, PlaceHeuristic, GuillotineSplitRule, ResizeMode,
-                                    BorderMode, BorderType, PackingAlgorithm, PackingAlgorithmAbility,
-                                    PackingSettings, RotateMode, SortKey, SortOrder)
+                                      BorderMode, BorderType, PackingAlgorithm, PackingAlgorithmAbility,
+                                      PackingSettings, RotateMode, SortKey, SortOrder)
 
 from pypack2d.atlas import AtlasGenerator
 
@@ -27,4 +27,21 @@ def pack(src_pathname, destination_dir, settings=None, **kwargs):
     return gen.generate()
 
 
+def json_writer(atlas):
+    import json
+    images = []
+    for image in atlas:
+        images.append(dict(
+            uv=image.uv,
+            path=image.path,
+            rotated=image.is_rotated
+        ))
 
+    data_path = atlas.get_path_with_extension("json")
+    data = dict(
+        path=atlas.path,
+        images=images
+    )
+    datafile = open(data_path, "w")
+    with datafile as f:
+        f.write(json.dumps(data))
