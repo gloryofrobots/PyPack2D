@@ -22,16 +22,16 @@ class Factory(object):
 
         return True
 
-    def __create_instance(self, name):
+    def __create_instance(self, name, *args, **kwargs):
         ctor = self._types[name]
-        instance = ctor()
+        instance = ctor(*args, **kwargs)
         return instance
 
-    def create_instance(self, name):
+    def create_instance(self, name, *args, **kwargs):
         if self.has_type(name) is False:
             raise FactoryError("TypeName not register %s" % name)
 
-        instance = self.__create_instance(name)
+        instance = self.__create_instance(name, *args, **kwargs)
         return instance
 
 

@@ -62,15 +62,13 @@ class BinSet(object):
 
 
 class BinPacker(object):
-    def __init__(self):
+    def __init__(self, factories, settings):
         super(BinPacker, self).__init__()
         self.bin_set = None
         self.heuristic = None
         self.settings = None
         self.max_width = 0
         self.max_height = 0
-
-    def initialise(self, factories, settings):
         self.heuristic = factories.heuristic.create_instance(settings.place_heuristic)
         self.settings = settings
         self._on_init(factories, settings)

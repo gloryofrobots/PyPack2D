@@ -3,9 +3,8 @@ from pypack2d.pack.conveyer.signal import SignalType, Signal
 
 
 class PackingControl(Unit):
-    def _on_init(self, packer, factories, settings):
+    def _on_init(self, packer, settings):
         self.packer = packer
-        self.packer.initialise(factories, settings)
         self.packer.set_size(settings.max_width, settings.max_height)
 
         self.result = []
