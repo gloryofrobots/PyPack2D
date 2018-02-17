@@ -1,6 +1,6 @@
-from pypack2d.pack.pack import Pack2D
-from pypack2d.pack.bin import Bin
-from pypack2d.pack.settings import BorderType
+from pypack2d.pack2d.pack import Pack2D
+from pypack2d.pack2d.bin import Bin
+from pypack2d.pack2d.settings import BorderType
 from pypack2d.border_draw import BorderDrawEdge, BorderDrawRectangle
 import glob
 import os
@@ -44,7 +44,7 @@ class AtlasImage(object):
         self.bin = bin
 
         if self.bin.is_rotate():
-            self.rotate()
+            self.__rotate()
 
         border = self.bin.border
 
@@ -53,7 +53,7 @@ class AtlasImage(object):
 
         self.draw_border(border)
 
-    def rotate(self):
+    def __rotate(self):
         self.img = self.img.rotate(-90)
         self._initialise()
 
@@ -68,8 +68,9 @@ class AtlasImage(object):
         self.img = draw.draw(self, border)
         self._initialise()
 
-    def is_rotate(self):
-        return self.bin.isRotate()
+    @property
+    def is_rotated(self):
+        return self.bin.is_rotate()
 
     def pack(self, atlas):
 
@@ -92,10 +93,10 @@ class Atlas(object):
         super(Atlas, self).__init__()
         self.width = width
         self.height = height
-        self.dir_path = dir_path
+        self.dirname = dir_path
         self.filename = filename
         self.texture_mode = tex_mode
-        self.atlas_type = atlas_type
+        self.image_type = atlas_type
         self.fill_color = fill_color
 
         self.canvas = None
@@ -108,12 +109,16 @@ class Atlas(object):
     def get_canvas(self):
         return self.canvas
 
+    def get_path_with_extension(self, ext):
+        return os.path.join(self.dirname, ("%s.%s" % (self.filename, ext)))
+
     @property
     def path(self):
-        return os.path.join(self.dir_path, self.filename)
+        return self.get_path_with_extension(self.image_type)
 
-    def save(self):
-        self.canvas.save(self.path, self.atlas_type)
+    def save(self, callback):
+        callback(self)
+        self.canvas.save(self.path, self.image_type)
 
     def show(self):
         self.canvas.show()
@@ -122,6 +127,9 @@ class Atlas(object):
         self.canvas = Image.new(self.texture_mode, (self.width, self.height), self.fill_color)
         for img in self.images:
             img.pack(self)
+
+    def __iter__(self):
+        return self.images.__iter__()
 
 
 class AtlasGenerator(object):
@@ -151,7 +159,7 @@ class AtlasGenerator(object):
         if index > 0:
             counter = "%i" % index
 
-        atlas_filename = self.relative_filename + counter + "." + self.atlas_type
+        atlas_filename = self.relative_filename + counter
         bin_width = bin_set.width
         bin_height = bin_set.height
         atlas = Atlas(bin_width, bin_height, self.dir_path, atlas_filename, self.tex_mode, self.atlas_type,
@@ -187,16 +195,16 @@ class AtlasGenerator(object):
         return image
 
     def _work_with_result(self, bin_sets):
-        for binSet in bin_sets:
-            atlas = self.get_new_atlas(binSet)
-            for bin in binSet:
+        for bin_set in bin_sets:
+            atlas = self.get_new_atlas(bin_set)
+            for bin in bin_set:
                 image = self._get_image_for_bin(bin)
 
                 image.set_bin(bin)
                 atlas.add_image(image)
 
             atlas.pack()
-            atlas.save()
+            atlas.save(self.packing_settings.callback)
 
             self.atlases.append(atlas)
 

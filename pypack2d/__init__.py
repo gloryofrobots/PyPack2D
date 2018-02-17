@@ -1,11 +1,11 @@
-from pypack2d.pack.settings import (PackingMode, PlaceHeuristic, GuillotineSplitRule, ResizeMode,
+from pypack2d.pack2d.settings import (PackingMode, PlaceHeuristic, GuillotineSplitRule, ResizeMode,
                                     BorderMode, BorderType, PackingAlgorithm, PackingAlgorithmAbility,
                                     PackingSettings, RotateMode, SortKey, SortOrder)
 
 from pypack2d.atlas import AtlasGenerator
 
 
-def generate(src_pathname, destination_dir, settings=None, **kwargs):
+def pack(src_pathname, destination_dir, settings=None, **kwargs):
     if settings is None:
         packing_settings = kwargs
     else:
