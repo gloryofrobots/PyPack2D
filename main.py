@@ -1,11 +1,11 @@
 import pypack2d
 
-settings = dict(
+pack_settings = dict(
     algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
     heuristic=pypack2d.PlaceHeuristic.BEST_AREA_FIT,
     sort_order=pypack2d.SortOrder.DESC,
     sort_key=pypack2d.SortKey.AREA,
-    bin_size_mode=pypack2d.BinSizeMode.STRICT,
+    resize_mode=pypack2d.ResizeMode.MINIMIZE_POW2,
     packing_mode=pypack2d.PackingMode.OFFLINE,
 
     rotate_mode=pypack2d.RotateMode.AUTO,
@@ -24,11 +24,13 @@ settings = dict(
     split_rule=pypack2d.GuillotineSplitRule.SHORTER_AXIS,
 )
 
-generator = pypack2d.generator("img/res", settings, file_prefix="atlas")
 
-generator.add_glob("img/src/*.png")
+# stats = pypack2d.generate(["img/src/001.png", "img/src/000.png"], "img/res", pack_settings, file_prefix="atlas")
+stats = pypack2d.generate(["img/src/*.png"], "img/res", pack_settings, file_prefix="atlas")
+# generator = pypack2d.generator("img/res", settings,  src="img/src/*.png", file_prefix="atlas",)
+# generator.add_glob("img/src/*.png")
+# stats = generator.generate()
 
-stats = generator.generate()
 print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
 
 

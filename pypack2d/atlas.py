@@ -1,6 +1,6 @@
-from pypack2d.pack2d.pack2d import Pack2D
-from pypack2d.pack2d.bin import Bin
-from pypack2d.pack2d.settings import BorderType
+from pypack2d.pack.pack import Pack2D
+from pypack2d.pack.bin import Bin
+from pypack2d.pack.settings import BorderType
 from pypack2d.border_draw import BorderDrawEdge, BorderDrawRectangle
 import glob
 import os
@@ -125,11 +125,9 @@ class Atlas(object):
 
 
 class AtlasGenerator(object):
-    def __init__(self, destination_directory, packing_settings, *,
-                 file_prefix="atlas",
-                 texture_mode="RGBA",
-                 file_type="png",
-                 fill_color="#000"):
+    def __init__(self, destination_directory, packing_settings,
+                 file_prefix, file_type, texture_mode, fill_color):
+
         super().__init__()
         self.dir_path = destination_directory
         self.relative_filename = file_prefix
