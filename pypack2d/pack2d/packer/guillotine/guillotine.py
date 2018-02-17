@@ -1,6 +1,7 @@
 from pypack2d.pack2d.packer.packer import BinPacker
 
 from pypack2d.pack2d.rectangle import Rectangle
+from pypack2d.pack2d.settings import GuillotineSplitRule
 
 
 class PackNode(Rectangle):
@@ -54,7 +55,7 @@ class PackNode(Rectangle):
 
 class BinPackerGuillotine(BinPacker):
     def _on_init(self, factories, settings):
-        self.splitter = factories.splitter.create_instance(settings.split_rule)
+        self.splitter = factories.splitter.create_instance(settings.guillotine_split)
 
     def _on_set_size(self):
         self.packNode = PackNode(0, 0, self.max_width, self.max_height)

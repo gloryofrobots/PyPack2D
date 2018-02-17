@@ -105,12 +105,18 @@ class PackingSettings(object):
                  max_width=1024,
                  max_height=1024,
                  border=None,
-                 border_mode=BorderMode.NONE,
-                 split_rule=None
+                 border_mode=BorderMode.NONE
                  ):
         super(PackingSettings, self).__init__()
+        if isinstance(algo, dict):
+            self.packing_algo = algo["type"]
+            if self.packing_algo != PackingAlgorithm.GUILLOTINE:
+                raise SetupError("This type of algorithm does not have specific options")
+            self.guillotine_split = algo["split"]
+        else:
+            self.packing_algo = algo
+            self.guillotine_split = GuillotineSplitRule.SHORTER_AXIS
         self.callback = callback
-        self.packing_algo = algo
         self.place_heuristic = heuristic
         self.sort_key = sort_key
         self.sort_order = sort_order
@@ -123,7 +129,6 @@ class PackingSettings(object):
         self.border = border
         self.border_mode = border_mode
 
-        self.split_rule = split_rule
         if self.border_mode == BorderMode.AUTO:
             if "size" not in self.border:
                 raise SetupError("BORDER MODE AUTO expects size attribute in border settings")

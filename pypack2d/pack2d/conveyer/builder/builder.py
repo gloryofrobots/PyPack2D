@@ -18,5 +18,11 @@ class PackingConveyerBuilder(object):
         shifter = factories.size_shifter.create_instance(settings.resize_mode)
         conveyer.push_unit(shifter)
 
+    @staticmethod
+    def create_packer(factories, settings):
+        packer_type = settings.packing_algo
+        packer = factories.packer.create_instance(packer_type, factories, settings)
+        return packer
+
     def _on_build(self, conveyer, factories, settings):
         pass

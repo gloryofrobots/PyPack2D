@@ -14,6 +14,6 @@ class PackingConveyerBuilderOffline(PackingConveyerBuilder):
             sorter = Sorter(sorting, settings.sort_order)
             conveyer.push_unit(sorter)
 
-        packer = factories.packer.create_instance(settings.packing_algo, factories, settings)
+        packer = self.create_packer(factories, settings)
         control = PackingControl(packer, settings)
         conveyer.push_unit(control)
