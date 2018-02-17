@@ -1,4 +1,4 @@
-from pypack2d.pack2d.utils import min_sort, max_sort
+from pypack2d.utils import min_sort, max_sort
 
 
 class PlaceHeuristicException(BaseException):

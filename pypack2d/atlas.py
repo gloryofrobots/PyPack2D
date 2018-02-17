@@ -2,6 +2,7 @@ from pypack2d.pack2d.pack import Pack2D
 from pypack2d.pack2d.bin import Bin
 from pypack2d.pack2d.settings import BorderType
 from pypack2d.border_draw import BorderDrawEdge, BorderDrawRectangle
+from pypack2d import utils
 import glob
 import os
 
@@ -54,7 +55,7 @@ class AtlasImage(object):
         self.draw_border(border)
 
     def __rotate(self):
-        self.img = self.img.rotate(-90, expand=True)
+        self.img = utils.rotate_image(self.img)
         self._initialise()
 
     def draw_border(self, border):
@@ -155,11 +156,8 @@ class AtlasGenerator(object):
 
     def get_new_atlas(self, bin_set):
         index = len(self.atlases)
-        counter = ""
-        if index > 0:
-            counter = "%i" % index
 
-        atlas_filename = self.relative_filename + counter
+        atlas_filename = self.relative_filename + str(index)
         bin_width = bin_set.width
         bin_height = bin_set.height
         atlas = Atlas(bin_width, bin_height, self.dir_path, atlas_filename, self.tex_mode, self.atlas_type,

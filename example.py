@@ -1,4 +1,6 @@
 import pypack2d
+import pypack2d.utils
+
 from PIL import Image
 import json
 import os
@@ -25,11 +27,8 @@ def callback(atlas):
         f.write(json.dumps(data))
 
 
-def clear_dir(dirname):
-    for filename in glob.glob(dirname + "/*.*"):
-        os.remove(filename)
-
 def pack(pathname, atlasdir):
+    pypack2d.utils.clear_dir(atlasdir)
     pack_settings = dict(
         callback=callback,
         # algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.MAX_AREA),
@@ -41,8 +40,8 @@ def pack(pathname, atlasdir):
         packing_mode=pypack2d.PackingMode.ONLINE,
 
         rotate_mode=pypack2d.RotateMode.SIDE_WAYS,
-        max_width=128,
-        max_height=128,
+        max_width=512,
+        max_height=512,
         border=dict(
             rect=dict(left=1, top=1, right=1, bottom=1),
             type=pypack2d.BorderType.SOLID,
@@ -67,33 +66,9 @@ def pack(pathname, atlasdir):
     print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
 
 
-def extract_image(atlas, uv, rotated):
-    width, height = atlas.size
-    # if rotated:
-    #     width,height = height, width
-    uv_left, uv_top, uv_right, uv_bottom = uv
-    left = width * uv_left
-    top = height * uv_top
-    right = width * uv_right
-    bottom = height * uv_bottom
-    image = atlas.crop((left, top, right, bottom))
-    image.load()
-    if rotated:
-        image = image.rotate(-90, expand=True)
-    return image
-
-
-def equal(im1, im2):
-    from PIL import ImageChops
-    # check image equality in many ways
-    # it is redundant but I want to be sure
-    check0 = im1.size == im2.size
-    check1 = ImageChops.difference(im1, im2).getbbox() is None
-    check2 = im1.tobytes() == im2.tobytes()
-    return check0 is True and check1 is True and check2 is True
-
-
 def unpack(atlasdir, dirname):
+    pypack2d.utils.clear_dir(dirname)
+    count = 0
     for filename in glob.glob(atlasdir):
         datafile = open(filename, "r")
         data = datafile.read()
@@ -104,23 +79,14 @@ def unpack(atlasdir, dirname):
         for image_data in data["images"]:
             uv = image_data["uv"]
             rotated = image_data["rotated"]
-            image = extract_image(atlas, uv, rotated)
+            image = pypack2d.utils.extract_image_from_atlas(atlas, uv, rotated)
             path = image_data["path"]
             _, image_filename = os.path.split(path)
             result_path = os.path.join(dirname, image_filename)
-            old_image = Image.open(path)
-            if not equal(old_image, image):
-                print("ERROR %s, %s" % (filename, result_path))
-                # old_image.show()
-                # image.show()
-                # return
             image.save(result_path)
+            count += 1
+    print("Unpacked %d images" % count)
 
 
-ATLAS_DIR = "img/atlas"
-UNPACKED_IMAGES_DIR = "img/unpacked"
-clear_dir(ATLAS_DIR)
-clear_dir(UNPACKED_IMAGES_DIR)
-
-pack(["img/test/*.png"], ATLAS_DIR)
-unpack("img/atlas/*.json", UNPACKED_IMAGES_DIR)
+pack(["test/img/test/*.png"], "test/img/atlas")
+unpack("test/img/atlas/*.json", "test/img/unpacked")

@@ -1,6 +1,6 @@
 from pypack2d.pack2d.conveyer.size_shifter.size_shifter import BinSizeShifter
 from pypack2d.pack2d.rectangle import Rectangle
-from pypack2d.pack2d.utils import get_low_pow2
+from pypack2d.utils import get_low_pow2
 
 
 class BinSizeShifterPow2(BinSizeShifter):

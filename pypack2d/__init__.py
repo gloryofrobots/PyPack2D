@@ -3,6 +3,7 @@ from pypack2d.pack2d.settings import (PackingMode, PlaceHeuristic, GuillotineSpl
                                       PackingSettings, RotateMode, SortKey, SortOrder)
 
 from pypack2d.atlas import AtlasGenerator
+from pypack2d import utils
 
 
 def pack(src_pathname, destination_dir, settings=None, **kwargs):
