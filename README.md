@@ -245,6 +245,7 @@ def unpack_and_check(atlasdir, dirname, save):
 ### Testing
 
 To generate random test images use script ```test/image_gen.py```
+
 Then you can run tests with ```python -m unittest test.test```
 
 ### Enums from ```pypack2d.pack2d.settings``` 
