@@ -9,7 +9,7 @@ It provides easy to use, one function api and many different options for customi
 ### Requirements
 
 * PILLOW
-* Python 3
+* Python 3.6
 
 ### Features
 * Three packing algorithms with different variety of options
@@ -54,14 +54,14 @@ print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficienc
 # all values are default ones 
 
 pack_settings = dict(
-    # postwrite atlas hook, in this callback you can save atlas meta data to your specific formats
+    # postwrite atlas hook, in this callback you can save uv-s and other atlas attributes for your specific needs
     callback=None,
     
     # type of packing algorithm
-    # MAX_RECTANGLES is considered to be the best algorithm for many choices
+    # MAX_RECTANGLES is considered to be the best choice
     algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
     
-    # if algo has specific params like guillotine split rule use dict
+    # if algo has specific params like guillotine split rule then use dict
     # algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.MAX_AREA),
     
     # specifies attribute used when comparing images for priority
@@ -73,7 +73,7 @@ pack_settings = dict(
     
     # specifies if atlas can be resized to smaller size than (max_with, max_height)
     resize_mode=pypack2d.ResizeMode.NONE,
-    # specifies type of packing processing
+    # specifies type of packing processing (offline, online and local search)
     packing_mode=pypack2d.PackingMode.OFFLINE,
 
     # specifies possible image rotation for better results
@@ -87,13 +87,13 @@ pack_settings = dict(
     
     # image border
     border=None,
-    # if border_mode is pypack2d.BorderMode.NONE previous attirbute ingored
+    # if border_mode is pypack2d.BorderMode.NONE previous attribute ingored
     border_mode=pypack2d.BorderMode.NONE,
     
     # atlas file settings
     atlas=dict(
-        # atlas files will have names like file_prefix[number].file_type
-        # for example with this settings program will generate files
+        # atlas files will going to have names like file_prefix[number].file_type
+        # for example with this settings program will be generating files
         # atlas0.png, atlas1.png, atlas2.png, atlas[n].png 
         
         file_prefix="atlas",
@@ -225,7 +225,7 @@ for filename in glob.glob("test/img/atlas/*.json"):
 
 For more information about available options you can read original article
 
-```
+```python
 class PackingAlgorithm(Enum):
     MAX_RECTANGLES = "MAX_RECTANGLES"
     GUILLOTINE = "GUILLOTINE"
