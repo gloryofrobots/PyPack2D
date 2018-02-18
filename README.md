@@ -127,7 +127,7 @@ border=dict(
 
 border=dict(
     # this means that if some image has uv(left:0, top:0, right:1, bottom:1)
-    # it's atlas border will be (0, 0, border_size, border_size)
+    # its atlas border will be (0, 0, border_size, border_size)
     mode=pypack2d.BorderMode.AUTO,
     # now you can use only size attribute because rect will be generated automatically
     size=1,
