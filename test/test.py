@@ -151,16 +151,12 @@ class TestPack(unittest.TestCase):
     def _test_batch(self, max_count=-1):
         algo_set = list(pypack2d.PackingAlgorithm)
 
-        # CELL is broken we remove it from the test
-        algo_set.remove(pypack2d.PackingAlgorithm.CELL)
 
         heuristic_set = list(pypack2d.PlaceHeuristic)
         order_set = list(pypack2d.SortOrder)
         key_set = list(pypack2d.SortKey)
         resize_set = list(pypack2d.ResizeMode)
 
-        # this mode is broken we remove it from the test
-        resize_set.remove(pypack2d.ResizeMode.MINIMIZE_POW2_MINIMIZE_LAST)
 
         packing_set = list(pypack2d.PackingMode)
         rotate_set = list(pypack2d.RotateMode)
@@ -177,7 +173,8 @@ class TestPack(unittest.TestCase):
             if count > max_count:
                 break
             with self.subTest(s=s):
-                print("running test", count)
+                if count % 300 == 0:
+                    print("running test", count)
                 algo, heuristic, order, key, resize, packing, rotate = s
                 settings = dict(
                     algo=algo,
@@ -197,7 +194,7 @@ class TestPack(unittest.TestCase):
 
     def pack(self, custom_settings):
         pack_settings = create_settings(custom_settings)
-        print(pack_settings)
+        # print(pack_settings)
         stats = pypack2d.pack(TEST_PATHNAME, ATLAS_DIR, pack_settings)
         # print("\nAlgo: %s Count images: %i efficiency : %4.2f " % (
         #      pack_settings["algo"], stats["count"], stats["efficiency"])

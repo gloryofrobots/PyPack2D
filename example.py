@@ -26,23 +26,14 @@ def callback(atlas):
     with datafile as f:
         f.write(json.dumps(data))
 
-"""
-{'callback': <function callback at 0xb71dafa4>,
- 'algo': <PackingAlgorithm.GUILLOTINE: 'GUILLOTINE'>,
-  'heuristic': <PlaceHeuristic.WORST_LONG_SIDE_FIT: 'WORST_LONG_SIDE_FIT'>,
-   'sort_order': <SortOrder.DESC: 'DESC'>,
-    'sort_key': <SortKey.HEIGHT: 'HEIGHT'>,
-     'resize_mode': <ResizeMode.MINIMIZE_POW2: 'MINIMIZE_POW2'>,
-      'packing_mode': <PackingMode.OFFLINE: 'OFFLINE'>,
-       'rotate_mode': <RotateMode.AUTO: 'AUTO'>,
-"""
+
 def pack(pathname, atlasdir):
     pypack2d.utils.clear_dir(atlasdir)
     pack_settings = dict(
         callback=callback,
         # algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.MAX_AREA),
-        # algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
-        algo=pypack2d.PackingAlgorithm.GUILLOTINE,
+        algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
+        # algo=pypack2d.PackingAlgorithm.GUILLOTINE,
         heuristic=pypack2d.PlaceHeuristic.WORST_LONG_SIDE_FIT,
         sort_order=pypack2d.SortOrder.DESC,
         sort_key=pypack2d.SortKey.HEIGHT,
@@ -98,5 +89,14 @@ def unpack(atlasdir, dirname):
     print("Unpacked %d images" % count)
 
 
-pack(["test/img/test/*.png"], "test/img/atlas")
-unpack("test/img/atlas/*.json", "test/img/unpacked")
+def big():
+    pack(["test/img/test/*.png"], "test/img/atlas")
+    unpack("test/img/atlas/*.json", "test/img/unpacked")
+
+
+def simple():
+    import pypack2d
+    stats = pypack2d.pack("test/img/test/*.png", "test/img/atlas")
+    print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
+
+simple()

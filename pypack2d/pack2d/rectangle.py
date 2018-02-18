@@ -134,5 +134,5 @@ class Rectangle:
         return Rectangle(left, top, width, height)
 
     def __repr__(self):
-        return "Rectangle %s : %s <left %d top : %d right : %d bottom: %d>" % (
+        return "<Rectangle %s : %s left %d top : %d right : %d bottom: %d>" % (
             str(self.__class__.__name__), hex(id(self)), self.left, self.top, self.right, self.bottom)

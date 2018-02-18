@@ -29,9 +29,11 @@ class PackingMode(Enum):
 
 class PackingAlgorithm(Enum):
     SHELF = "SHELF"
-    CELL = "CELL"
     GUILLOTINE = "GUILLOTINE"
     MAX_RECTANGLES = "MAX_RECTANGLES"
+
+    # currently there is a bag here it fails on some data
+    # CELL = "CELL"
 
 
 class PlaceHeuristic(Enum):
@@ -53,7 +55,8 @@ class ResizeMode(Enum):
     NONE = "STRICT"
     MINIMIZE_MAXIMAL = "MINIMIZE_MAXIMAL"
     MINIMIZE_POW2 = "MINIMIZE_POW2"
-    MINIMIZE_POW2_MINIMIZE_LAST = "MINIMIZE_POW2_MINIMIZE_LAST"
+    # currently there is a bag here it fails on some data
+    # MINIMIZE_POW2_MINIMIZE_LAST = "MINIMIZE_POW2_MINIMIZE_LAST"
 
 
 class PackingAlgorithmAbility(Enum):

@@ -66,9 +66,10 @@ from pypack2d.pack2d.packer.shelf.shelf import BinPackerShelf
 from pypack2d.pack2d.packer.max_rectangles.max_rectangles import BinPackerMaxRectangles
 
 Factories.packer.register(settings.PackingAlgorithm.GUILLOTINE, BinPackerGuillotine)
-Factories.packer.register(settings.PackingAlgorithm.CELL, BinPackerCell)
 Factories.packer.register(settings.PackingAlgorithm.SHELF, BinPackerShelf)
 Factories.packer.register(settings.PackingAlgorithm.MAX_RECTANGLES, BinPackerMaxRectangles)
+# FIXME this packer is broken
+# Factories.packer.register(settings.PackingAlgorithm.CELL, BinPackerCell)
 
 ###################################################################################
 
@@ -85,7 +86,8 @@ from pypack2d.pack2d.conveyer.size_shifter.size_shifter_pow2_minimize_last impor
 
 Factories.size_shifter.register(settings.ResizeMode.MINIMIZE_MAXIMAL, BinSizeShifterMaximal)
 Factories.size_shifter.register(settings.ResizeMode.MINIMIZE_POW2, BinSizeShifterPow2)
-Factories.size_shifter.register(settings.ResizeMode.MINIMIZE_POW2_MINIMIZE_LAST, BinSizeShifterPow2MinimizeLast)
+# FIXME this mode is broken
+# Factories.size_shifter.register(settings.ResizeMode.MINIMIZE_POW2_MINIMIZE_LAST, BinSizeShifterPow2MinimizeLast)
 
 ###################################################################################
 
