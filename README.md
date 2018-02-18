@@ -248,10 +248,12 @@ To generate random test images use script ```test/image_gen.py```
 
 Then you can run tests with ```python -m unittest test.test```
 
-### Enums from ```pypack2d.pack2d.settings``` 
+### Available options 
+
+This is Enums from ```pypack2d.pack2d.settings```
 
 For more information about available options you can read original article
-
+ 
 ```python
 class PackingAlgorithm(Enum):
     MAX_RECTANGLES = "MAX_RECTANGLES"
