@@ -35,24 +35,25 @@ def pack(pathname, atlasdir):
         algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
         # algo=pypack2d.PackingAlgorithm.GUILLOTINE,
         heuristic=pypack2d.PlaceHeuristic.WORST_LONG_SIDE_FIT,
-        sort_order=pypack2d.SortOrder.DESC,
-        sort_key=pypack2d.SortKey.HEIGHT,
-        resize_mode=pypack2d.ResizeMode.MINIMIZE_POW2,
-        packing_mode=pypack2d.PackingMode.OFFLINE,
+        sort_order=pypack2d.SortOrder.ASC,
+        sort_key=pypack2d.SortKey.SIDE_RATIO,
+        resize_mode=pypack2d.ResizeMode.NONE,
+        packing_mode=pypack2d.PackingMode.ONLINE,
 
         rotate_mode=pypack2d.RotateMode.SIDE_WAYS,
         max_width=64,
         max_height=64,
-        border=dict(
-            mode=pypack2d.BorderMode.STRICT,
-            rect=dict(left=1, top=1, right=1, bottom=1),
-            type=pypack2d.BorderType.SOLID,
-            color="#000"
-        ),
+        border=None,
         # border=dict(
+        #     mode=pypack2d.BorderMode.STRICT,
+        #     rect=dict(left=1, top=1, right=1, bottom=1),
+        #     type=pypack2d.BorderType.SOLID,
+        #     color="#000"
+        # ),
+        # border=dict(
+        #     mode=pypack2d.BorderMode.AUTO,
         #     size=1,
         #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
-        #     color="#fff"
         # ),
 
         atlas=dict(
@@ -91,4 +92,3 @@ def unpack(atlasdir, dirname):
 
 pack(["test/img/test/*.png"], "test/img/atlas")
 unpack("test/img/atlas/*.json", "test/img/unpacked")
-

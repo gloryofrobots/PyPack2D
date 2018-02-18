@@ -2,13 +2,11 @@ import unittest
 import json
 import os
 import glob
-import sys
 import random
 import itertools
 
 import pypack2d
 import pypack2d.utils
-import time
 from PIL import Image
 
 ATLAS_DIR = "img/atlas"
@@ -87,76 +85,69 @@ class TestPack(unittest.TestCase):
     def enum_choice(self, e):
         return random.choice(list(e))
 
-    # def test_border_strict_solid(self):
-    #     self.pack_unpack(dict(
-    #         border_mode=pypack2d.BorderMode.STRICT,
-    #         border=dict(
-    #             rect=dict(left=1, top=1, right=1, bottom=1),
-    #             type=pypack2d.BorderType.SOLID,
-    #             color="#000"
-    #         ),
-    #     ))
-    #
-    # def test_border_strict_from_edge(self):
-    #     self.pack_unpack(dict(
-    #         border_mode=pypack2d.BorderMode.STRICT,
-    #         border=dict(
-    #             rect=dict(left=1, top=1, right=1, bottom=1),
-    #             type=pypack2d.BorderType.PIXELS_FROM_EDGE,
-    #         ),
-    #     ))
-    #
-    # @unittest.expectedFailure
-    # def test_border_auto_from_edge_failure(self):
-    #     self.pack_unpack(dict(
-    #         border_mode=pypack2d.BorderMode.AUTO,
-    #         border=dict(
-    #             rect=dict(left=1, top=1, right=1, bottom=1),
-    #             type=pypack2d.BorderType.PIXELS_FROM_EDGE,
-    #         ),
-    #     ))
-    #
-    # def test_border_auto_from_edge(self):
-    #     self.pack_unpack(dict(
-    #         border_mode=pypack2d.BorderMode.AUTO,
-    #         border=dict(
-    #             size=1,
-    #             type=pypack2d.BorderType.PIXELS_FROM_EDGE,
-    #         ),
-    #     ))
+    def test_border_strict_solid(self):
+        self.pack_unpack(dict(
+            border=dict(
+                mode=pypack2d.BorderMode.STRICT,
+                rect=dict(left=1, top=1, right=1, bottom=1),
+                type=pypack2d.BorderType.SOLID,
+                color="#000"
+            ),
+        ))
 
-    # def test_shelf(self):
-    #     self.pack_unpack(dict(
-    #         algo=pypack2d.PackingAlgorithm.SHELF
-    #     ))
+    def test_border_strict_from_edge(self):
+        self.pack_unpack(dict(
+            border=dict(
+                mode=pypack2d.BorderMode.STRICT,
+                rect=dict(left=1, top=1, right=1, bottom=1),
+                type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+            ),
+        ))
 
+    @unittest.expectedFailure
+    def test_border_auto_from_edge_failure(self):
+        self.pack_unpack(dict(
+            border=dict(
+                mode=pypack2d.BorderMode.AUTO,
+                rect=dict(left=1, top=1, right=1, bottom=1),
+                type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+            ),
+        ))
 
-    # def test_guillotine(self):
-    #     self.pack_unpack(dict(
-    #         algo=pypack2d.PackingAlgorithm.GUILLOTINE
-    #     ))
-    #
-    # def test_guillotine2(self):
-    #     self.pack_unpack(dict(
-    #         algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.SHORTER_AXIS)
-    #     ))
-    # def test_cell(self):
-    #     self.pack_unpack(dict(
-    #         algo=pypack2d.PackingAlgorithm.CELL
-    #     ))
+    def test_border_auto_from_edge(self):
+        self.pack_unpack(dict(
+            border=dict(
+                mode=pypack2d.BorderMode.AUTO,
+                size=1,
+                type=pypack2d.BorderType.PIXELS_FROM_EDGE,
+            ),
+        ))
+
+    def test_shelf(self):
+        self.pack_unpack(dict(
+            algo=pypack2d.PackingAlgorithm.SHELF
+        ))
+
+    def test_guillotine(self):
+        self.pack_unpack(dict(
+            algo=pypack2d.PackingAlgorithm.GUILLOTINE
+        ))
+
+    def test_guillotine2(self):
+        self.pack_unpack(dict(
+            algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.SHORTER_AXIS)
+        ))
 
     def test_batch(self):
-        self._test_batch(1000)
+        self._test_batch()
 
     def _test_batch(self, max_count=-1):
         algo_set = list(pypack2d.PackingAlgorithm)
-
 
         heuristic_set = list(pypack2d.PlaceHeuristic)
         order_set = list(pypack2d.SortOrder)
         key_set = list(pypack2d.SortKey)
         resize_set = list(pypack2d.ResizeMode)
-
 
         packing_set = list(pypack2d.PackingMode)
         rotate_set = list(pypack2d.RotateMode)
