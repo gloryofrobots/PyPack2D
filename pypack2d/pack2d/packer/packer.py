@@ -119,8 +119,8 @@ class BinPacker(object):
         if self._on_pack_bin(bin) is False:
             return False
 
-        # if __debug__:
-        #     self.validate(bin)
+        if __debug__:
+            self.validate(bin)
 
         self.bin_set.add(bin)
         return True
@@ -128,7 +128,8 @@ class BinPacker(object):
     def validate(self, bin):
         for binCheck in self.bin_set:
             if binCheck.is_intersect(bin) is True:
-                raise BinPackerError("Validate Error! Please submit an issue. Bins are intersected : %s with %s" % (binCheck, bin))
+                raise BinPackerError(
+                    "Validate Error! Please submit an issue. Bins are intersected : %s with %s" % (binCheck, bin))
 
     def _on_pack_bin(self, bin):
         raise NotImplementedError()

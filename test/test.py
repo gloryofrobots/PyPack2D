@@ -57,16 +57,16 @@ def create_settings(custom=None):
         max_width=64,
         max_height=64,
         border=dict(
+            mode=pypack2d.BorderMode.STRICT,
             rect=dict(left=1, top=1, right=1, bottom=1),
             type=pypack2d.BorderType.SOLID,
-            color="#000"
+            color="#000",
         ),
         # border=dict(
         #     size=1,
         #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
         #     color="#fff"
         # ),
-        border_mode=pypack2d.BorderMode.STRICT,
 
         atlas=dict(
             file_prefix="atlas",

@@ -106,8 +106,7 @@ class PackingSettings(object):
                  rotate_mode=RotateMode.NONE,
                  max_width=1024,
                  max_height=1024,
-                 border=None,
-                 border_mode=BorderMode.NONE
+                 border=None
                  ):
         super(PackingSettings, self).__init__()
         if isinstance(algo, dict):
@@ -128,12 +127,20 @@ class PackingSettings(object):
         self.rotate_mode = rotate_mode
         self.max_width = max_width
         self.max_height = max_height
-        self.border = border
-        self.border_mode = border_mode
+        if border is None:
+            self.border = dict(mode=BorderMode.NONE)
+        else:
+            self.border = border
+            if "mode" not in self.border:
+                raise SetupError("Missing border mode attribute")
 
-        if self.border_mode == BorderMode.AUTO:
+        if self.border["mode"] == BorderMode.AUTO:
             if "size" not in self.border:
                 raise SetupError("BORDER MODE AUTO expects size attribute in border settings")
+
+    @property
+    def border_mode(self):
+        return self.border["mode"]
 
     @property
     def border_size(self):
