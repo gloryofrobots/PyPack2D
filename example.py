@@ -26,22 +26,32 @@ def callback(atlas):
     with datafile as f:
         f.write(json.dumps(data))
 
-
+"""
+{'callback': <function callback at 0xb71dafa4>,
+ 'algo': <PackingAlgorithm.GUILLOTINE: 'GUILLOTINE'>,
+  'heuristic': <PlaceHeuristic.WORST_LONG_SIDE_FIT: 'WORST_LONG_SIDE_FIT'>,
+   'sort_order': <SortOrder.DESC: 'DESC'>,
+    'sort_key': <SortKey.HEIGHT: 'HEIGHT'>,
+     'resize_mode': <ResizeMode.MINIMIZE_POW2: 'MINIMIZE_POW2'>,
+      'packing_mode': <PackingMode.OFFLINE: 'OFFLINE'>,
+       'rotate_mode': <RotateMode.AUTO: 'AUTO'>,
+"""
 def pack(pathname, atlasdir):
     pypack2d.utils.clear_dir(atlasdir)
     pack_settings = dict(
         callback=callback,
         # algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.MAX_AREA),
-        algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
-        heuristic=pypack2d.PlaceHeuristic.BEST_AREA_FIT,
-        sort_order=pypack2d.SortOrder.ASC,
-        sort_key=pypack2d.SortKey.SIDE_RATIO,
-        resize_mode=pypack2d.ResizeMode.NONE,
-        packing_mode=pypack2d.PackingMode.ONLINE,
+        # algo=pypack2d.PackingAlgorithm.MAX_RECTANGLES,
+        algo=pypack2d.PackingAlgorithm.GUILLOTINE,
+        heuristic=pypack2d.PlaceHeuristic.WORST_LONG_SIDE_FIT,
+        sort_order=pypack2d.SortOrder.DESC,
+        sort_key=pypack2d.SortKey.HEIGHT,
+        resize_mode=pypack2d.ResizeMode.MINIMIZE_POW2,
+        packing_mode=pypack2d.PackingMode.OFFLINE,
 
         rotate_mode=pypack2d.RotateMode.SIDE_WAYS,
-        max_width=512,
-        max_height=512,
+        max_width=64,
+        max_height=64,
         border=dict(
             rect=dict(left=1, top=1, right=1, bottom=1),
             type=pypack2d.BorderType.SOLID,
@@ -52,7 +62,7 @@ def pack(pathname, atlasdir):
         #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
         #     color="#fff"
         # ),
-        border_mode=pypack2d.BorderMode.NONE,
+        border_mode=pypack2d.BorderMode.STRICT,
 
         atlas=dict(
             file_prefix="atlas",

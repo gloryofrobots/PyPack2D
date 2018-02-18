@@ -73,7 +73,7 @@ class BinPackerCell(BinPacker):
         for cell in self.cells:
             if self.can_place(cell, bin) is False:
                 continue
-
+            # print("PLACE OK", bin, cell)
             top_left = cell.top + bin.height
 
             if min_top_left < top_left:

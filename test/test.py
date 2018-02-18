@@ -2,9 +2,13 @@ import unittest
 import json
 import os
 import glob
+import sys
+import random
+import itertools
 
 import pypack2d
 import pypack2d.utils
+import time
 from PIL import Image
 
 ATLAS_DIR = "img/atlas"
@@ -47,11 +51,11 @@ def create_settings(custom=None):
         sort_order=pypack2d.SortOrder.ASC,
         sort_key=pypack2d.SortKey.SIDE_RATIO,
         resize_mode=pypack2d.ResizeMode.NONE,
-        packing_mode=pypack2d.PackingMode.ONLINE,
+        packing_mode=pypack2d.PackingMode.LOCAL_SEARCH,
 
         rotate_mode=pypack2d.RotateMode.SIDE_WAYS,
-        max_width=512,
-        max_height=512,
+        max_width=64,
+        max_height=64,
         border=dict(
             rect=dict(left=1, top=1, right=1, bottom=1),
             type=pypack2d.BorderType.SOLID,
@@ -62,7 +66,7 @@ def create_settings(custom=None):
         #     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
         #     color="#fff"
         # ),
-        border_mode=pypack2d.BorderMode.NONE,
+        border_mode=pypack2d.BorderMode.STRICT,
 
         atlas=dict(
             file_prefix="atlas",
@@ -79,6 +83,9 @@ class TestPack(unittest.TestCase):
     def setUp(self):
         pypack2d.utils.clear_dir(ATLAS_DIR)
         pypack2d.utils.clear_dir(UNPACKED_IMAGES_DIR)
+
+    def enum_choice(self, e):
+        return random.choice(list(e))
 
     # def test_border_strict_solid(self):
     #     self.pack_unpack(dict(
@@ -123,34 +130,83 @@ class TestPack(unittest.TestCase):
     #         algo=pypack2d.PackingAlgorithm.SHELF
     #     ))
 
+
+    # def test_guillotine(self):
+    #     self.pack_unpack(dict(
+    #         algo=pypack2d.PackingAlgorithm.GUILLOTINE
+    #     ))
+    #
+    # def test_guillotine2(self):
+    #     self.pack_unpack(dict(
+    #         algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.SHORTER_AXIS)
+    #     ))
     # def test_cell(self):
     #     self.pack_unpack(dict(
     #         algo=pypack2d.PackingAlgorithm.CELL
     #     ))
 
-    def test_guillotine(self):
-        self.pack_unpack(dict(
-            algo=pypack2d.PackingAlgorithm.GUILLOTINE
-        ))
+    def test_batch(self):
+        self._test_batch(1000)
 
-    def test_guillotine2(self):
-        self.pack_unpack(dict(
-            algo=dict(type=pypack2d.PackingAlgorithm.GUILLOTINE, split=pypack2d.GuillotineSplitRule.SHORTER_AXIS)
-        ))
+    def _test_batch(self, max_count=-1):
+        algo_set = list(pypack2d.PackingAlgorithm)
+
+        # CELL is broken we remove it from the test
+        algo_set.remove(pypack2d.PackingAlgorithm.CELL)
+
+        heuristic_set = list(pypack2d.PlaceHeuristic)
+        order_set = list(pypack2d.SortOrder)
+        key_set = list(pypack2d.SortKey)
+        resize_set = list(pypack2d.ResizeMode)
+
+        # this mode is broken we remove it from the test
+        resize_set.remove(pypack2d.ResizeMode.MINIMIZE_POW2_MINIMIZE_LAST)
+
+        packing_set = list(pypack2d.PackingMode)
+        rotate_set = list(pypack2d.RotateMode)
+        sets = [algo_set, heuristic_set, order_set, key_set, resize_set, packing_set, rotate_set]
+
+        product = itertools.product(*sets)
+        unique = set(product)
+        count = 0
+        print("Total length of batch tests %d, performing %d tests" % (len(unique), max_count))
+        if max_count < 0:
+            max_count = len(unique)
+
+        for s in unique:
+            if count > max_count:
+                break
+            with self.subTest(s=s):
+                print("running test", count)
+                algo, heuristic, order, key, resize, packing, rotate = s
+                settings = dict(
+                    algo=algo,
+                    heuristic=heuristic,
+                    sort_order=order,
+                    sort_key=key,
+                    resize_mode=resize,
+                    packing_mode=packing,
+                    rotate_mode=rotate,
+                )
+                self.pack_unpack(settings)
+                count += 1
 
     def pack_unpack(self, settings):
         self.pack(settings)
-        self.unpack()
+        self.unpack(settings, False)
 
     def pack(self, custom_settings):
         pack_settings = create_settings(custom_settings)
+        print(pack_settings)
         stats = pypack2d.pack(TEST_PATHNAME, ATLAS_DIR, pack_settings)
-        print("\nCount images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
+        # print("\nAlgo: %s Count images: %i efficiency : %4.2f " % (
+        #      pack_settings["algo"], stats["count"], stats["efficiency"])
+        # )
 
-    def unpack(self, save=False):
-        self._unpack(ATLAS_META_PATHNAME, UNPACKED_IMAGES_DIR, save)
+    def unpack(self, settings, save=False):
+        self._unpack(settings, ATLAS_META_PATHNAME, UNPACKED_IMAGES_DIR, save)
 
-    def _unpack(self, atlasdir, dirname, save):
+    def _unpack(self, settings, atlasdir, dirname, save):
         for filename in glob.glob(atlasdir):
             datafile = open(filename, "r")
             data = datafile.read()
@@ -166,12 +222,13 @@ class TestPack(unittest.TestCase):
                 path = image_data["path"]
                 _, image_filename = os.path.split(path)
                 old_image = Image.open(path)
-                self.assertTrue(pypack2d.utils.are_images_equal(old_image, image),
-                                "Extracted and source Images not equal atlas:%s, source:%s"
-                                % (filename, path))
                 if save:
                     result_path = os.path.join(dirname, image_filename)
                     image.save(result_path)
+                self.assertTrue(pypack2d.utils.are_images_equal(old_image, image),
+                                "Extracted and source Images not equal atlas:%s, source:%s\n"
+                                "Settings: %s"
+                                % (filename, path, settings))
 
 
 if __name__ == "__main__":

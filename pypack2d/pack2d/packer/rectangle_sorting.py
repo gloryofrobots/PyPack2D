@@ -31,7 +31,7 @@ class RectangleSortingWidth(RectangleSorting):
 
 class RectangleSortingHeight(RectangleSorting):
     def get_sorting_attribute(self, image):
-        return image.heght
+        return image.height
 
 
 class RectangleSortingShorterSide(RectangleSorting):

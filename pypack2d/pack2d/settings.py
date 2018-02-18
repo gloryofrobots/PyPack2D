@@ -47,7 +47,6 @@ class PlaceHeuristic(Enum):
     WORST_SHORT_SIDE_FIT = "WORST_SHORT_SIDE_FIT"
     WORST_LONG_SIDE_FIT = "WORST_LONG_SIDE_FIT"
     BOTTOM_LEFT = "BOTTOM_LEFT"
-    BEST_FIT = "BEST_FIT"
 
 
 class ResizeMode(Enum):

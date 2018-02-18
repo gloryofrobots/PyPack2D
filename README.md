@@ -1,0 +1,1 @@
+A thousand ways to pack the bin -- a practical approach to two-dimensional rectangle bin packing (http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.695.2918)

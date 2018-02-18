@@ -17,7 +17,7 @@ class BinSizeShifterPow2MinimizeLast(BinSizeShifterPow2):
         # compare last minimized binSet with old last binSet
         self.normalise_size(minimized)
         old = result[index]
-        if old.get_efficiency() < minimized.getEfficiency():
+        if old.get_efficiency() < minimized.get_efficiency():
             result[index] = minimized
 
         return True

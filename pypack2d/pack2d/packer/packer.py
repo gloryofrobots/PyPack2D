@@ -119,8 +119,8 @@ class BinPacker(object):
         if self._on_pack_bin(bin) is False:
             return False
 
-        if __debug__:
-            self.validate(bin)
+        # if __debug__:
+        #     self.validate(bin)
 
         self.bin_set.add(bin)
         return True
