@@ -2,7 +2,7 @@ pypack2d is texture packer written on Python and based on article
 
 A thousand ways to pack the bin -- a practical approach to two-dimensional rectangle bin packing (http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.695.2918)
 
-It provides easy to use, one function api and a lot of different options.
+It provides easy to use, one function api and many different options for customisation
 
 Requirements :
 * PILLOW
