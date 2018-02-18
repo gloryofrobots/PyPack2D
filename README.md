@@ -1,22 +1,25 @@
+### pypack2d
+
 pypack2d is texture packer written on Python and based on article
 
-A thousand ways to pack the bin -- a practical approach to two-dimensional rectangle bin packing (http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.695.2918)
+[A thousand ways to pack the bin -- a practical approach to two-dimensional rectangle bin packing](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.695.2918)
 
 It provides easy to use, one function api and many different options for customisation
 
-Requirements :
+### Requirements
+
 * PILLOW
 * Python 3
 
-# Features
+### Features
 * Three packing algorithms with different variety of options
 * Solid borders, borders with calculable size and borders with colors from image edges
 * Support for image rotation
 * Support for custom post made hooks, useful for writing atlas metadata
 
-Simple usage
+### Simple usage
 
-```
+```python
 import pypack2d
 # first argument is a pathname for glob.glob
 # second argument is a path to directory where atlas files would be stored
@@ -41,28 +44,15 @@ stats = pypack2d.pack(
         )
 print("Count images: %i efficiency : %4.2f " % (stats["count"], stats["efficiency"]))
 ```
+### Advanced usage
 
-You can tweak a lot of options for ```pypack2d.pack``` function
 
 
-```
-# this is list of all possible options
-# for all available variants look at ```pypack2d.pack2d.settings```
-
-                 callback=lambda x: x,
-                 heuristic=PlaceHeuristic.BEST_AREA_FIT,
-                 sort_key=SortKey.SIDE_RATIO,
-                 sort_order=SortOrder.ASC,
-                 resize_mode=ResizeMode.NONE,
-                 packing_mode=PackingMode.OFFLINE,
-                 rotate_mode=RotateMode.NONE,
-                 max_width=1024,
-                 max_height=1024,
-                 border=None,
-                 border_mode=BorderMode.NONE
-                 ):
-                 
+```python
+# You can tweak a lot of options for ```pypack2d.pack``` function
+# for all available variants look at ```pypack2d.pack2d.settings```             
 # all values are default ones 
+
 pack_settings = dict(
     # postwrite atlas hook, in this callback you can save atlas meta data to your specific formats
     callback=None,
@@ -86,7 +76,9 @@ pack_settings = dict(
     # specifies type of packing processing
     packing_mode=pypack2d.PackingMode.OFFLINE,
 
-    # specifies possible image rotation 
+    # specifies possible image rotation for better results
+    # if set to no NONE, images can be rotated on -90 degrees if specific conditions are met,
+    # so when unpacking rotated image you must rotate it on 90 degrees
     rotate_mode=pypack2d.RotateMode.NONE,
     
     # atlas size
@@ -114,8 +106,9 @@ stats = pypack2d.pack("test/img/test/*.png", "test/img/atlas", pack_settings)
 
 ```
 
-## Border
-```
+### Adding border for packed images
+
+```python
 # settings for specific color and specific size
 border=dict(
     rect=dict(left=1, top=1, right=1, bottom=1),
@@ -143,12 +136,13 @@ border=dict(
     color="#000"
 ),
 # this means that if some image has uv(left:0, top:0, right:1, bottom:1)
-# its atlas border will be (0, 0, border_size, border_size)
+# it's atlas border will be (0, 0, border_size, border_size)
 border_mode=pypack2d.BorderMode.AUTO,
 ```
 
-## writing atlas meta and unpacking atlas images
-```
+### Callbacks and unpacking
+
+```python
 # this function will write simple json files in the same directory as atlas images 
 # with content like
 """
@@ -203,6 +197,7 @@ def callback(atlas):
 pypack2d.pack("test/img/test/*.png", "test/img/atlas", callback=callback)
 
 # unpacking atlas images
+
 from PIL import Image
 for filename in glob.glob("test/img/atlas/*.json"):
     datafile = open(filename, "r")
@@ -211,11 +206,13 @@ for filename in glob.glob("test/img/atlas/*.json"):
     data = json.loads(data)
 
     atlas = Image.open(data["path"])
-
+    
+    # directory for extracted images
     unpacked_dirname = "test/img/unpacked"
     for image_data in data["images"]:
         uv = image_data["uv"]
         rotated = image_data["rotated"]
+        # helper function that extracts part of atlas image and rotates it back if necessary
         image = pypack2d.utils.extract_image_from_atlas(atlas, uv, rotated)
         path = image_data["path"]
         _, image_filename = os.path.split(path)
@@ -224,8 +221,9 @@ for filename in glob.glob("test/img/atlas/*.json"):
 ```
 
 
-## Enums from ```pypack2d.pack2d.settings``` 
-For more information about options you can read original article
+### Enums from ```pypack2d.pack2d.settings``` 
+
+For more information about available options you can read original article
 
 ```
 class PackingAlgorithm(Enum):
@@ -275,12 +273,6 @@ class ResizeMode(Enum):
     NONE = "STRICT"
     MINIMIZE_MAXIMAL = "MINIMIZE_MAXIMAL"
     MINIMIZE_POW2 = "MINIMIZE_POW2"
-
-
-class PackingAlgorithmAbility(Enum):
-    RECTANGLE_MERGE = "RECTANGLE_MERGE"
-    WASTE_MAP = "WASTE_MAP"
-    FLOOR_CEILING = "FLOOR_CEILING"
 
 
 class GuillotineSplitRule(Enum):
