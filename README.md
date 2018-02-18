@@ -87,8 +87,6 @@ pack_settings = dict(
     
     # image border
     border=None,
-    # if border_mode is pypack2d.BorderMode.NONE previous attribute ingored
-    border_mode=pypack2d.BorderMode.NONE,
     
     # atlas file settings
     atlas=dict(
@@ -111,23 +109,26 @@ stats = pypack2d.pack("test/img/test/*.png", "test/img/atlas", pack_settings)
 ```python
 # settings for specific color and specific size
 border=dict(
+    mode=pypack2d.BorderMode.STRICT,
     rect=dict(left=1, top=1, right=1, bottom=1),
     # or just size=1,
     type=pypack2d.BorderType.SOLID,
     color="#000"
 ),
-border_mode=pypack2d.BorderMode.STRICT,
 
 # settings for border with specific size and color from pixels from image edge
 border=dict(
+    mode=pypack2d.BorderMode.STRICT,
     rect=dict(left=1, top=1, right=1, bottom=1),
     type=pypack2d.BorderType.PIXELS_FROM_EDGE,
 ),
-border_mode=pypack2d.BorderMode.STRICT,
 
 # settings for border with auto generated size 
 
 border=dict(
+    # this means that if some image has uv(left:0, top:0, right:1, bottom:1)
+    # it's atlas border will be (0, 0, border_size, border_size)
+    mode=pypack2d.BorderMode.AUTO,
     # now you can use only size attribute because rect will be generated automatically
     size=1,
     # any type
@@ -135,9 +136,6 @@ border=dict(
     any type
     color="#000"
 ),
-# this means that if some image has uv(left:0, top:0, right:1, bottom:1)
-# it's atlas border will be (0, 0, border_size, border_size)
-border_mode=pypack2d.BorderMode.AUTO,
 ```
 
 ### Callbacks and unpacking
