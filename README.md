@@ -220,6 +220,30 @@ for filename in glob.glob("test/img/atlas/*.json"):
         image.save(result_path)
 ```
 
+If you need to check if images are packed correctly you can use this function from test suite
+
+```python
+def unpack_and_check(atlasdir, dirname, save):
+    for filename in glob.glob(atlasdir):
+        datafile = open(filename, "r")
+        data = datafile.read()
+        datafile.close()
+        data = json.loads(data)
+
+        atlas = Image.open(data["path"])
+
+        for image_data in data["images"]:
+            uv = image_data["uv"]
+            rotated = image_data["rotated"]
+            image = pypack2d.utils.extract_image_from_atlas(atlas, uv, rotated)
+            path = image_data["path"]
+            _, image_filename = os.path.split(path)
+            old_image = Image.open(path)
+            if save:
+                result_path = os.path.join(dirname, image_filename)
+                image.save(result_path)
+            assert pypack2d.utils.are_images_equal(old_image, image)
+```
 
 ### Enums from ```pypack2d.pack2d.settings``` 
 
