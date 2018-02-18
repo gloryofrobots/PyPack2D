@@ -242,6 +242,10 @@ def unpack_and_check(atlasdir, dirname, save):
                 image.save(result_path)
             assert pypack2d.utils.are_images_equal(old_image, image)
 ```
+### Testing
+
+To generate random test images use script ```test/image_gen.py```
+Then you can run tests with ```python -m unittest test.test```
 
 ### Enums from ```pypack2d.pack2d.settings``` 
 
